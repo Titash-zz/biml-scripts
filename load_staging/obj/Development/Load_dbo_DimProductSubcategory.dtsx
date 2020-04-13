@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{DE58F7B1-C91B-4A3E-9863-FE68C799FA9F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimProductSubcategory"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{6E1AE74D-5C95-4B53-8587-4ACBE5D97121}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D032B7A7-7C60-44CB-B6FD-7005948ED023}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{683AA74D-1B1A-4AE6-8E16-811BA392A3ED}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{62BF2D92-2299-4E4C-9184-4B4397B09AC5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimProductSubcategory"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{B616B1D3-7626-43B2-9CC5-176CA9D08957}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimProductSubcategory"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimProductSubcategory\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimProductSubcategory\Add Load Date.Inputs[Source dbo DimProductSubcategory_Output_Add Load Date]"
+                  name="Source dbo DimProductSubcategory_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimProductSubcategory\Add Load Date.Inputs[Source dbo DimProductSubcategory_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimProductSubcategory\Add Load Date.Inputs[Source dbo DimProductSubcategory_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimProductSubcategory\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimProductSubcategory\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimProductSubcategory\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimProductSubcategory\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimProductSubcategory"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ProductSubcategoryKey]
+,[ProductSubcategoryAlternateKey]
+,[EnglishProductSubcategoryName]
+,[SpanishProductSubcategoryName]
+,[FrenchProductSubcategoryName]
+,[ProductCategoryKey]
+FROM [dbo].[DimProductSubcategory]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[ProductSubcategoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[ProductSubcategoryKey]"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[ProductSubcategoryKey]"
+                      name="ProductSubcategoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[ProductSubcategoryAlternateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[ProductSubcategoryAlternateKey]"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[ProductSubcategoryAlternateKey]"
+                      name="ProductSubcategoryAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[EnglishProductSubcategoryName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[EnglishProductSubcategoryName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[EnglishProductSubcategoryName]"
+                      name="EnglishProductSubcategoryName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[SpanishProductSubcategoryName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[SpanishProductSubcategoryName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[SpanishProductSubcategoryName]"
+                      name="SpanishProductSubcategoryName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[FrenchProductSubcategoryName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[FrenchProductSubcategoryName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[FrenchProductSubcategoryName]"
+                      name="FrenchProductSubcategoryName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[ProductCategoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[ProductCategoryKey]"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].Columns[ProductCategoryKey]"
+                      name="ProductCategoryKey"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[ProductSubcategoryKey]"
+                      dataType="i4"
+                      name="ProductSubcategoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[ProductSubcategoryAlternateKey]"
+                      dataType="i4"
+                      name="ProductSubcategoryAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[EnglishProductSubcategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      name="EnglishProductSubcategoryName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[SpanishProductSubcategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      name="SpanishProductSubcategoryName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[FrenchProductSubcategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FrenchProductSubcategoryName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output].ExternalColumns[ProductCategoryKey]"
+                      dataType="i4"
+                      name="ProductCategoryKey" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ProductSubcategoryKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ProductSubcategoryKey]"
+                      name="ProductSubcategoryKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ProductSubcategoryAlternateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ProductSubcategoryAlternateKey]"
+                      name="ProductSubcategoryAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[EnglishProductSubcategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[EnglishProductSubcategoryName]"
+                      name="EnglishProductSubcategoryName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[SpanishProductSubcategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[SpanishProductSubcategoryName]"
+                      name="SpanishProductSubcategoryName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[FrenchProductSubcategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[FrenchProductSubcategoryName]"
+                      name="FrenchProductSubcategoryName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ProductCategoryKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ProductCategoryKey]"
+                      name="ProductCategoryKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimProductSubcategory.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimProductSubcategory\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimProductSubcategory\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimProductSubcategory.Paths[Source dbo DimProductSubcategory_Output_Add Load Date]"
+              endId="Package\Load dbo DimProductSubcategory\Add Load Date.Inputs[Source dbo DimProductSubcategory_Output_Add Load Date]"
+              name="Source dbo DimProductSubcategory_Output_Add Load Date"
+              startId="Package\Load dbo DimProductSubcategory\Source dbo DimProductSubcategory.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimProductSubcategory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{D2102FAF-5CFC-4EDC-BCE8-B5616B4CF74B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimProductSubcategory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{683AA74D-1B1A-4AE6-8E16-811BA392A3ED}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimProductSubcategory&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimProductSubcategory_To_Load dbo DimProductSubcategory]"
+      DTS:CreationName=""
+      DTS:DTSID="{6C19884C-A9F4-44EC-ACF8-AF9BEC0B9B0F}"
+      DTS:From="Package\Truncate dbo DimProductSubcategory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimProductSubcategory_To_Load dbo DimProductSubcategory"
+      DTS:To="Package\Load dbo DimProductSubcategory" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

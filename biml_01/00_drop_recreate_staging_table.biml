@@ -1,0 +1,45 @@
+﻿<#
+    var sourceSchemas = new List<string> {"Sales","Purchasing"};
+    var destinationSchema = "wwi";
+    var sourceConnection = SchemaManager.CreateConnectionNode("Source",@"Data Source=localhost\SQLEXPRESS;Initial Catalog=WideWorldImporters;Provider=SQLNCLI11.0;Integrated Security=SSPI;");
+    var sourceMetadata = sourceConnection.GetDatabaseSchema(ImportOptions.ExcludeViews | ImportOptions.ExcludeCheckConstraint | ImportOptions.ExcludeForeignKey | ImportOptions.ExcludeIndex);
+
+#>
+
+<#@ include file="_functions.biml" #>
+
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    
+<Connections>
+    <#@include file="_connections.biml"#>
+</Connections> 
+
+<Packages>    
+     <Package Name="DropRecreateStagingTables" ConstraintMode="Parallel" ProtectionLevel="EncryptSensitiveWithUserKey">
+             <Tasks>
+         <# foreach (var table in sourceMetadata.TableNodes) { 
+         
+         if (sourceSchemas.Any(str => str.Contains(table.SchemaName))) {
+         
+         #>
+
+        
+         
+          
+                
+ 
+            
+            <ExecuteSQL Name="Create Table <#=table.Name#>" ConnectionName="Staging">
+                    <DirectInput><#=table.GetDropAndCreateDdl()#></DirectInput>
+            </ExecuteSQL>  
+            
+            
+        
+   
+
+    <# } } #>        
+ </Tasks>
+     </Package>    
+</Packages>
+
+</Biml>

@@ -1,0 +1,841 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:53 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{A2F509AB-C01E-42EB-A3B7-D573849B9A98}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_CustomerTransactions"
+  DTS:VersionGUID="{C8021FD5-8138-4949-BB02-4420309A6E4E}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3B080FAD-684E-400B-B868-F0A01FFB2AEA}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D408CDCC-FAFA-474F-9E71-F58F5E8E0377}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{691B482D-5997-493D-A84A-13152D83AF17}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E9C3DA1B-E25B-4430-99BF-9DB69E9C8E83}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6EED5BF0-B1EA-491D-876A-244B0E9F3DF0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales CustomerTransactions"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{C8503DBE-F135-4CEF-9D8C-B443165CDB5B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales CustomerTransactions"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales CustomerTransactions\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales CustomerTransactions\Add Load Date.Inputs[Source Sales CustomerTransactions_Output_Add Load Date]"
+                  name="Source Sales CustomerTransactions_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales CustomerTransactions\Add Load Date.Inputs[Source Sales CustomerTransactions_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales CustomerTransactions\Add Load Date.Inputs[Source Sales CustomerTransactions_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales CustomerTransactions\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales CustomerTransactions\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerTransactions\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales CustomerTransactions\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales CustomerTransactions"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [CustomerTransactionID]
+,[CustomerID]
+,[TransactionTypeID]
+,[InvoiceID]
+,[PaymentMethodID]
+,[TransactionDate]
+,[AmountExcludingTax]
+,[TaxAmount]
+,[TransactionAmount]
+,[OutstandingBalance]
+,[FinalizationDate]
+,[IsFinalized]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Sales].[CustomerTransactions]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[CustomerTransactionID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[CustomerTransactionID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[CustomerTransactionID]"
+                      name="CustomerTransactionID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionTypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TransactionTypeID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionTypeID]"
+                      name="TransactionTypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[InvoiceID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[InvoiceID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[InvoiceID]"
+                      name="InvoiceID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[PaymentMethodID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[PaymentMethodID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[PaymentMethodID]"
+                      name="PaymentMethodID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TransactionDate]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionDate]"
+                      name="TransactionDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[AmountExcludingTax]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[AmountExcludingTax]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[AmountExcludingTax]"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TaxAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionAmount]"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[OutstandingBalance]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[OutstandingBalance]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[OutstandingBalance]"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[FinalizationDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[FinalizationDate]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[FinalizationDate]"
+                      name="FinalizationDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[IsFinalized]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[IsFinalized]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[IsFinalized]"
+                      name="IsFinalized"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[CustomerTransactionID]"
+                      dataType="i4"
+                      name="CustomerTransactionID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TransactionTypeID]"
+                      dataType="i4"
+                      name="TransactionTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[InvoiceID]"
+                      dataType="i4"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[PaymentMethodID]"
+                      dataType="i4"
+                      name="PaymentMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TransactionDate]"
+                      dataType="dbDate"
+                      name="TransactionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[AmountExcludingTax]"
+                      dataType="numeric"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[TransactionAmount]"
+                      dataType="numeric"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[OutstandingBalance]"
+                      dataType="numeric"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[FinalizationDate]"
+                      dataType="dbDate"
+                      name="FinalizationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[IsFinalized]"
+                      dataType="bool"
+                      name="IsFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[CustomerTransactionID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[CustomerTransactionID]"
+                      name="CustomerTransactionID" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TransactionTypeID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TransactionTypeID]"
+                      name="TransactionTypeID" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[InvoiceID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[InvoiceID]"
+                      name="InvoiceID" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[PaymentMethodID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[PaymentMethodID]"
+                      name="PaymentMethodID" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TransactionDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TransactionDate]"
+                      name="TransactionDate" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[AmountExcludingTax]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[AmountExcludingTax]"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TaxAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TransactionAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[TransactionAmount]"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[OutstandingBalance]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[OutstandingBalance]"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[FinalizationDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[FinalizationDate]"
+                      name="FinalizationDate" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[IsFinalized]"
+                      dataType="bool"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[IsFinalized]"
+                      name="IsFinalized" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi CustomerTransactions"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[CustomerTransactions]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi CustomerTransactions">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[CustomerTransactionID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerTransactionID"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[CustomerTransactionID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[CustomerTransactionID]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[TransactionTypeID]"
+                      cachedDataType="i4"
+                      cachedName="TransactionTypeID"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TransactionTypeID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionTypeID]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[InvoiceID]"
+                      cachedDataType="i4"
+                      cachedName="InvoiceID"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[InvoiceID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[InvoiceID]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[PaymentMethodID]"
+                      cachedDataType="i4"
+                      cachedName="PaymentMethodID"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[PaymentMethodID]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[PaymentMethodID]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[TransactionDate]"
+                      cachedDataType="dbDate"
+                      cachedName="TransactionDate"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TransactionDate]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[AmountExcludingTax]"
+                      cachedDataType="numeric"
+                      cachedName="AmountExcludingTax"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[AmountExcludingTax]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[AmountExcludingTax]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[TaxAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TaxAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TaxAmount]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[TransactionAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TransactionAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[TransactionAmount]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[OutstandingBalance]"
+                      cachedDataType="numeric"
+                      cachedName="OutstandingBalance"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[OutstandingBalance]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[OutstandingBalance]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[FinalizationDate]"
+                      cachedDataType="dbDate"
+                      cachedName="FinalizationDate"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[FinalizationDate]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[FinalizationDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[IsFinalized]"
+                      cachedDataType="bool"
+                      cachedName="IsFinalized"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[IsFinalized]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[IsFinalized]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[CustomerTransactionID]"
+                      dataType="i4"
+                      name="CustomerTransactionID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TransactionTypeID]"
+                      dataType="i4"
+                      name="TransactionTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[InvoiceID]"
+                      dataType="i4"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[PaymentMethodID]"
+                      dataType="i4"
+                      name="PaymentMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TransactionDate]"
+                      dataType="dbDate"
+                      name="TransactionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[AmountExcludingTax]"
+                      dataType="numeric"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[TransactionAmount]"
+                      dataType="numeric"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[OutstandingBalance]"
+                      dataType="numeric"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[FinalizationDate]"
+                      dataType="dbDate"
+                      name="FinalizationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[IsFinalized]"
+                      dataType="bool"
+                      name="IsFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales CustomerTransactions.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales CustomerTransactions\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales CustomerTransactions\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales CustomerTransactions.Paths[Count New Rows_Output_Staging wwi CustomerTransactions]"
+              endId="Package\Load Sales CustomerTransactions\Staging wwi CustomerTransactions.Inputs[Count New Rows_Output_Staging wwi CustomerTransactions]"
+              name="Count New Rows_Output_Staging wwi CustomerTransactions"
+              startId="Package\Load Sales CustomerTransactions\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales CustomerTransactions.Paths[Source Sales CustomerTransactions_Output_Add Load Date]"
+              endId="Package\Load Sales CustomerTransactions\Add Load Date.Inputs[Source Sales CustomerTransactions_Output_Add Load Date]"
+              name="Source Sales CustomerTransactions_Output_Add Load Date"
+              startId="Package\Load Sales CustomerTransactions\Source Sales CustomerTransactions.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

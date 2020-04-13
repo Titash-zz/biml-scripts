@@ -1,0 +1,836 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:53 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{8AFE6F55-1C6A-4F21-9957-A9A6E55F77B3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_SpecialDeals"
+  DTS:VersionGUID="{68CB0FEC-0350-41F9-A379-0A3CA9CD00E3}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A5356B58-8094-4FD9-94AD-7E3D529FAB2C}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{209DF0C7-6168-4965-AF93-AE4E10BF666F}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{67388C2F-DE3F-4A5D-BF28-D1D70F35CB5A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0F8CE3D2-B0A0-4B13-8A44-B58E88C5F1B8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E9389B6D-A924-4737-AF49-0E3E3CCFDCD3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales SpecialDeals"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{168DBFF7-32D1-44CF-9591-0F7B8AB45D49}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales SpecialDeals"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales SpecialDeals\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales SpecialDeals\Add Load Date.Inputs[Source Sales SpecialDeals_Output_Add Load Date]"
+                  name="Source Sales SpecialDeals_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales SpecialDeals\Add Load Date.Inputs[Source Sales SpecialDeals_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales SpecialDeals\Add Load Date.Inputs[Source Sales SpecialDeals_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales SpecialDeals\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales SpecialDeals\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales SpecialDeals\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales SpecialDeals\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales SpecialDeals"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [SpecialDealID]
+,[StockItemID]
+,[CustomerID]
+,[BuyingGroupID]
+,[CustomerCategoryID]
+,[StockGroupID]
+,[DealDescription]
+,[StartDate]
+,[EndDate]
+,[DiscountAmount]
+,[DiscountPercentage]
+,[UnitPrice]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Sales].[SpecialDeals]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[SpecialDealID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[SpecialDealID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[SpecialDealID]"
+                      name="SpecialDealID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StockItemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StockItemID]"
+                      name="StockItemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[BuyingGroupID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[BuyingGroupID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[BuyingGroupID]"
+                      name="BuyingGroupID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[CustomerCategoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[CustomerCategoryID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[CustomerCategoryID]"
+                      name="CustomerCategoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StockGroupID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[StockGroupID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StockGroupID]"
+                      name="StockGroupID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DealDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[DealDescription]"
+                      length="30"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DealDescription]"
+                      name="DealDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StartDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[StartDate]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StartDate]"
+                      name="StartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[EndDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[EndDate]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[EndDate]"
+                      name="EndDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DiscountAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[DiscountAmount]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DiscountAmount]"
+                      name="DiscountAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DiscountPercentage]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[DiscountPercentage]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DiscountPercentage]"
+                      name="DiscountPercentage"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[UnitPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[SpecialDealID]"
+                      dataType="i4"
+                      name="SpecialDealID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[BuyingGroupID]"
+                      dataType="i4"
+                      name="BuyingGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[CustomerCategoryID]"
+                      dataType="i4"
+                      name="CustomerCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[StockGroupID]"
+                      dataType="i4"
+                      name="StockGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[DealDescription]"
+                      dataType="wstr"
+                      length="30"
+                      name="DealDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[StartDate]"
+                      dataType="dbDate"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[EndDate]"
+                      dataType="dbDate"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[DiscountAmount]"
+                      dataType="numeric"
+                      name="DiscountAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[DiscountPercentage]"
+                      dataType="numeric"
+                      name="DiscountPercentage"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[SpecialDealID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[SpecialDealID]"
+                      name="SpecialDealID" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[StockItemID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[StockItemID]"
+                      name="StockItemID" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[BuyingGroupID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[BuyingGroupID]"
+                      name="BuyingGroupID" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[CustomerCategoryID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[CustomerCategoryID]"
+                      name="CustomerCategoryID" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[StockGroupID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[StockGroupID]"
+                      name="StockGroupID" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[DealDescription]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[DealDescription]"
+                      name="DealDescription" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[StartDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[StartDate]"
+                      name="StartDate" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[EndDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[EndDate]"
+                      name="EndDate" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[DiscountAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[DiscountAmount]"
+                      name="DiscountAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[DiscountPercentage]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[DiscountPercentage]"
+                      name="DiscountPercentage"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[UnitPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi SpecialDeals"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[SpecialDeals]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi SpecialDeals">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[SpecialDealID]"
+                      cachedDataType="i4"
+                      cachedName="SpecialDealID"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[SpecialDealID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[SpecialDealID]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[StockItemID]"
+                      cachedDataType="i4"
+                      cachedName="StockItemID"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StockItemID]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[BuyingGroupID]"
+                      cachedDataType="i4"
+                      cachedName="BuyingGroupID"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[BuyingGroupID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[BuyingGroupID]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[CustomerCategoryID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerCategoryID"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[CustomerCategoryID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[CustomerCategoryID]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[StockGroupID]"
+                      cachedDataType="i4"
+                      cachedName="StockGroupID"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[StockGroupID]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StockGroupID]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[DealDescription]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="DealDescription"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[DealDescription]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DealDescription]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[StartDate]"
+                      cachedDataType="dbDate"
+                      cachedName="StartDate"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[StartDate]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[StartDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[EndDate]"
+                      cachedDataType="dbDate"
+                      cachedName="EndDate"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[EndDate]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[EndDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[DiscountAmount]"
+                      cachedDataType="numeric"
+                      cachedName="DiscountAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[DiscountAmount]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DiscountAmount]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[DiscountPercentage]"
+                      cachedDataType="numeric"
+                      cachedName="DiscountPercentage"
+                      cachedPrecision="18"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[DiscountPercentage]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[DiscountPercentage]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[UnitPrice]"
+                      cachedDataType="numeric"
+                      cachedName="UnitPrice"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[UnitPrice]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[SpecialDealID]"
+                      dataType="i4"
+                      name="SpecialDealID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[BuyingGroupID]"
+                      dataType="i4"
+                      name="BuyingGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[CustomerCategoryID]"
+                      dataType="i4"
+                      name="CustomerCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[StockGroupID]"
+                      dataType="i4"
+                      name="StockGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[DealDescription]"
+                      dataType="wstr"
+                      length="30"
+                      name="DealDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[StartDate]"
+                      dataType="dbDate"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[EndDate]"
+                      dataType="dbDate"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[DiscountAmount]"
+                      dataType="numeric"
+                      name="DiscountAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[DiscountPercentage]"
+                      dataType="numeric"
+                      name="DiscountPercentage"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales SpecialDeals.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales SpecialDeals\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales SpecialDeals\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales SpecialDeals.Paths[Count New Rows_Output_Staging wwi SpecialDeals]"
+              endId="Package\Load Sales SpecialDeals\Staging wwi SpecialDeals.Inputs[Count New Rows_Output_Staging wwi SpecialDeals]"
+              name="Count New Rows_Output_Staging wwi SpecialDeals"
+              startId="Package\Load Sales SpecialDeals\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales SpecialDeals.Paths[Source Sales SpecialDeals_Output_Add Load Date]"
+              endId="Package\Load Sales SpecialDeals\Add Load Date.Inputs[Source Sales SpecialDeals_Output_Add Load Date]"
+              name="Source Sales SpecialDeals_Output_Add Load Date"
+              startId="Package\Load Sales SpecialDeals\Source Sales SpecialDeals.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

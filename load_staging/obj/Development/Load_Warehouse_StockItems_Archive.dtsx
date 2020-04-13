@@ -1,0 +1,810 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:02:51 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{B8F561C3-5F77-4890-8DF7-C6A17D61B36F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Warehouse_StockItems_Archive"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{5CD33649-7E6A-476F-9B31-75CDD90746C2}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{207FCE9B-F5BF-49D6-9F84-5BCF607AADCB}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5349D56F-860F-443F-9BB3-67F4167D0807}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1A6BC0FF-DA43-4123-9839-741D6D869914}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table StockItems_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{56541916-F79B-4D65-88F8-7DF011F0DAD0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table StockItems_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5349D56F-860F-443F-9BB3-67F4167D0807}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Warehouse].[StockItems_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Warehouse].[StockItems_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Warehouse].[StockItems_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [StockItemID] int NOT NULL &#xA;, [StockItemName] nvarchar(100) NOT NULL &#xA;, [SupplierID] int NOT NULL &#xA;, [ColorID] int &#xA;, [UnitPackageID] int NOT NULL &#xA;, [OuterPackageID] int NOT NULL &#xA;, [Brand] nvarchar(50) &#xA;, [Size] nvarchar(20) &#xA;, [LeadTimeDays] int NOT NULL &#xA;, [QuantityPerOuter] int NOT NULL &#xA;, [IsChillerStock] bit NOT NULL &#xA;, [Barcode] nvarchar(50) &#xA;, [TaxRate] decimal(18,3) NOT NULL &#xA;, [UnitPrice] decimal(18,2) NOT NULL &#xA;, [RecommendedRetailPrice] decimal(18,2) &#xA;, [TypicalWeightPerUnit] decimal(18,3) NOT NULL &#xA;, [MarketingComments] nvarchar(max) &#xA;, [InternalComments] nvarchar(max) &#xA;, [Photo] varbinary(max) &#xA;, [CustomFields] nvarchar(max) &#xA;, [Tags] nvarchar(max) &#xA;, [SearchDetails] nvarchar(max) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE  CLUSTERED INDEX [ix_StockItems_Archive] ON [Warehouse].[StockItems_Archive]&#xA;      (&#xA;      [ValidTo] Asc,[ValidFrom] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Warehouse StockItems_Archive"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{637B6D35-8E6B-4238-9D5A-0678F2E9FB42}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Warehouse StockItems_Archive"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Warehouse StockItems_Archive\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse StockItems_Archive\Add Load Date.Inputs[Source Warehouse StockItems_Archive_Output_Add Load Date]"
+                  name="Source Warehouse StockItems_Archive_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse StockItems_Archive\Add Load Date.Inputs[Source Warehouse StockItems_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Warehouse StockItems_Archive\Add Load Date.Inputs[Source Warehouse StockItems_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse StockItems_Archive\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse StockItems_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse StockItems_Archive\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse StockItems_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Warehouse StockItems_Archive"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [StockItemID]
+,[StockItemName]
+,[SupplierID]
+,[ColorID]
+,[UnitPackageID]
+,[OuterPackageID]
+,[Brand]
+,[Size]
+,[LeadTimeDays]
+,[QuantityPerOuter]
+,[IsChillerStock]
+,[Barcode]
+,[TaxRate]
+,[UnitPrice]
+,[RecommendedRetailPrice]
+,[TypicalWeightPerUnit]
+,[MarketingComments]
+,[InternalComments]
+,[Photo]
+,[CustomFields]
+,[Tags]
+,[SearchDetails]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Warehouse].[StockItems_Archive]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[StockItemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[StockItemID]"
+                      name="StockItemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[StockItemName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[StockItemName]"
+                      length="100"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[StockItemName]"
+                      name="StockItemName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[SupplierID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[SupplierID]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[SupplierID]"
+                      name="SupplierID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[ColorID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[ColorID]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[ColorID]"
+                      name="ColorID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[UnitPackageID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[UnitPackageID]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[UnitPackageID]"
+                      name="UnitPackageID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[OuterPackageID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[OuterPackageID]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[OuterPackageID]"
+                      name="OuterPackageID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Brand]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Brand]"
+                      length="50"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Brand]"
+                      name="Brand"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Size]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Size]"
+                      length="20"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Size]"
+                      name="Size"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[LeadTimeDays]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[LeadTimeDays]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[LeadTimeDays]"
+                      name="LeadTimeDays"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[QuantityPerOuter]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[QuantityPerOuter]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[QuantityPerOuter]"
+                      name="QuantityPerOuter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[IsChillerStock]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[IsChillerStock]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[IsChillerStock]"
+                      name="IsChillerStock"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Barcode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Barcode]"
+                      length="50"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Barcode]"
+                      name="Barcode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[TaxRate]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[TaxRate]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[TaxRate]"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[UnitPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[RecommendedRetailPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[RecommendedRetailPrice]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[RecommendedRetailPrice]"
+                      name="RecommendedRetailPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[TypicalWeightPerUnit]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[TypicalWeightPerUnit]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[TypicalWeightPerUnit]"
+                      name="TypicalWeightPerUnit"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[MarketingComments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[MarketingComments]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[MarketingComments]"
+                      name="MarketingComments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[InternalComments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[InternalComments]"
+                      name="InternalComments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Photo]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Photo]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Photo]"
+                      name="Photo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[CustomFields]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[CustomFields]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[CustomFields]"
+                      name="CustomFields"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Tags]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Tags]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[Tags]"
+                      name="Tags"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[SearchDetails]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[SearchDetails]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[SearchDetails]"
+                      name="SearchDetails"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[StockItemName]"
+                      dataType="wstr"
+                      length="100"
+                      name="StockItemName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[SupplierID]"
+                      dataType="i4"
+                      name="SupplierID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[ColorID]"
+                      dataType="i4"
+                      name="ColorID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[UnitPackageID]"
+                      dataType="i4"
+                      name="UnitPackageID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[OuterPackageID]"
+                      dataType="i4"
+                      name="OuterPackageID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Brand]"
+                      dataType="wstr"
+                      length="50"
+                      name="Brand" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Size]"
+                      dataType="wstr"
+                      length="20"
+                      name="Size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[LeadTimeDays]"
+                      dataType="i4"
+                      name="LeadTimeDays" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[QuantityPerOuter]"
+                      dataType="i4"
+                      name="QuantityPerOuter" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[IsChillerStock]"
+                      dataType="bool"
+                      name="IsChillerStock" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Barcode]"
+                      dataType="wstr"
+                      length="50"
+                      name="Barcode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[TaxRate]"
+                      dataType="numeric"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[RecommendedRetailPrice]"
+                      dataType="numeric"
+                      name="RecommendedRetailPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[TypicalWeightPerUnit]"
+                      dataType="numeric"
+                      name="TypicalWeightPerUnit"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[MarketingComments]"
+                      dataType="nText"
+                      name="MarketingComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Photo]"
+                      dataType="image"
+                      name="Photo" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[CustomFields]"
+                      dataType="nText"
+                      name="CustomFields" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[Tags]"
+                      dataType="nText"
+                      name="Tags" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[SearchDetails]"
+                      dataType="nText"
+                      name="SearchDetails" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[StockItemID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[StockItemID]"
+                      name="StockItemID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[StockItemName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[StockItemName]"
+                      name="StockItemName" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[SupplierID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[SupplierID]"
+                      name="SupplierID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ColorID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ColorID]"
+                      name="ColorID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[UnitPackageID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[UnitPackageID]"
+                      name="UnitPackageID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[OuterPackageID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[OuterPackageID]"
+                      name="OuterPackageID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Brand]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Brand]"
+                      name="Brand" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Size]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Size]"
+                      name="Size" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[LeadTimeDays]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[LeadTimeDays]"
+                      name="LeadTimeDays" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[QuantityPerOuter]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[QuantityPerOuter]"
+                      name="QuantityPerOuter" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[IsChillerStock]"
+                      dataType="bool"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[IsChillerStock]"
+                      name="IsChillerStock" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Barcode]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Barcode]"
+                      name="Barcode" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[TaxRate]"
+                      dataType="numeric"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[TaxRate]"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[UnitPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[RecommendedRetailPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[RecommendedRetailPrice]"
+                      name="RecommendedRetailPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[TypicalWeightPerUnit]"
+                      dataType="numeric"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[TypicalWeightPerUnit]"
+                      name="TypicalWeightPerUnit"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[MarketingComments]"
+                      dataType="nText"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[MarketingComments]"
+                      name="MarketingComments" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[InternalComments]"
+                      dataType="nText"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[InternalComments]"
+                      name="InternalComments" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Photo]"
+                      dataType="image"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Photo]"
+                      name="Photo" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[CustomFields]"
+                      dataType="nText"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[CustomFields]"
+                      name="CustomFields" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Tags]"
+                      dataType="nText"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[Tags]"
+                      name="Tags" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[SearchDetails]"
+                      dataType="nText"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[SearchDetails]"
+                      name="SearchDetails" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Warehouse StockItems_Archive.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Warehouse StockItems_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Warehouse StockItems_Archive\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Warehouse StockItems_Archive.Paths[Source Warehouse StockItems_Archive_Output_Add Load Date]"
+              endId="Package\Load Warehouse StockItems_Archive\Add Load Date.Inputs[Source Warehouse StockItems_Archive_Output_Add Load Date]"
+              name="Source Warehouse StockItems_Archive_Output_Add Load Date"
+              startId="Package\Load Warehouse StockItems_Archive\Source Warehouse StockItems_Archive.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table StockItems_Archive_To_Load Warehouse StockItems_Archive]"
+      DTS:CreationName=""
+      DTS:DTSID="{5502138A-77CB-4E1C-BCF0-126C50EF7062}"
+      DTS:From="Package\Create Table StockItems_Archive"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table StockItems_Archive_To_Load Warehouse StockItems_Archive"
+      DTS:To="Package\Load Warehouse StockItems_Archive" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

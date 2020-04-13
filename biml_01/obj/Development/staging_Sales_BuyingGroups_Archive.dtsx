@@ -1,0 +1,550 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:52 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{CB476AD0-54BD-4B74-B6E5-D3CBB44082E3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_BuyingGroups_Archive"
+  DTS:VersionGUID="{3B05EF07-12FB-43D0-B8BF-05554F1F6841}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{269AE8D0-D0F3-40CE-AC3E-2851B8226C49}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8339FB56-B118-40E5-B442-35399E56954F}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{15FE12C8-A6C9-4497-B28F-777921043FAC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3177BD47-82AD-4522-8D87-2A3DBE200462}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{41B0EA34-7915-4DEB-A77E-DB8FD3433960}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales BuyingGroups_Archive"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{5528FF69-5818-4A46-A84F-4A7EBDDF1A5E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales BuyingGroups_Archive"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales BuyingGroups_Archive\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Inputs[Source Sales BuyingGroups_Archive_Output_Add Load Date]"
+                  name="Source Sales BuyingGroups_Archive_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Inputs[Source Sales BuyingGroups_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Inputs[Source Sales BuyingGroups_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales BuyingGroups_Archive\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales BuyingGroups_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales BuyingGroups_Archive\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales BuyingGroups_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales BuyingGroups_Archive"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [BuyingGroupID]
+,[BuyingGroupName]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Sales].[BuyingGroups_Archive]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[BuyingGroupID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[BuyingGroupID]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[BuyingGroupID]"
+                      name="BuyingGroupID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[BuyingGroupName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[BuyingGroupName]"
+                      length="50"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[BuyingGroupName]"
+                      name="BuyingGroupName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[BuyingGroupID]"
+                      dataType="i4"
+                      name="BuyingGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[BuyingGroupName]"
+                      dataType="wstr"
+                      length="50"
+                      name="BuyingGroupName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[BuyingGroupID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[BuyingGroupID]"
+                      name="BuyingGroupID" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[BuyingGroupName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[BuyingGroupName]"
+                      name="BuyingGroupName" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi BuyingGroups_Archive"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[BuyingGroups_Archive]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi BuyingGroups_Archive">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].Columns[BuyingGroupID]"
+                      cachedDataType="i4"
+                      cachedName="BuyingGroupID"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[BuyingGroupID]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[BuyingGroupID]" />
+                    <inputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].Columns[BuyingGroupName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="BuyingGroupName"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[BuyingGroupName]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[BuyingGroupName]" />
+                    <inputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].Columns[ValidFrom]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ValidFrom"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[ValidFrom]" />
+                    <inputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].Columns[ValidTo]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ValidTo"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output].Columns[ValidTo]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[BuyingGroupID]"
+                      dataType="i4"
+                      name="BuyingGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[BuyingGroupName]"
+                      dataType="wstr"
+                      length="50"
+                      name="BuyingGroupName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales BuyingGroups_Archive.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales BuyingGroups_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales BuyingGroups_Archive.Paths[Count New Rows_Output_Staging wwi BuyingGroups_Archive]"
+              endId="Package\Load Sales BuyingGroups_Archive\Staging wwi BuyingGroups_Archive.Inputs[Count New Rows_Output_Staging wwi BuyingGroups_Archive]"
+              name="Count New Rows_Output_Staging wwi BuyingGroups_Archive"
+              startId="Package\Load Sales BuyingGroups_Archive\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales BuyingGroups_Archive.Paths[Source Sales BuyingGroups_Archive_Output_Add Load Date]"
+              endId="Package\Load Sales BuyingGroups_Archive\Add Load Date.Inputs[Source Sales BuyingGroups_Archive_Output_Add Load Date]"
+              name="Source Sales BuyingGroups_Archive_Output_Add Load Date"
+              startId="Package\Load Sales BuyingGroups_Archive\Source Sales BuyingGroups_Archive.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

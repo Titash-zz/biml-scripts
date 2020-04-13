@@ -1,0 +1,904 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{FD27FB54-7C73-450F-ADC9-AFF7C7A5B9E1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimCustomer"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{EC20E6F7-CD50-4CA3-BF41-EFC440EDE23C}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{400A991A-E7F6-4EAA-9A0C-AD29322B5BAC}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A309AA3A-0EB8-4E11-8280-8C67B0128E98}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{112BF76F-B2B9-453F-841B-5F8C7FE318F0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimCustomer"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{899BD5DF-8BD7-4B0A-85D5-CB452A56A7D3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimCustomer"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimCustomer\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimCustomer\Add Load Date.Inputs[Source dbo DimCustomer_Output_Add Load Date]"
+                  name="Source dbo DimCustomer_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimCustomer\Add Load Date.Inputs[Source dbo DimCustomer_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimCustomer\Add Load Date.Inputs[Source dbo DimCustomer_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimCustomer\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimCustomer\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimCustomer\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimCustomer\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimCustomer\Source dbo DimCustomer"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimCustomer"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [CustomerKey]
+,[GeographyKey]
+,[CustomerAlternateKey]
+,[Title]
+,[FirstName]
+,[MiddleName]
+,[LastName]
+,[NameStyle]
+,[BirthDate]
+,[MaritalStatus]
+,[Suffix]
+,[Gender]
+,[EmailAddress]
+,[YearlyIncome]
+,[TotalChildren]
+,[NumberChildrenAtHome]
+,[EnglishEducation]
+,[SpanishEducation]
+,[FrenchEducation]
+,[EnglishOccupation]
+,[SpanishOccupation]
+,[FrenchOccupation]
+,[HouseOwnerFlag]
+,[NumberCarsOwned]
+,[AddressLine1]
+,[AddressLine2]
+,[Phone]
+,[DateFirstPurchase]
+,[CommuteDistance]
+FROM [dbo].[DimCustomer]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[CustomerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[CustomerKey]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[CustomerKey]"
+                      name="CustomerKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[GeographyKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[GeographyKey]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[GeographyKey]"
+                      name="GeographyKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[CustomerAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[CustomerAlternateKey]"
+                      length="15"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[CustomerAlternateKey]"
+                      name="CustomerAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Title]"
+                      length="8"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Title]"
+                      name="Title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[FirstName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[MiddleName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[MiddleName]"
+                      name="MiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[LastName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[NameStyle]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[NameStyle]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[NameStyle]"
+                      name="NameStyle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[BirthDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[BirthDate]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[BirthDate]"
+                      name="BirthDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[MaritalStatus]"
+                      length="1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[MaritalStatus]"
+                      name="MaritalStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Suffix]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Suffix]"
+                      length="10"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Suffix]"
+                      name="Suffix"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Gender]"
+                      length="1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Gender]"
+                      name="Gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[EmailAddress]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[EmailAddress]"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[EmailAddress]"
+                      name="EmailAddress"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[YearlyIncome]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[YearlyIncome]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[YearlyIncome]"
+                      name="YearlyIncome"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[TotalChildren]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[TotalChildren]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[TotalChildren]"
+                      name="TotalChildren"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[NumberChildrenAtHome]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[NumberChildrenAtHome]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[NumberChildrenAtHome]"
+                      name="NumberChildrenAtHome"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[EnglishEducation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[EnglishEducation]"
+                      length="40"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[EnglishEducation]"
+                      name="EnglishEducation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[SpanishEducation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[SpanishEducation]"
+                      length="40"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[SpanishEducation]"
+                      name="SpanishEducation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[FrenchEducation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[FrenchEducation]"
+                      length="40"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[FrenchEducation]"
+                      name="FrenchEducation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[EnglishOccupation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[EnglishOccupation]"
+                      length="100"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[EnglishOccupation]"
+                      name="EnglishOccupation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[SpanishOccupation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[SpanishOccupation]"
+                      length="100"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[SpanishOccupation]"
+                      name="SpanishOccupation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[FrenchOccupation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[FrenchOccupation]"
+                      length="100"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[FrenchOccupation]"
+                      name="FrenchOccupation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[HouseOwnerFlag]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[HouseOwnerFlag]"
+                      length="1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[HouseOwnerFlag]"
+                      name="HouseOwnerFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[NumberCarsOwned]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[NumberCarsOwned]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[NumberCarsOwned]"
+                      name="NumberCarsOwned"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[AddressLine1]"
+                      length="120"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[AddressLine1]"
+                      name="AddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[AddressLine2]"
+                      length="120"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[AddressLine2]"
+                      name="AddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Phone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Phone]"
+                      length="20"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[Phone]"
+                      name="Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[DateFirstPurchase]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[DateFirstPurchase]"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[DateFirstPurchase]"
+                      name="DateFirstPurchase"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[CommuteDistance]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[CommuteDistance]"
+                      length="15"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].Columns[CommuteDistance]"
+                      name="CommuteDistance"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[CustomerKey]"
+                      dataType="i4"
+                      name="CustomerKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[GeographyKey]"
+                      dataType="i4"
+                      name="GeographyKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[CustomerAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="CustomerAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="8"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[NameStyle]"
+                      dataType="bool"
+                      name="NameStyle" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[BirthDate]"
+                      dataType="dbDate"
+                      name="BirthDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      name="MaritalStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Suffix]"
+                      dataType="wstr"
+                      length="10"
+                      name="Suffix" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      name="Gender" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[YearlyIncome]"
+                      dataType="cy"
+                      name="YearlyIncome" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[TotalChildren]"
+                      dataType="ui1"
+                      name="TotalChildren" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[NumberChildrenAtHome]"
+                      dataType="ui1"
+                      name="NumberChildrenAtHome" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[EnglishEducation]"
+                      dataType="wstr"
+                      length="40"
+                      name="EnglishEducation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[SpanishEducation]"
+                      dataType="wstr"
+                      length="40"
+                      name="SpanishEducation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[FrenchEducation]"
+                      dataType="wstr"
+                      length="40"
+                      name="FrenchEducation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[EnglishOccupation]"
+                      dataType="wstr"
+                      length="100"
+                      name="EnglishOccupation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[SpanishOccupation]"
+                      dataType="wstr"
+                      length="100"
+                      name="SpanishOccupation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[FrenchOccupation]"
+                      dataType="wstr"
+                      length="100"
+                      name="FrenchOccupation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[HouseOwnerFlag]"
+                      dataType="wstr"
+                      length="1"
+                      name="HouseOwnerFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[NumberCarsOwned]"
+                      dataType="ui1"
+                      name="NumberCarsOwned" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[AddressLine1]"
+                      dataType="wstr"
+                      length="120"
+                      name="AddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[AddressLine2]"
+                      dataType="wstr"
+                      length="120"
+                      name="AddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="20"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[DateFirstPurchase]"
+                      dataType="dbDate"
+                      name="DateFirstPurchase" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output].ExternalColumns[CommuteDistance]"
+                      dataType="wstr"
+                      length="15"
+                      name="CommuteDistance" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[CustomerKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[CustomerKey]"
+                      name="CustomerKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[GeographyKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[GeographyKey]"
+                      name="GeographyKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[CustomerAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[CustomerAlternateKey]"
+                      name="CustomerAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Title]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Title]"
+                      name="Title" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[MiddleName]"
+                      name="MiddleName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[NameStyle]"
+                      dataType="bool"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[NameStyle]"
+                      name="NameStyle" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[BirthDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[BirthDate]"
+                      name="BirthDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[MaritalStatus]"
+                      name="MaritalStatus" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Suffix]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Suffix]"
+                      name="Suffix" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Gender]"
+                      name="Gender" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[EmailAddress]"
+                      name="EmailAddress" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[YearlyIncome]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[YearlyIncome]"
+                      name="YearlyIncome" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[TotalChildren]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[TotalChildren]"
+                      name="TotalChildren" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[NumberChildrenAtHome]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[NumberChildrenAtHome]"
+                      name="NumberChildrenAtHome" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[EnglishEducation]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[EnglishEducation]"
+                      name="EnglishEducation" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[SpanishEducation]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[SpanishEducation]"
+                      name="SpanishEducation" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[FrenchEducation]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[FrenchEducation]"
+                      name="FrenchEducation" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[EnglishOccupation]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[EnglishOccupation]"
+                      name="EnglishOccupation" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[SpanishOccupation]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[SpanishOccupation]"
+                      name="SpanishOccupation" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[FrenchOccupation]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[FrenchOccupation]"
+                      name="FrenchOccupation" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[HouseOwnerFlag]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[HouseOwnerFlag]"
+                      name="HouseOwnerFlag" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[NumberCarsOwned]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[NumberCarsOwned]"
+                      name="NumberCarsOwned" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[AddressLine1]"
+                      dataType="wstr"
+                      length="120"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[AddressLine1]"
+                      name="AddressLine1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[AddressLine2]"
+                      dataType="wstr"
+                      length="120"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[AddressLine2]"
+                      name="AddressLine2" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Phone]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[Phone]"
+                      name="Phone" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[DateFirstPurchase]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[DateFirstPurchase]"
+                      name="DateFirstPurchase" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[CommuteDistance]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[CommuteDistance]"
+                      name="CommuteDistance" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimCustomer.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimCustomer\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimCustomer\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimCustomer.Paths[Source dbo DimCustomer_Output_Add Load Date]"
+              endId="Package\Load dbo DimCustomer\Add Load Date.Inputs[Source dbo DimCustomer_Output_Add Load Date]"
+              name="Source dbo DimCustomer_Output_Add Load Date"
+              startId="Package\Load dbo DimCustomer\Source dbo DimCustomer.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimCustomer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{3D9F904E-2042-46C8-9EC7-8F044F68E74E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimCustomer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A309AA3A-0EB8-4E11-8280-8C67B0128E98}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimCustomer&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimCustomer_To_Load dbo DimCustomer]"
+      DTS:CreationName=""
+      DTS:DTSID="{D7D181B3-2548-40A6-AC82-7738D2524949}"
+      DTS:From="Package\Truncate dbo DimCustomer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimCustomer_To_Load dbo DimCustomer"
+      DTS:To="Package\Load dbo DimCustomer" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

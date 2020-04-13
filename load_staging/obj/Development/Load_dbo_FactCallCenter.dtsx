@@ -1,0 +1,565 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{E5F32341-83EE-4BDF-9BAB-B24AF1853F06}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_FactCallCenter"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{8E4639C8-8D78-423E-8F2D-3CFD09771079}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3291B4D1-BAB2-4A28-BCD9-B53599750F1F}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7742A57D-545C-4503-B7FA-1BA08EE27A02}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3E663B8-C2F2-4A43-9DDB-9BDBD045303F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo FactCallCenter"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{2D39D441-99BF-4955-8E30-48B335E5A736}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo FactCallCenter"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo FactCallCenter\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactCallCenter\Add Load Date.Inputs[Source dbo FactCallCenter_Output_Add Load Date]"
+                  name="Source dbo FactCallCenter_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactCallCenter\Add Load Date.Inputs[Source dbo FactCallCenter_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo FactCallCenter\Add Load Date.Inputs[Source dbo FactCallCenter_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactCallCenter\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactCallCenter\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactCallCenter\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactCallCenter\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo FactCallCenter"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [FactCallCenterID]
+,[DateKey]
+,[WageType]
+,[Shift]
+,[LevelOneOperators]
+,[LevelTwoOperators]
+,[TotalOperators]
+,[Calls]
+,[AutomaticResponses]
+,[Orders]
+,[IssuesRaised]
+,[AverageTimePerIssue]
+,[ServiceGrade]
+,[Date]
+FROM [dbo].[FactCallCenter]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[FactCallCenterID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[FactCallCenterID]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[FactCallCenterID]"
+                      name="FactCallCenterID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[DateKey]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[WageType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[WageType]"
+                      length="15"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[WageType]"
+                      name="WageType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Shift]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Shift]"
+                      length="20"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Shift]"
+                      name="Shift"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[LevelOneOperators]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[LevelOneOperators]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[LevelOneOperators]"
+                      name="LevelOneOperators"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[LevelTwoOperators]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[LevelTwoOperators]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[LevelTwoOperators]"
+                      name="LevelTwoOperators"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[TotalOperators]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[TotalOperators]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[TotalOperators]"
+                      name="TotalOperators"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Calls]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Calls]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Calls]"
+                      name="Calls"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[AutomaticResponses]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[AutomaticResponses]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[AutomaticResponses]"
+                      name="AutomaticResponses"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Orders]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Orders]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Orders]"
+                      name="Orders"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[IssuesRaised]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[IssuesRaised]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[IssuesRaised]"
+                      name="IssuesRaised"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[AverageTimePerIssue]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[AverageTimePerIssue]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[AverageTimePerIssue]"
+                      name="AverageTimePerIssue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[ServiceGrade]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[ServiceGrade]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[ServiceGrade]"
+                      name="ServiceGrade"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Date]"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].Columns[Date]"
+                      name="Date"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[FactCallCenterID]"
+                      dataType="i4"
+                      name="FactCallCenterID" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[WageType]"
+                      dataType="wstr"
+                      length="15"
+                      name="WageType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Shift]"
+                      dataType="wstr"
+                      length="20"
+                      name="Shift" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[LevelOneOperators]"
+                      dataType="i2"
+                      name="LevelOneOperators" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[LevelTwoOperators]"
+                      dataType="i2"
+                      name="LevelTwoOperators" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[TotalOperators]"
+                      dataType="i2"
+                      name="TotalOperators" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Calls]"
+                      dataType="i4"
+                      name="Calls" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[AutomaticResponses]"
+                      dataType="i4"
+                      name="AutomaticResponses" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Orders]"
+                      dataType="i4"
+                      name="Orders" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[IssuesRaised]"
+                      dataType="i2"
+                      name="IssuesRaised" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[AverageTimePerIssue]"
+                      dataType="i2"
+                      name="AverageTimePerIssue" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[ServiceGrade]"
+                      dataType="r8"
+                      name="ServiceGrade" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output].ExternalColumns[Date]"
+                      dataType="dbTimeStamp"
+                      name="Date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[FactCallCenterID]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[FactCallCenterID]"
+                      name="FactCallCenterID" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[DateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[DateKey]"
+                      name="DateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[WageType]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[WageType]"
+                      name="WageType" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Shift]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Shift]"
+                      name="Shift" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[LevelOneOperators]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[LevelOneOperators]"
+                      name="LevelOneOperators" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[LevelTwoOperators]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[LevelTwoOperators]"
+                      name="LevelTwoOperators" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[TotalOperators]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[TotalOperators]"
+                      name="TotalOperators" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Calls]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Calls]"
+                      name="Calls" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[AutomaticResponses]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[AutomaticResponses]"
+                      name="AutomaticResponses" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Orders]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Orders]"
+                      name="Orders" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[IssuesRaised]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[IssuesRaised]"
+                      name="IssuesRaised" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[AverageTimePerIssue]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[AverageTimePerIssue]"
+                      name="AverageTimePerIssue" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[ServiceGrade]"
+                      dataType="r8"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[ServiceGrade]"
+                      name="ServiceGrade" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[Date]"
+                      name="Date" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo FactCallCenter.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo FactCallCenter\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo FactCallCenter\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo FactCallCenter.Paths[Source dbo FactCallCenter_Output_Add Load Date]"
+              endId="Package\Load dbo FactCallCenter\Add Load Date.Inputs[Source dbo FactCallCenter_Output_Add Load Date]"
+              name="Source dbo FactCallCenter_Output_Add Load Date"
+              startId="Package\Load dbo FactCallCenter\Source dbo FactCallCenter.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo FactCallCenter"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{720AC4B9-169F-4EEE-89B0-8B665E4A8E21}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo FactCallCenter"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7742A57D-545C-4503-B7FA-1BA08EE27A02}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.FactCallCenter&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo FactCallCenter_To_Load dbo FactCallCenter]"
+      DTS:CreationName=""
+      DTS:DTSID="{410F3F89-0F2E-4169-8E9E-78B46A09EB57}"
+      DTS:From="Package\Truncate dbo FactCallCenter"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo FactCallCenter_To_Load dbo FactCallCenter"
+      DTS:To="Package\Load dbo FactCallCenter" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

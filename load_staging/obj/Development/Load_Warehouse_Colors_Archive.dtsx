@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:02:51 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{3A5FEF97-361B-45DA-B745-29931D97F47A}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Warehouse_Colors_Archive"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{6645B7C4-C050-4EE1-8D68-8A43FDD3E0A8}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1C81687A-619F-4D6E-BF02-366A7D179780}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{829ED18D-1469-4E5E-97C7-86F75EEAEA8C}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{74D27E7F-1E95-432E-81F1-985C225D0285}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Colors_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{E113174D-3C5A-4169-BCA7-6C8D227BBE9C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Colors_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{829ED18D-1469-4E5E-97C7-86F75EEAEA8C}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Warehouse].[Colors_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Warehouse].[Colors_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Warehouse].[Colors_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [ColorID] int NOT NULL &#xA;, [ColorName] nvarchar(20) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE  CLUSTERED INDEX [ix_Colors_Archive] ON [Warehouse].[Colors_Archive]&#xA;      (&#xA;      [ValidTo] Asc,[ValidFrom] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Warehouse Colors_Archive"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{3C67BCF0-C031-42C1-9713-2E77A36F2EDB}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Warehouse Colors_Archive"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Warehouse Colors_Archive\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse Colors_Archive\Add Load Date.Inputs[Source Warehouse Colors_Archive_Output_Add Load Date]"
+                  name="Source Warehouse Colors_Archive_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse Colors_Archive\Add Load Date.Inputs[Source Warehouse Colors_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Warehouse Colors_Archive\Add Load Date.Inputs[Source Warehouse Colors_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse Colors_Archive\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse Colors_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse Colors_Archive\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse Colors_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Warehouse Colors_Archive"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ColorID]
+,[ColorName]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Warehouse].[Colors_Archive]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ColorID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ColorID]"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ColorID]"
+                      name="ColorID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ColorName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ColorName]"
+                      length="20"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ColorName]"
+                      name="ColorName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ColorID]"
+                      dataType="i4"
+                      name="ColorID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ColorName]"
+                      dataType="wstr"
+                      length="20"
+                      name="ColorName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ColorID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ColorID]"
+                      name="ColorID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ColorName]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ColorName]"
+                      name="ColorName" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Warehouse Colors_Archive.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Warehouse Colors_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Warehouse Colors_Archive\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Warehouse Colors_Archive.Paths[Source Warehouse Colors_Archive_Output_Add Load Date]"
+              endId="Package\Load Warehouse Colors_Archive\Add Load Date.Inputs[Source Warehouse Colors_Archive_Output_Add Load Date]"
+              name="Source Warehouse Colors_Archive_Output_Add Load Date"
+              startId="Package\Load Warehouse Colors_Archive\Source Warehouse Colors_Archive.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table Colors_Archive_To_Load Warehouse Colors_Archive]"
+      DTS:CreationName=""
+      DTS:DTSID="{223C72FF-9D8D-429F-BC68-3CF1555EE9CC}"
+      DTS:From="Package\Create Table Colors_Archive"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table Colors_Archive_To_Load Warehouse Colors_Archive"
+      DTS:To="Package\Load Warehouse Colors_Archive" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

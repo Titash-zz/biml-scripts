@@ -1,0 +1,542 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:08:02 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{400D45EA-282E-4E1C-8FD4-3B3380A9EF91}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_wwi_OrderLines"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{00837249-96F3-4C9C-B791-D837558E68E8}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CE9C9A10-E02E-4997-9592-5EBE2DFD9F38}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3828BDFD-0D9B-4273-BEFB-F2954788E6D1}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{16960077-07CC-4580-BA18-ADBB4620C456}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table OrderLines"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{3B1721BF-A1B8-45E3-887B-55E07A20A6AC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table OrderLines"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3828BDFD-0D9B-4273-BEFB-F2954788E6D1}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[OrderLines]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[OrderLines]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[OrderLines]&#xA;(&#xA;-- Columns Definition&#xA; [OrderLineID] int NOT NULL &#xA;, [Description] nvarchar(100) NOT NULL &#xA;, [Quantity] int NOT NULL &#xA;, [UnitPrice] decimal(18,2) &#xA;, [TaxRate] decimal(18,3) NOT NULL &#xA;, [PickedQuantity] int NOT NULL &#xA;, [PickingCompletedWhen] datetime2(7) &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_OrderLines] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [OrderLineID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE  NONCLUSTERED INDEX [FK_Sales_OrderLines_OrderID] ON [Sales].[OrderLines]&#xA;      (&#xA;      [OrderID] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [FK_Sales_OrderLines_PackageTypeID] ON [Sales].[OrderLines]&#xA;      (&#xA;      [PackageTypeID] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [IX_Sales_OrderLines_AllocatedStockItems] ON [Sales].[OrderLines]&#xA;      (&#xA;      [StockItemID] Asc&#xA;      )&#xA;      INCLUDE ([PickedQuantity])&#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [IX_Sales_OrderLines_Perf_20160301_01] ON [Sales].[OrderLines]&#xA;      (&#xA;      [PickingCompletedWhen] Asc,[OrderID] Asc,[OrderLineID] Asc&#xA;      )&#xA;      INCLUDE ([Quantity],[StockItemID])&#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [IX_Sales_OrderLines_Perf_20160301_02] ON [Sales].[OrderLines]&#xA;      (&#xA;      [StockItemID] Asc,[PickingCompletedWhen] Asc&#xA;      )&#xA;      INCLUDE ([OrderID],[PickedQuantity])&#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [NCCX_Sales_OrderLines] ON [Sales].[OrderLines]&#xA;      (&#xA;      &#xA;      )&#xA;      INCLUDE ([OrderID],[StockItemID],[Description],[Quantity],[UnitPrice],[PickedQuantity])&#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales OrderLines"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{9732D915-42DF-49F2-800D-20D5E6061BCE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales OrderLines"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales OrderLines\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales OrderLines\Add Load Date.Inputs[Source Sales OrderLines_Output_Add Load Date]"
+                  name="Source Sales OrderLines_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales OrderLines\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales OrderLines\Add Load Date.Inputs[Source Sales OrderLines_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales OrderLines\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales OrderLines\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales OrderLines\Add Load Date.Inputs[Source Sales OrderLines_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales OrderLines\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales OrderLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales OrderLines\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales OrderLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales OrderLines\Source Sales OrderLines"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales OrderLines"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [OrderLineID]
+,[OrderID]
+,[StockItemID]
+,[Description]
+,[PackageTypeID]
+,[Quantity]
+,[UnitPrice]
+,[TaxRate]
+,[PickedQuantity]
+,[PickingCompletedWhen]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Sales].[OrderLines]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales OrderLines\Source Sales OrderLines.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[OrderLineID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[OrderLineID]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[OrderLineID]"
+                      name="OrderLineID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[OrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[OrderID]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[OrderID]"
+                      name="OrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[StockItemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[StockItemID]"
+                      name="StockItemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[Description]"
+                      length="100"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[PackageTypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[PackageTypeID]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[PackageTypeID]"
+                      name="PackageTypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[Quantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[Quantity]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[Quantity]"
+                      name="Quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[UnitPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[TaxRate]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[TaxRate]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[TaxRate]"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[PickedQuantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[PickedQuantity]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[PickedQuantity]"
+                      name="PickedQuantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[PickingCompletedWhen]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[PickingCompletedWhen]"
+                      name="PickingCompletedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[OrderLineID]"
+                      dataType="i4"
+                      name="OrderLineID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[OrderID]"
+                      dataType="i4"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[PackageTypeID]"
+                      dataType="i4"
+                      name="PackageTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[Quantity]"
+                      dataType="i4"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[TaxRate]"
+                      dataType="numeric"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[PickedQuantity]"
+                      dataType="i4"
+                      name="PickedQuantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="PickingCompletedWhen"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[OrderLineID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[OrderLineID]"
+                      name="OrderLineID" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[OrderID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[OrderID]"
+                      name="OrderID" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[StockItemID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[StockItemID]"
+                      name="StockItemID" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[PackageTypeID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[PackageTypeID]"
+                      name="PackageTypeID" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[Quantity]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[Quantity]"
+                      name="Quantity" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[UnitPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[TaxRate]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[TaxRate]"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[PickedQuantity]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[PickedQuantity]"
+                      name="PickedQuantity" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[PickingCompletedWhen]"
+                      name="PickingCompletedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales OrderLines.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales OrderLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales OrderLines\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales OrderLines.Paths[Source Sales OrderLines_Output_Add Load Date]"
+              endId="Package\Load Sales OrderLines\Add Load Date.Inputs[Source Sales OrderLines_Output_Add Load Date]"
+              name="Source Sales OrderLines_Output_Add Load Date"
+              startId="Package\Load Sales OrderLines\Source Sales OrderLines.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table OrderLines_To_Load Sales OrderLines]"
+      DTS:CreationName=""
+      DTS:DTSID="{7B21D87C-5EAF-4B67-912A-4725AC00C167}"
+      DTS:From="Package\Create Table OrderLines"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table OrderLines_To_Load Sales OrderLines"
+      DTS:To="Package\Load Sales OrderLines" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

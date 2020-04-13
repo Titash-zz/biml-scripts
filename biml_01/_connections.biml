@@ -1,0 +1,21 @@
+﻿<!--SQL Database Connections -->
+
+    <OleDbConnection Name="Source"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=WideWorldImporters;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+        </OleDbConnection>
+    
+    <OleDbConnection Name="Audit"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Audit;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+        </OleDbConnection>
+    
+    <OleDbConnection Name="Staging"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Staging;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+</OleDbConnection>
+
+<!-- Logging Connections-->
+
+<FileConnection Name="XmlFile" FilePath="XmlLog.xml" />
+<FileConnection Name="TextFile" FilePath="TextLog.txt" />

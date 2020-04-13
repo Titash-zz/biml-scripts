@@ -1,0 +1,353 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{FE35CF55-0A7C-4B8B-860E-27F015A5B57C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_FactAdditionalInternationalProductDescription"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{477B7260-50B3-4DA6-BA86-61F5DAC26244}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CB407A07-4307-47E4-BAE1-A4BD9C9453CA}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EB02B9F2-C7B2-4939-8B81-D7D19E884051}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CCBD09BE-BBA3-4DCA-86F5-16E758F8F356}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo FactAdditionalInternationalProductDescription"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{675B61F4-04E4-4C4F-A411-D024E62E9DA0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo FactAdditionalInternationalProductDescription"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Inputs[Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date]"
+                  name="Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Inputs[Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Inputs[Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactAdditionalInternationalProductDescription\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactAdditionalInternationalProductDescription\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo FactAdditionalInternationalProductDescription"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ProductKey]
+,[CultureName]
+,[ProductDescription]
+FROM [dbo].[FactAdditionalInternationalProductDescription]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].Columns[ProductKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].ExternalColumns[ProductKey]"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].Columns[ProductKey]"
+                      name="ProductKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].Columns[CultureName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].ExternalColumns[CultureName]"
+                      length="50"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].Columns[CultureName]"
+                      name="CultureName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].Columns[ProductDescription]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].ExternalColumns[ProductDescription]"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].Columns[ProductDescription]"
+                      name="ProductDescription"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].ExternalColumns[ProductKey]"
+                      dataType="i4"
+                      name="ProductKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].ExternalColumns[CultureName]"
+                      dataType="wstr"
+                      length="50"
+                      name="CultureName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output].ExternalColumns[ProductDescription]"
+                      dataType="nText"
+                      name="ProductDescription" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ProductKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ProductKey]"
+                      name="ProductKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[CultureName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[CultureName]"
+                      name="CultureName" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ProductDescription]"
+                      dataType="nText"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ProductDescription]"
+                      name="ProductDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo FactAdditionalInternationalProductDescription.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo FactAdditionalInternationalProductDescription\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo FactAdditionalInternationalProductDescription.Paths[Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date]"
+              endId="Package\Load dbo FactAdditionalInternationalProductDescription\Add Load Date.Inputs[Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date]"
+              name="Source dbo FactAdditionalInternationalProductDescription_Output_Add Load Date"
+              startId="Package\Load dbo FactAdditionalInternationalProductDescription\Source dbo FactAdditionalInternationalProductDescription.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo FactAdditionalInternationalProductDescription"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{C8C1A2B7-9A25-4059-B0E9-E2EA617A0170}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo FactAdditionalInternationalProductDescription"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EB02B9F2-C7B2-4939-8B81-D7D19E884051}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.FactAdditionalInternationalProductDescription&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo FactAdditionalInternationalProductDescription_To_Load dbo FactAdditionalInternationalProductDescription]"
+      DTS:CreationName=""
+      DTS:DTSID="{84273949-CB19-4749-9E40-F0A135D059A2}"
+      DTS:From="Package\Truncate dbo FactAdditionalInternationalProductDescription"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo FactAdditionalInternationalProductDescription_To_Load dbo FactAdditionalInternationalProductDescription"
+      DTS:To="Package\Load dbo FactAdditionalInternationalProductDescription" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

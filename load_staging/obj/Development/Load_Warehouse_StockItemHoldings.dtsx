@@ -1,0 +1,476 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:02:51 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{72AE9471-8AF7-405A-9A89-75546821BE29}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Warehouse_StockItemHoldings"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{857723EB-EA26-4C0D-8B21-517BCEA95C1A}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{94EB6A88-387F-4240-A6C2-55811165812C}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3C5036FB-DD89-48E4-AB52-85A17539C372}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8BC43530-8CA2-4555-A653-7AECD61E06FE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table StockItemHoldings"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{4943FA79-6FB4-4D01-8B82-382BA2737DEA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table StockItemHoldings"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3C5036FB-DD89-48E4-AB52-85A17539C372}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Warehouse].[StockItemHoldings]') AND type IN (N'U'))&#xA;DROP TABLE [Warehouse].[StockItemHoldings]&#xA;GO&#xA;&#xA;CREATE TABLE [Warehouse].[StockItemHoldings]&#xA;(&#xA;-- Columns Definition&#xA; [QuantityOnHand] int NOT NULL &#xA;, [BinLocation] nvarchar(20) NOT NULL &#xA;, [LastStocktakeQuantity] int NOT NULL &#xA;, [LastCostPrice] decimal(18,2) NOT NULL &#xA;, [ReorderLevel] int NOT NULL &#xA;, [TargetStockLevel] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Warehouse_StockItemHoldings] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [StockItemID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Warehouse StockItemHoldings"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{A14B80C9-23A7-4F58-91F2-6C9F24B62534}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Warehouse StockItemHoldings"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Warehouse StockItemHoldings\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse StockItemHoldings\Add Load Date.Inputs[Source Warehouse StockItemHoldings_Output_Add Load Date]"
+                  name="Source Warehouse StockItemHoldings_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse StockItemHoldings\Add Load Date.Inputs[Source Warehouse StockItemHoldings_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Warehouse StockItemHoldings\Add Load Date.Inputs[Source Warehouse StockItemHoldings_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse StockItemHoldings\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse StockItemHoldings\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse StockItemHoldings\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse StockItemHoldings\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Warehouse StockItemHoldings"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [StockItemID]
+,[QuantityOnHand]
+,[BinLocation]
+,[LastStocktakeQuantity]
+,[LastCostPrice]
+,[ReorderLevel]
+,[TargetStockLevel]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Warehouse].[StockItemHoldings]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[StockItemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[StockItemID]"
+                      name="StockItemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[QuantityOnHand]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[QuantityOnHand]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[QuantityOnHand]"
+                      name="QuantityOnHand"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[BinLocation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[BinLocation]"
+                      length="20"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[BinLocation]"
+                      name="BinLocation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastStocktakeQuantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastStocktakeQuantity]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastStocktakeQuantity]"
+                      name="LastStocktakeQuantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastCostPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastCostPrice]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastCostPrice]"
+                      name="LastCostPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[ReorderLevel]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[ReorderLevel]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[ReorderLevel]"
+                      name="ReorderLevel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[TargetStockLevel]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[TargetStockLevel]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[TargetStockLevel]"
+                      name="TargetStockLevel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[QuantityOnHand]"
+                      dataType="i4"
+                      name="QuantityOnHand" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[BinLocation]"
+                      dataType="wstr"
+                      length="20"
+                      name="BinLocation" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastStocktakeQuantity]"
+                      dataType="i4"
+                      name="LastStocktakeQuantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastCostPrice]"
+                      dataType="numeric"
+                      name="LastCostPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[ReorderLevel]"
+                      dataType="i4"
+                      name="ReorderLevel" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[TargetStockLevel]"
+                      dataType="i4"
+                      name="TargetStockLevel" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[StockItemID]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[StockItemID]"
+                      name="StockItemID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[QuantityOnHand]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[QuantityOnHand]"
+                      name="QuantityOnHand" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[BinLocation]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[BinLocation]"
+                      name="BinLocation" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastStocktakeQuantity]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastStocktakeQuantity]"
+                      name="LastStocktakeQuantity" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastCostPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastCostPrice]"
+                      name="LastCostPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[ReorderLevel]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[ReorderLevel]"
+                      name="ReorderLevel" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[TargetStockLevel]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[TargetStockLevel]"
+                      name="TargetStockLevel" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Warehouse StockItemHoldings.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Warehouse StockItemHoldings\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Warehouse StockItemHoldings\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Warehouse StockItemHoldings.Paths[Source Warehouse StockItemHoldings_Output_Add Load Date]"
+              endId="Package\Load Warehouse StockItemHoldings\Add Load Date.Inputs[Source Warehouse StockItemHoldings_Output_Add Load Date]"
+              name="Source Warehouse StockItemHoldings_Output_Add Load Date"
+              startId="Package\Load Warehouse StockItemHoldings\Source Warehouse StockItemHoldings.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table StockItemHoldings_To_Load Warehouse StockItemHoldings]"
+      DTS:CreationName=""
+      DTS:DTSID="{4FAB922D-F954-42BB-8932-4DB0866DD4EF}"
+      DTS:From="Package\Create Table StockItemHoldings"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table StockItemHoldings_To_Load Warehouse StockItemHoldings"
+      DTS:To="Package\Load Warehouse StockItemHoldings" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

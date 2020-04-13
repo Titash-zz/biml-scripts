@@ -1,0 +1,875 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:52 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{61138AC4-52B2-4871-A314-A74A2661B3C2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Purchasing_SupplierTransactions"
+  DTS:VersionGUID="{4AF8A796-F30B-4582-8E4E-8C3BDE1FD15B}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6EBACEB9-1DEC-4513-99B3-F339CE495683}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6256B13C-AC44-4B25-9349-69579C91E2D0}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B21311EB-8F1C-42FF-A621-897BAED31F7C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{34A190A7-5DF2-4586-8232-F7EF52D6B331}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A48586C6-576A-4BED-9220-F73620CCF921}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Purchasing SupplierTransactions"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{65A2422B-2DC5-4091-BA49-159A7084CA44}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Purchasing SupplierTransactions"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Purchasing SupplierTransactions\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing SupplierTransactions\Add Load Date.Inputs[Source Purchasing SupplierTransactions_Output_Add Load Date]"
+                  name="Source Purchasing SupplierTransactions_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Purchasing SupplierTransactions\Add Load Date.Inputs[Source Purchasing SupplierTransactions_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Purchasing SupplierTransactions\Add Load Date.Inputs[Source Purchasing SupplierTransactions_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing SupplierTransactions\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing SupplierTransactions\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing SupplierTransactions\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Purchasing SupplierTransactions\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Purchasing SupplierTransactions"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [SupplierTransactionID]
+,[SupplierID]
+,[TransactionTypeID]
+,[PurchaseOrderID]
+,[PaymentMethodID]
+,[SupplierInvoiceNumber]
+,[TransactionDate]
+,[AmountExcludingTax]
+,[TaxAmount]
+,[TransactionAmount]
+,[OutstandingBalance]
+,[FinalizationDate]
+,[IsFinalized]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Purchasing].[SupplierTransactions]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierTransactionID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[SupplierTransactionID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierTransactionID]"
+                      name="SupplierTransactionID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[SupplierID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierID]"
+                      name="SupplierID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionTypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TransactionTypeID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionTypeID]"
+                      name="TransactionTypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[PurchaseOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[PurchaseOrderID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[PurchaseOrderID]"
+                      name="PurchaseOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[PaymentMethodID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[PaymentMethodID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[PaymentMethodID]"
+                      name="PaymentMethodID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[SupplierInvoiceNumber]"
+                      length="20"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierInvoiceNumber]"
+                      name="SupplierInvoiceNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TransactionDate]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionDate]"
+                      name="TransactionDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[AmountExcludingTax]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[AmountExcludingTax]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[AmountExcludingTax]"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TaxAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionAmount]"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[OutstandingBalance]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[OutstandingBalance]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[OutstandingBalance]"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[FinalizationDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[FinalizationDate]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[FinalizationDate]"
+                      name="FinalizationDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[IsFinalized]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[IsFinalized]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[IsFinalized]"
+                      name="IsFinalized"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[SupplierTransactionID]"
+                      dataType="i4"
+                      name="SupplierTransactionID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[SupplierID]"
+                      dataType="i4"
+                      name="SupplierID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TransactionTypeID]"
+                      dataType="i4"
+                      name="TransactionTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[PurchaseOrderID]"
+                      dataType="i4"
+                      name="PurchaseOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[PaymentMethodID]"
+                      dataType="i4"
+                      name="PaymentMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="SupplierInvoiceNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TransactionDate]"
+                      dataType="dbDate"
+                      name="TransactionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[AmountExcludingTax]"
+                      dataType="numeric"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[TransactionAmount]"
+                      dataType="numeric"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[OutstandingBalance]"
+                      dataType="numeric"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[FinalizationDate]"
+                      dataType="dbDate"
+                      name="FinalizationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[IsFinalized]"
+                      dataType="bool"
+                      name="IsFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[SupplierTransactionID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[SupplierTransactionID]"
+                      name="SupplierTransactionID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[SupplierID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[SupplierID]"
+                      name="SupplierID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TransactionTypeID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TransactionTypeID]"
+                      name="TransactionTypeID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[PurchaseOrderID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[PurchaseOrderID]"
+                      name="PurchaseOrderID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[PaymentMethodID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[PaymentMethodID]"
+                      name="PaymentMethodID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[SupplierInvoiceNumber]"
+                      name="SupplierInvoiceNumber" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TransactionDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TransactionDate]"
+                      name="TransactionDate" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[AmountExcludingTax]"
+                      dataType="numeric"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[AmountExcludingTax]"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TaxAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TransactionAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[TransactionAmount]"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[OutstandingBalance]"
+                      dataType="numeric"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[OutstandingBalance]"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[FinalizationDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[FinalizationDate]"
+                      name="FinalizationDate" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[IsFinalized]"
+                      dataType="bool"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[IsFinalized]"
+                      name="IsFinalized" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi SupplierTransactions"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Purchasing].[SupplierTransactions]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi SupplierTransactions">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[SupplierTransactionID]"
+                      cachedDataType="i4"
+                      cachedName="SupplierTransactionID"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[SupplierTransactionID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierTransactionID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[SupplierID]"
+                      cachedDataType="i4"
+                      cachedName="SupplierID"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[SupplierID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[TransactionTypeID]"
+                      cachedDataType="i4"
+                      cachedName="TransactionTypeID"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TransactionTypeID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionTypeID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[PurchaseOrderID]"
+                      cachedDataType="i4"
+                      cachedName="PurchaseOrderID"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[PurchaseOrderID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[PurchaseOrderID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[PaymentMethodID]"
+                      cachedDataType="i4"
+                      cachedName="PaymentMethodID"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[PaymentMethodID]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[PaymentMethodID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[SupplierInvoiceNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="SupplierInvoiceNumber"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[SupplierInvoiceNumber]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[SupplierInvoiceNumber]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[TransactionDate]"
+                      cachedDataType="dbDate"
+                      cachedName="TransactionDate"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TransactionDate]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionDate]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[AmountExcludingTax]"
+                      cachedDataType="numeric"
+                      cachedName="AmountExcludingTax"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[AmountExcludingTax]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[AmountExcludingTax]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[TaxAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TaxAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TaxAmount]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[TransactionAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TransactionAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TransactionAmount]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[TransactionAmount]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[OutstandingBalance]"
+                      cachedDataType="numeric"
+                      cachedName="OutstandingBalance"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[OutstandingBalance]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[OutstandingBalance]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[FinalizationDate]"
+                      cachedDataType="dbDate"
+                      cachedName="FinalizationDate"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[FinalizationDate]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[FinalizationDate]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[IsFinalized]"
+                      cachedDataType="bool"
+                      cachedName="IsFinalized"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[IsFinalized]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[IsFinalized]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[SupplierTransactionID]"
+                      dataType="i4"
+                      name="SupplierTransactionID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[SupplierID]"
+                      dataType="i4"
+                      name="SupplierID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TransactionTypeID]"
+                      dataType="i4"
+                      name="TransactionTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[PurchaseOrderID]"
+                      dataType="i4"
+                      name="PurchaseOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[PaymentMethodID]"
+                      dataType="i4"
+                      name="PaymentMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[SupplierInvoiceNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="SupplierInvoiceNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TransactionDate]"
+                      dataType="dbDate"
+                      name="TransactionDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[AmountExcludingTax]"
+                      dataType="numeric"
+                      name="AmountExcludingTax"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[TransactionAmount]"
+                      dataType="numeric"
+                      name="TransactionAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[OutstandingBalance]"
+                      dataType="numeric"
+                      name="OutstandingBalance"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[FinalizationDate]"
+                      dataType="dbDate"
+                      name="FinalizationDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[IsFinalized]"
+                      dataType="bool"
+                      name="IsFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Purchasing SupplierTransactions.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Purchasing SupplierTransactions\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Purchasing SupplierTransactions\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Purchasing SupplierTransactions.Paths[Count New Rows_Output_Staging wwi SupplierTransactions]"
+              endId="Package\Load Purchasing SupplierTransactions\Staging wwi SupplierTransactions.Inputs[Count New Rows_Output_Staging wwi SupplierTransactions]"
+              name="Count New Rows_Output_Staging wwi SupplierTransactions"
+              startId="Package\Load Purchasing SupplierTransactions\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Purchasing SupplierTransactions.Paths[Source Purchasing SupplierTransactions_Output_Add Load Date]"
+              endId="Package\Load Purchasing SupplierTransactions\Add Load Date.Inputs[Source Purchasing SupplierTransactions_Output_Add Load Date]"
+              name="Source Purchasing SupplierTransactions_Output_Add Load Date"
+              startId="Package\Load Purchasing SupplierTransactions\Source Purchasing SupplierTransactions.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

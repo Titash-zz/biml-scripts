@@ -1,0 +1,353 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{37A1E79F-AE09-4B11-B112-55E9358E3132}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimDepartmentGroup"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{D576B2DA-3C6C-4F20-9566-6789571557DB}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A024C32B-FC61-4948-9B8F-8D6A9DE8C6E9}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9E174524-E438-4A69-8F8B-2078C20CDCAE}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{84D963B6-60E0-4CA7-A0F4-CDC2CC1027A8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimDepartmentGroup"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{0B256CFA-817C-4C48-A5EB-E10CBE0FBC84}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimDepartmentGroup"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimDepartmentGroup\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimDepartmentGroup\Add Load Date.Inputs[Source dbo DimDepartmentGroup_Output_Add Load Date]"
+                  name="Source dbo DimDepartmentGroup_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimDepartmentGroup\Add Load Date.Inputs[Source dbo DimDepartmentGroup_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimDepartmentGroup\Add Load Date.Inputs[Source dbo DimDepartmentGroup_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimDepartmentGroup\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimDepartmentGroup\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimDepartmentGroup\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimDepartmentGroup\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimDepartmentGroup"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [DepartmentGroupKey]
+,[ParentDepartmentGroupKey]
+,[DepartmentGroupName]
+FROM [dbo].[DimDepartmentGroup]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].Columns[DepartmentGroupKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].ExternalColumns[DepartmentGroupKey]"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].Columns[DepartmentGroupKey]"
+                      name="DepartmentGroupKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].Columns[ParentDepartmentGroupKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].ExternalColumns[ParentDepartmentGroupKey]"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].Columns[ParentDepartmentGroupKey]"
+                      name="ParentDepartmentGroupKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].Columns[DepartmentGroupName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].ExternalColumns[DepartmentGroupName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].Columns[DepartmentGroupName]"
+                      name="DepartmentGroupName"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].ExternalColumns[DepartmentGroupKey]"
+                      dataType="i4"
+                      name="DepartmentGroupKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].ExternalColumns[ParentDepartmentGroupKey]"
+                      dataType="i4"
+                      name="ParentDepartmentGroupKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output].ExternalColumns[DepartmentGroupName]"
+                      dataType="wstr"
+                      length="50"
+                      name="DepartmentGroupName" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[DepartmentGroupKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[DepartmentGroupKey]"
+                      name="DepartmentGroupKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[ParentDepartmentGroupKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[ParentDepartmentGroupKey]"
+                      name="ParentDepartmentGroupKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[DepartmentGroupName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[DepartmentGroupName]"
+                      name="DepartmentGroupName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimDepartmentGroup.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimDepartmentGroup\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimDepartmentGroup\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimDepartmentGroup.Paths[Source dbo DimDepartmentGroup_Output_Add Load Date]"
+              endId="Package\Load dbo DimDepartmentGroup\Add Load Date.Inputs[Source dbo DimDepartmentGroup_Output_Add Load Date]"
+              name="Source dbo DimDepartmentGroup_Output_Add Load Date"
+              startId="Package\Load dbo DimDepartmentGroup\Source dbo DimDepartmentGroup.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimDepartmentGroup"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{EF6F4B96-754F-4637-A456-CFE762A84BB3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimDepartmentGroup"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9E174524-E438-4A69-8F8B-2078C20CDCAE}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimDepartmentGroup&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimDepartmentGroup_To_Load dbo DimDepartmentGroup]"
+      DTS:CreationName=""
+      DTS:DTSID="{145D5B63-E5E5-4BFB-8643-97708A6495E0}"
+      DTS:From="Package\Truncate dbo DimDepartmentGroup"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimDepartmentGroup_To_Load dbo DimDepartmentGroup"
+      DTS:To="Package\Load dbo DimDepartmentGroup" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

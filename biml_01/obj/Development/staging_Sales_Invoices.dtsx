@@ -1,0 +1,1145 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:53 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{899E335D-C8F0-4D83-B148-BA4B0FCB3C76}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_Invoices"
+  DTS:VersionGUID="{FE49FCC9-5B2D-4B77-BF95-C195F2AFA951}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1850CE64-AC48-4D8F-9F4A-C5EFD33B83C8}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{66C1E4A3-72F9-4416-9419-EAD7AF806921}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0ADDF3B7-224D-4F37-8429-EBDFAB5BE22B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D751293D-A4DC-458B-9CD9-7FD0A47AAF94}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4D8052AA-1CBE-48EE-8341-83D0302F79AE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales Invoices"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{F92AED55-4BAB-4829-9BCD-D03DB1314005}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales Invoices"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales Invoices\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales Invoices\Add Load Date.Inputs[Source Sales Invoices_Output_Add Load Date]"
+                  name="Source Sales Invoices_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Invoices\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales Invoices\Add Load Date.Inputs[Source Sales Invoices_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales Invoices\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales Invoices\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales Invoices\Add Load Date.Inputs[Source Sales Invoices_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Invoices\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales Invoices\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Invoices\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales Invoices\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Invoices\Source Sales Invoices"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales Invoices"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [InvoiceID]
+,[CustomerID]
+,[BillToCustomerID]
+,[OrderID]
+,[DeliveryMethodID]
+,[ContactPersonID]
+,[AccountsPersonID]
+,[SalespersonPersonID]
+,[PackedByPersonID]
+,[InvoiceDate]
+,[CustomerPurchaseOrderNumber]
+,[IsCreditNote]
+,[CreditNoteReason]
+,[Comments]
+,[DeliveryInstructions]
+,[InternalComments]
+,[TotalDryItems]
+,[TotalChillerItems]
+,[DeliveryRun]
+,[RunPosition]
+,[ReturnedDeliveryData]
+,[ConfirmedDeliveryTime]
+,[ConfirmedReceivedBy]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Sales].[Invoices]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales Invoices\Source Sales Invoices.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InvoiceID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[InvoiceID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InvoiceID]"
+                      name="InvoiceID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[BillToCustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[BillToCustomerID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[BillToCustomerID]"
+                      name="BillToCustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[OrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[OrderID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[OrderID]"
+                      name="OrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryMethodID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[DeliveryMethodID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryMethodID]"
+                      name="DeliveryMethodID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ContactPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ContactPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ContactPersonID]"
+                      name="ContactPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[AccountsPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[AccountsPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[AccountsPersonID]"
+                      name="AccountsPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[SalespersonPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[SalespersonPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[SalespersonPersonID]"
+                      name="SalespersonPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[PackedByPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[PackedByPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[PackedByPersonID]"
+                      name="PackedByPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InvoiceDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[InvoiceDate]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InvoiceDate]"
+                      name="InvoiceDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      length="20"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CustomerPurchaseOrderNumber]"
+                      name="CustomerPurchaseOrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[IsCreditNote]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[IsCreditNote]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[IsCreditNote]"
+                      name="IsCreditNote"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CreditNoteReason]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[CreditNoteReason]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CreditNoteReason]"
+                      name="CreditNoteReason"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[Comments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[Comments]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[Comments]"
+                      name="Comments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryInstructions]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[DeliveryInstructions]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryInstructions]"
+                      name="DeliveryInstructions"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InternalComments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InternalComments]"
+                      name="InternalComments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[TotalDryItems]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[TotalDryItems]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[TotalDryItems]"
+                      name="TotalDryItems"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[TotalChillerItems]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[TotalChillerItems]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[TotalChillerItems]"
+                      name="TotalChillerItems"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryRun]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[DeliveryRun]"
+                      length="5"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryRun]"
+                      name="DeliveryRun"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[RunPosition]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[RunPosition]"
+                      length="5"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[RunPosition]"
+                      name="RunPosition"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ReturnedDeliveryData]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ReturnedDeliveryData]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ReturnedDeliveryData]"
+                      name="ReturnedDeliveryData"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ConfirmedDeliveryTime]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ConfirmedDeliveryTime]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ConfirmedDeliveryTime]"
+                      name="ConfirmedDeliveryTime"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ConfirmedReceivedBy]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ConfirmedReceivedBy]"
+                      length="4000"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ConfirmedReceivedBy]"
+                      name="ConfirmedReceivedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[InvoiceID]"
+                      dataType="i4"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[BillToCustomerID]"
+                      dataType="i4"
+                      name="BillToCustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[OrderID]"
+                      dataType="i4"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[DeliveryMethodID]"
+                      dataType="i4"
+                      name="DeliveryMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ContactPersonID]"
+                      dataType="i4"
+                      name="ContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[AccountsPersonID]"
+                      dataType="i4"
+                      name="AccountsPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[SalespersonPersonID]"
+                      dataType="i4"
+                      name="SalespersonPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[PackedByPersonID]"
+                      dataType="i4"
+                      name="PackedByPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[InvoiceDate]"
+                      dataType="dbDate"
+                      name="InvoiceDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="CustomerPurchaseOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[IsCreditNote]"
+                      dataType="bool"
+                      name="IsCreditNote" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[CreditNoteReason]"
+                      dataType="nText"
+                      name="CreditNoteReason" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[Comments]"
+                      dataType="nText"
+                      name="Comments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[DeliveryInstructions]"
+                      dataType="nText"
+                      name="DeliveryInstructions" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[TotalDryItems]"
+                      dataType="i4"
+                      name="TotalDryItems" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[TotalChillerItems]"
+                      dataType="i4"
+                      name="TotalChillerItems" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[DeliveryRun]"
+                      dataType="wstr"
+                      length="5"
+                      name="DeliveryRun" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[RunPosition]"
+                      dataType="wstr"
+                      length="5"
+                      name="RunPosition" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ReturnedDeliveryData]"
+                      dataType="nText"
+                      name="ReturnedDeliveryData" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ConfirmedDeliveryTime]"
+                      dataType="dbTimeStamp2"
+                      name="ConfirmedDeliveryTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[ConfirmedReceivedBy]"
+                      dataType="wstr"
+                      length="4000"
+                      name="ConfirmedReceivedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[InvoiceID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[InvoiceID]"
+                      name="InvoiceID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[BillToCustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[BillToCustomerID]"
+                      name="BillToCustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[OrderID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[OrderID]"
+                      name="OrderID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[DeliveryMethodID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[DeliveryMethodID]"
+                      name="DeliveryMethodID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ContactPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ContactPersonID]"
+                      name="ContactPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[AccountsPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[AccountsPersonID]"
+                      name="AccountsPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[SalespersonPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[SalespersonPersonID]"
+                      name="SalespersonPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[PackedByPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[PackedByPersonID]"
+                      name="PackedByPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[InvoiceDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[InvoiceDate]"
+                      name="InvoiceDate" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[CustomerPurchaseOrderNumber]"
+                      name="CustomerPurchaseOrderNumber" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[IsCreditNote]"
+                      dataType="bool"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[IsCreditNote]"
+                      name="IsCreditNote" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[CreditNoteReason]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[CreditNoteReason]"
+                      name="CreditNoteReason" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[Comments]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[Comments]"
+                      name="Comments" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[DeliveryInstructions]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[DeliveryInstructions]"
+                      name="DeliveryInstructions" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[InternalComments]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[InternalComments]"
+                      name="InternalComments" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[TotalDryItems]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[TotalDryItems]"
+                      name="TotalDryItems" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[TotalChillerItems]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[TotalChillerItems]"
+                      name="TotalChillerItems" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[DeliveryRun]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[DeliveryRun]"
+                      name="DeliveryRun" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[RunPosition]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[RunPosition]"
+                      name="RunPosition" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ReturnedDeliveryData]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ReturnedDeliveryData]"
+                      name="ReturnedDeliveryData" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ConfirmedDeliveryTime]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ConfirmedDeliveryTime]"
+                      name="ConfirmedDeliveryTime"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ConfirmedReceivedBy]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ConfirmedReceivedBy]"
+                      name="ConfirmedReceivedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Invoices\Staging wwi Invoices"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi Invoices"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[Invoices]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales Invoices\Staging wwi Invoices.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi Invoices">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[InvoiceID]"
+                      cachedDataType="i4"
+                      cachedName="InvoiceID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[InvoiceID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InvoiceID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[BillToCustomerID]"
+                      cachedDataType="i4"
+                      cachedName="BillToCustomerID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[BillToCustomerID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[BillToCustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[OrderID]"
+                      cachedDataType="i4"
+                      cachedName="OrderID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[OrderID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[OrderID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[DeliveryMethodID]"
+                      cachedDataType="i4"
+                      cachedName="DeliveryMethodID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[DeliveryMethodID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryMethodID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[ContactPersonID]"
+                      cachedDataType="i4"
+                      cachedName="ContactPersonID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ContactPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ContactPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[AccountsPersonID]"
+                      cachedDataType="i4"
+                      cachedName="AccountsPersonID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[AccountsPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[AccountsPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[SalespersonPersonID]"
+                      cachedDataType="i4"
+                      cachedName="SalespersonPersonID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[SalespersonPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[SalespersonPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[PackedByPersonID]"
+                      cachedDataType="i4"
+                      cachedName="PackedByPersonID"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[PackedByPersonID]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[PackedByPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[InvoiceDate]"
+                      cachedDataType="dbDate"
+                      cachedName="InvoiceDate"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[InvoiceDate]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InvoiceDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[CustomerPurchaseOrderNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="CustomerPurchaseOrderNumber"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CustomerPurchaseOrderNumber]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[IsCreditNote]"
+                      cachedDataType="bool"
+                      cachedName="IsCreditNote"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[IsCreditNote]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[IsCreditNote]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[CreditNoteReason]"
+                      cachedDataType="nText"
+                      cachedName="CreditNoteReason"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[CreditNoteReason]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[CreditNoteReason]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[Comments]"
+                      cachedDataType="nText"
+                      cachedName="Comments"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[Comments]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[Comments]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[DeliveryInstructions]"
+                      cachedDataType="nText"
+                      cachedName="DeliveryInstructions"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[DeliveryInstructions]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryInstructions]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[InternalComments]"
+                      cachedDataType="nText"
+                      cachedName="InternalComments"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[InternalComments]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[TotalDryItems]"
+                      cachedDataType="i4"
+                      cachedName="TotalDryItems"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[TotalDryItems]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[TotalDryItems]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[TotalChillerItems]"
+                      cachedDataType="i4"
+                      cachedName="TotalChillerItems"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[TotalChillerItems]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[TotalChillerItems]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[DeliveryRun]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="DeliveryRun"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[DeliveryRun]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[DeliveryRun]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[RunPosition]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="RunPosition"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[RunPosition]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[RunPosition]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[ReturnedDeliveryData]"
+                      cachedDataType="nText"
+                      cachedName="ReturnedDeliveryData"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ReturnedDeliveryData]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ReturnedDeliveryData]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[ConfirmedDeliveryTime]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ConfirmedDeliveryTime"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ConfirmedDeliveryTime]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ConfirmedDeliveryTime]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[ConfirmedReceivedBy]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="ConfirmedReceivedBy"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ConfirmedReceivedBy]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[ConfirmedReceivedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[InvoiceID]"
+                      dataType="i4"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[BillToCustomerID]"
+                      dataType="i4"
+                      name="BillToCustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[OrderID]"
+                      dataType="i4"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[DeliveryMethodID]"
+                      dataType="i4"
+                      name="DeliveryMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ContactPersonID]"
+                      dataType="i4"
+                      name="ContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[AccountsPersonID]"
+                      dataType="i4"
+                      name="AccountsPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[SalespersonPersonID]"
+                      dataType="i4"
+                      name="SalespersonPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[PackedByPersonID]"
+                      dataType="i4"
+                      name="PackedByPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[InvoiceDate]"
+                      dataType="dbDate"
+                      name="InvoiceDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="CustomerPurchaseOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[IsCreditNote]"
+                      dataType="bool"
+                      name="IsCreditNote" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[CreditNoteReason]"
+                      dataType="nText"
+                      name="CreditNoteReason" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[Comments]"
+                      dataType="nText"
+                      name="Comments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[DeliveryInstructions]"
+                      dataType="nText"
+                      name="DeliveryInstructions" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[TotalDryItems]"
+                      dataType="i4"
+                      name="TotalDryItems" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[TotalChillerItems]"
+                      dataType="i4"
+                      name="TotalChillerItems" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[DeliveryRun]"
+                      dataType="wstr"
+                      length="5"
+                      name="DeliveryRun" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[RunPosition]"
+                      dataType="wstr"
+                      length="5"
+                      name="RunPosition" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ReturnedDeliveryData]"
+                      dataType="nText"
+                      name="ReturnedDeliveryData" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ConfirmedDeliveryTime]"
+                      dataType="dbTimeStamp2"
+                      name="ConfirmedDeliveryTime"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[ConfirmedReceivedBy]"
+                      dataType="wstr"
+                      length="4000"
+                      name="ConfirmedReceivedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Invoices\Staging wwi Invoices.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Staging wwi Invoices.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Invoices\Staging wwi Invoices.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Invoices\Staging wwi Invoices.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales Invoices.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales Invoices\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales Invoices\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales Invoices.Paths[Count New Rows_Output_Staging wwi Invoices]"
+              endId="Package\Load Sales Invoices\Staging wwi Invoices.Inputs[Count New Rows_Output_Staging wwi Invoices]"
+              name="Count New Rows_Output_Staging wwi Invoices"
+              startId="Package\Load Sales Invoices\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales Invoices.Paths[Source Sales Invoices_Output_Add Load Date]"
+              endId="Package\Load Sales Invoices\Add Load Date.Inputs[Source Sales Invoices_Output_Add Load Date]"
+              name="Source Sales Invoices_Output_Add Load Date"
+              startId="Package\Load Sales Invoices\Source Sales Invoices.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

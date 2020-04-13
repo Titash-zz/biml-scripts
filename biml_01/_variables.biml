@@ -1,0 +1,5 @@
+﻿<!-- includes all variables from variables.biml -->
+
+<Variable Name="NewRows" DataType="Int64" Namespace="Audit">0</Variable>
+<Variable Name="UnchangedRows" DataType="Int64" Namespace="Audit">0</Variable>
+<Variable Name="ChangedRows" DataType="Int64" Namespace="Audit">0</Variable>

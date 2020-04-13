@@ -1,0 +1,800 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{1C4BC707-A504-4205-9295-B3DA92B88EFC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_ProspectiveBuyer"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{BA536EB9-A98A-4C21-90F7-CE45FBAD31BA}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E4E28E28-4AA9-4604-AFEB-3FC1DD780D25}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EDFDB7AE-9C0D-4363-8C34-1FE19CC1A6AC}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7A33CB67-01F4-4F99-AE58-BB149C27B044}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo ProspectiveBuyer"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{9E6AC7AC-1448-453F-BFF0-C4D55BDCFBF3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo ProspectiveBuyer"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo ProspectiveBuyer\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo ProspectiveBuyer\Add Load Date.Inputs[Source dbo ProspectiveBuyer_Output_Add Load Date]"
+                  name="Source dbo ProspectiveBuyer_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo ProspectiveBuyer\Add Load Date.Inputs[Source dbo ProspectiveBuyer_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo ProspectiveBuyer\Add Load Date.Inputs[Source dbo ProspectiveBuyer_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo ProspectiveBuyer\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo ProspectiveBuyer\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo ProspectiveBuyer\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo ProspectiveBuyer\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo ProspectiveBuyer"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ProspectiveBuyerKey]
+,[ProspectAlternateKey]
+,[FirstName]
+,[MiddleName]
+,[LastName]
+,[BirthDate]
+,[MaritalStatus]
+,[Gender]
+,[EmailAddress]
+,[YearlyIncome]
+,[TotalChildren]
+,[NumberChildrenAtHome]
+,[Education]
+,[Occupation]
+,[HouseOwnerFlag]
+,[NumberCarsOwned]
+,[AddressLine1]
+,[AddressLine2]
+,[City]
+,[StateProvinceCode]
+,[PostalCode]
+,[Phone]
+,[Salutation]
+,[Unknown]
+FROM [dbo].[ProspectiveBuyer]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[ProspectiveBuyerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[ProspectiveBuyerKey]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[ProspectiveBuyerKey]"
+                      name="ProspectiveBuyerKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[ProspectAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[ProspectAlternateKey]"
+                      length="15"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[ProspectAlternateKey]"
+                      name="ProspectAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[FirstName]"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[MiddleName]"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[MiddleName]"
+                      name="MiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[LastName]"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[BirthDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[BirthDate]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[BirthDate]"
+                      name="BirthDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[MaritalStatus]"
+                      length="1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[MaritalStatus]"
+                      name="MaritalStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Gender]"
+                      length="1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Gender]"
+                      name="Gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[EmailAddress]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[EmailAddress]"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[EmailAddress]"
+                      name="EmailAddress"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[YearlyIncome]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[YearlyIncome]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[YearlyIncome]"
+                      name="YearlyIncome"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[TotalChildren]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[TotalChildren]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[TotalChildren]"
+                      name="TotalChildren"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[NumberChildrenAtHome]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[NumberChildrenAtHome]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[NumberChildrenAtHome]"
+                      name="NumberChildrenAtHome"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Education]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Education]"
+                      length="40"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Education]"
+                      name="Education"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Occupation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Occupation]"
+                      length="100"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Occupation]"
+                      name="Occupation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[HouseOwnerFlag]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[HouseOwnerFlag]"
+                      length="1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[HouseOwnerFlag]"
+                      name="HouseOwnerFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[NumberCarsOwned]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[NumberCarsOwned]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[NumberCarsOwned]"
+                      name="NumberCarsOwned"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[AddressLine1]"
+                      length="120"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[AddressLine1]"
+                      name="AddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[AddressLine2]"
+                      length="120"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[AddressLine2]"
+                      name="AddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[City]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[City]"
+                      length="30"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[StateProvinceCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[StateProvinceCode]"
+                      length="3"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[StateProvinceCode]"
+                      name="StateProvinceCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[PostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[PostalCode]"
+                      length="15"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[PostalCode]"
+                      name="PostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Phone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Phone]"
+                      length="20"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Phone]"
+                      name="Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Salutation]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Salutation]"
+                      length="8"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Salutation]"
+                      name="Salutation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Unknown]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Unknown]"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].Columns[Unknown]"
+                      name="Unknown"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[ProspectiveBuyerKey]"
+                      dataType="i4"
+                      name="ProspectiveBuyerKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[ProspectAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="ProspectAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[BirthDate]"
+                      dataType="dbTimeStamp"
+                      name="BirthDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      name="MaritalStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      name="Gender" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[YearlyIncome]"
+                      dataType="cy"
+                      name="YearlyIncome" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[TotalChildren]"
+                      dataType="ui1"
+                      name="TotalChildren" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[NumberChildrenAtHome]"
+                      dataType="ui1"
+                      name="NumberChildrenAtHome" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Education]"
+                      dataType="wstr"
+                      length="40"
+                      name="Education" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Occupation]"
+                      dataType="wstr"
+                      length="100"
+                      name="Occupation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[HouseOwnerFlag]"
+                      dataType="wstr"
+                      length="1"
+                      name="HouseOwnerFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[NumberCarsOwned]"
+                      dataType="ui1"
+                      name="NumberCarsOwned" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[AddressLine1]"
+                      dataType="wstr"
+                      length="120"
+                      name="AddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[AddressLine2]"
+                      dataType="wstr"
+                      length="120"
+                      name="AddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[City]"
+                      dataType="wstr"
+                      length="30"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[StateProvinceCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="StateProvinceCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[PostalCode]"
+                      dataType="wstr"
+                      length="15"
+                      name="PostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="20"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Salutation]"
+                      dataType="wstr"
+                      length="8"
+                      name="Salutation" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output].ExternalColumns[Unknown]"
+                      dataType="i4"
+                      name="Unknown" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ProspectiveBuyerKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ProspectiveBuyerKey]"
+                      name="ProspectiveBuyerKey" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ProspectAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ProspectAlternateKey]"
+                      name="ProspectAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[MiddleName]"
+                      name="MiddleName" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[BirthDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[BirthDate]"
+                      name="BirthDate" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[MaritalStatus]"
+                      name="MaritalStatus" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Gender]"
+                      name="Gender" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[EmailAddress]"
+                      name="EmailAddress" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[YearlyIncome]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[YearlyIncome]"
+                      name="YearlyIncome" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[TotalChildren]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[TotalChildren]"
+                      name="TotalChildren" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[NumberChildrenAtHome]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[NumberChildrenAtHome]"
+                      name="NumberChildrenAtHome" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Education]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Education]"
+                      name="Education" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Occupation]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Occupation]"
+                      name="Occupation" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[HouseOwnerFlag]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[HouseOwnerFlag]"
+                      name="HouseOwnerFlag" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[NumberCarsOwned]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[NumberCarsOwned]"
+                      name="NumberCarsOwned" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[AddressLine1]"
+                      dataType="wstr"
+                      length="120"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[AddressLine1]"
+                      name="AddressLine1" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[AddressLine2]"
+                      dataType="wstr"
+                      length="120"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[AddressLine2]"
+                      name="AddressLine2" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[City]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[StateProvinceCode]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[StateProvinceCode]"
+                      name="StateProvinceCode" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[PostalCode]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[PostalCode]"
+                      name="PostalCode" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Phone]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Phone]"
+                      name="Phone" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Salutation]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Salutation]"
+                      name="Salutation" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Unknown]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[Unknown]"
+                      name="Unknown" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo ProspectiveBuyer.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo ProspectiveBuyer\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo ProspectiveBuyer\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo ProspectiveBuyer.Paths[Source dbo ProspectiveBuyer_Output_Add Load Date]"
+              endId="Package\Load dbo ProspectiveBuyer\Add Load Date.Inputs[Source dbo ProspectiveBuyer_Output_Add Load Date]"
+              name="Source dbo ProspectiveBuyer_Output_Add Load Date"
+              startId="Package\Load dbo ProspectiveBuyer\Source dbo ProspectiveBuyer.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo ProspectiveBuyer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{650341D2-3E07-4370-9809-5E05ADA8222E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo ProspectiveBuyer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EDFDB7AE-9C0D-4363-8C34-1FE19CC1A6AC}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.ProspectiveBuyer&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo ProspectiveBuyer_To_Load dbo ProspectiveBuyer]"
+      DTS:CreationName=""
+      DTS:DTSID="{050C7EB6-7116-4B4C-99A3-08FADFA41285}"
+      DTS:From="Package\Truncate dbo ProspectiveBuyer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo ProspectiveBuyer_To_Load dbo ProspectiveBuyer"
+      DTS:To="Package\Load dbo ProspectiveBuyer" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

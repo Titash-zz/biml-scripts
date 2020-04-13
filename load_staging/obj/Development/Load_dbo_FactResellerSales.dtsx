@@ -1,0 +1,815 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{6EB5B915-6A02-4D2B-851C-EFB5D4761BE9}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_FactResellerSales"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{DF6F7F57-3A78-43C3-847D-46E034971273}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BAAF3128-DF7B-4DBF-B0EE-565C456C5091}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EB459709-21D4-4BE1-9157-2A4FCC38C185}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{385163A5-E9FB-4B73-82A3-71BC79CA6931}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo FactResellerSales"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{878B67C1-472C-4FCA-B2C6-C5D698BF6599}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo FactResellerSales"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo FactResellerSales\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactResellerSales\Add Load Date.Inputs[Source dbo FactResellerSales_Output_Add Load Date]"
+                  name="Source dbo FactResellerSales_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactResellerSales\Add Load Date.Inputs[Source dbo FactResellerSales_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo FactResellerSales\Add Load Date.Inputs[Source dbo FactResellerSales_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactResellerSales\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactResellerSales\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactResellerSales\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactResellerSales\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo FactResellerSales"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ProductKey]
+,[OrderDateKey]
+,[DueDateKey]
+,[ShipDateKey]
+,[ResellerKey]
+,[EmployeeKey]
+,[PromotionKey]
+,[CurrencyKey]
+,[SalesTerritoryKey]
+,[SalesOrderNumber]
+,[SalesOrderLineNumber]
+,[RevisionNumber]
+,[OrderQuantity]
+,[UnitPrice]
+,[ExtendedAmount]
+,[UnitPriceDiscountPct]
+,[DiscountAmount]
+,[ProductStandardCost]
+,[TotalProductCost]
+,[SalesAmount]
+,[TaxAmt]
+,[Freight]
+,[CarrierTrackingNumber]
+,[CustomerPONumber]
+,[OrderDate]
+,[DueDate]
+,[ShipDate]
+FROM [dbo].[FactResellerSales]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ProductKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ProductKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ProductKey]"
+                      name="ProductKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[OrderDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[OrderDateKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[OrderDateKey]"
+                      name="OrderDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[DueDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[DueDateKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[DueDateKey]"
+                      name="DueDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ShipDateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ShipDateKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ShipDateKey]"
+                      name="ShipDateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ResellerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ResellerKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ResellerKey]"
+                      name="ResellerKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[EmployeeKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[EmployeeKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[EmployeeKey]"
+                      name="EmployeeKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[PromotionKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[PromotionKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[PromotionKey]"
+                      name="PromotionKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[CurrencyKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[CurrencyKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[CurrencyKey]"
+                      name="CurrencyKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesTerritoryKey]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesOrderNumber]"
+                      length="20"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesOrderLineNumber]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesOrderLineNumber]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesOrderLineNumber]"
+                      name="SalesOrderLineNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[RevisionNumber]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[RevisionNumber]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[RevisionNumber]"
+                      name="RevisionNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[OrderQuantity]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[OrderQuantity]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[OrderQuantity]"
+                      name="OrderQuantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ExtendedAmount]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ExtendedAmount]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ExtendedAmount]"
+                      name="ExtendedAmount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[UnitPriceDiscountPct]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[UnitPriceDiscountPct]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[UnitPriceDiscountPct]"
+                      name="UnitPriceDiscountPct"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[DiscountAmount]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[DiscountAmount]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[DiscountAmount]"
+                      name="DiscountAmount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ProductStandardCost]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ProductStandardCost]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ProductStandardCost]"
+                      name="ProductStandardCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[TotalProductCost]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[TotalProductCost]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[TotalProductCost]"
+                      name="TotalProductCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesAmount]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesAmount]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[SalesAmount]"
+                      name="SalesAmount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[TaxAmt]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[TaxAmt]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[TaxAmt]"
+                      name="TaxAmt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[Freight]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[Freight]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[Freight]"
+                      name="Freight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[CarrierTrackingNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[CarrierTrackingNumber]"
+                      length="25"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[CarrierTrackingNumber]"
+                      name="CarrierTrackingNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[CustomerPONumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[CustomerPONumber]"
+                      length="25"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[CustomerPONumber]"
+                      name="CustomerPONumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[DueDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[DueDate]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[DueDate]"
+                      name="DueDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ShipDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ShipDate]"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].Columns[ShipDate]"
+                      name="ShipDate"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ProductKey]"
+                      dataType="i4"
+                      name="ProductKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[OrderDateKey]"
+                      dataType="i4"
+                      name="OrderDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[DueDateKey]"
+                      dataType="i4"
+                      name="DueDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ShipDateKey]"
+                      dataType="i4"
+                      name="ShipDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ResellerKey]"
+                      dataType="i4"
+                      name="ResellerKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[EmployeeKey]"
+                      dataType="i4"
+                      name="EmployeeKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[PromotionKey]"
+                      dataType="i4"
+                      name="PromotionKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[CurrencyKey]"
+                      dataType="i4"
+                      name="CurrencyKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesTerritoryKey]"
+                      dataType="i4"
+                      name="SalesTerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="SalesOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesOrderLineNumber]"
+                      dataType="ui1"
+                      name="SalesOrderLineNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[RevisionNumber]"
+                      dataType="ui1"
+                      name="RevisionNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[OrderQuantity]"
+                      dataType="i2"
+                      name="OrderQuantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[UnitPrice]"
+                      dataType="cy"
+                      name="UnitPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ExtendedAmount]"
+                      dataType="cy"
+                      name="ExtendedAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[UnitPriceDiscountPct]"
+                      dataType="r8"
+                      name="UnitPriceDiscountPct" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[DiscountAmount]"
+                      dataType="r8"
+                      name="DiscountAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ProductStandardCost]"
+                      dataType="cy"
+                      name="ProductStandardCost" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[TotalProductCost]"
+                      dataType="cy"
+                      name="TotalProductCost" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[SalesAmount]"
+                      dataType="cy"
+                      name="SalesAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[TaxAmt]"
+                      dataType="cy"
+                      name="TaxAmt" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[Freight]"
+                      dataType="cy"
+                      name="Freight" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[CarrierTrackingNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="CarrierTrackingNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[CustomerPONumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="CustomerPONumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[DueDate]"
+                      dataType="dbTimeStamp"
+                      name="DueDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output].ExternalColumns[ShipDate]"
+                      dataType="dbTimeStamp"
+                      name="ShipDate" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ProductKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ProductKey]"
+                      name="ProductKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[OrderDateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[OrderDateKey]"
+                      name="OrderDateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[DueDateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[DueDateKey]"
+                      name="DueDateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ShipDateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ShipDateKey]"
+                      name="ShipDateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ResellerKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ResellerKey]"
+                      name="ResellerKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[EmployeeKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[EmployeeKey]"
+                      name="EmployeeKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[PromotionKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[PromotionKey]"
+                      name="PromotionKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[CurrencyKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[CurrencyKey]"
+                      name="CurrencyKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesOrderLineNumber]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesOrderLineNumber]"
+                      name="SalesOrderLineNumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[RevisionNumber]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[RevisionNumber]"
+                      name="RevisionNumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[OrderQuantity]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[OrderQuantity]"
+                      name="OrderQuantity" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[UnitPrice]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[UnitPrice]"
+                      name="UnitPrice" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ExtendedAmount]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ExtendedAmount]"
+                      name="ExtendedAmount" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[UnitPriceDiscountPct]"
+                      dataType="r8"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[UnitPriceDiscountPct]"
+                      name="UnitPriceDiscountPct" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[DiscountAmount]"
+                      dataType="r8"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[DiscountAmount]"
+                      name="DiscountAmount" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ProductStandardCost]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ProductStandardCost]"
+                      name="ProductStandardCost" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[TotalProductCost]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[TotalProductCost]"
+                      name="TotalProductCost" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesAmount]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[SalesAmount]"
+                      name="SalesAmount" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[TaxAmt]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[TaxAmt]"
+                      name="TaxAmt" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[Freight]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[Freight]"
+                      name="Freight" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[CarrierTrackingNumber]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[CarrierTrackingNumber]"
+                      name="CarrierTrackingNumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[CustomerPONumber]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[CustomerPONumber]"
+                      name="CustomerPONumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[OrderDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[DueDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[DueDate]"
+                      name="DueDate" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ShipDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ShipDate]"
+                      name="ShipDate" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo FactResellerSales.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo FactResellerSales\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo FactResellerSales\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo FactResellerSales.Paths[Source dbo FactResellerSales_Output_Add Load Date]"
+              endId="Package\Load dbo FactResellerSales\Add Load Date.Inputs[Source dbo FactResellerSales_Output_Add Load Date]"
+              name="Source dbo FactResellerSales_Output_Add Load Date"
+              startId="Package\Load dbo FactResellerSales\Source dbo FactResellerSales.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo FactResellerSales"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{85E091E3-33EF-468A-BAE7-93200A56740A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo FactResellerSales"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EB459709-21D4-4BE1-9157-2A4FCC38C185}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.FactResellerSales&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo FactResellerSales_To_Load dbo FactResellerSales]"
+      DTS:CreationName=""
+      DTS:DTSID="{E58F2475-6700-4ED2-AD4A-7749407379F0}"
+      DTS:From="Package\Truncate dbo FactResellerSales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo FactResellerSales_To_Load dbo FactResellerSales"
+      DTS:To="Package\Load dbo FactResellerSales" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

@@ -1,0 +1,706 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{2490F550-8875-4443-8201-F2BEF3AD8D57}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimReseller"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{CAFAD982-D48D-45AC-9CE9-4AD08DDD53FE}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B5EE7664-085F-4CF8-BF8C-85553B748E1B}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2FA1B271-E24A-4FDC-B587-222CB253EF16}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{36531CFB-94D5-4940-B863-6A9D8223A8D4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimReseller"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{AFAA73AC-2F78-4DC1-A4BF-1E4542B7BC39}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimReseller"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimReseller\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimReseller\Add Load Date.Inputs[Source dbo DimReseller_Output_Add Load Date]"
+                  name="Source dbo DimReseller_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimReseller\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimReseller\Add Load Date.Inputs[Source dbo DimReseller_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimReseller\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimReseller\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimReseller\Add Load Date.Inputs[Source dbo DimReseller_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimReseller\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimReseller\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimReseller\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimReseller\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimReseller\Source dbo DimReseller"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimReseller"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ResellerKey]
+,[GeographyKey]
+,[ResellerAlternateKey]
+,[Phone]
+,[BusinessType]
+,[ResellerName]
+,[NumberEmployees]
+,[OrderFrequency]
+,[OrderMonth]
+,[FirstOrderYear]
+,[LastOrderYear]
+,[ProductLine]
+,[AddressLine1]
+,[AddressLine2]
+,[AnnualSales]
+,[BankName]
+,[MinPaymentType]
+,[MinPaymentAmount]
+,[AnnualRevenue]
+,[YearOpened]
+FROM [dbo].[DimReseller]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimReseller\Source dbo DimReseller.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ResellerKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ResellerKey]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ResellerKey]"
+                      name="ResellerKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[GeographyKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[GeographyKey]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[GeographyKey]"
+                      name="GeographyKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ResellerAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ResellerAlternateKey]"
+                      length="15"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ResellerAlternateKey]"
+                      name="ResellerAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[Phone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[Phone]"
+                      length="25"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[Phone]"
+                      name="Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[BusinessType]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[BusinessType]"
+                      length="20"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[BusinessType]"
+                      name="BusinessType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ResellerName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ResellerName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ResellerName]"
+                      name="ResellerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[NumberEmployees]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[NumberEmployees]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[NumberEmployees]"
+                      name="NumberEmployees"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[OrderFrequency]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[OrderFrequency]"
+                      length="1"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[OrderFrequency]"
+                      name="OrderFrequency"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[OrderMonth]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[OrderMonth]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[OrderMonth]"
+                      name="OrderMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[FirstOrderYear]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[FirstOrderYear]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[FirstOrderYear]"
+                      name="FirstOrderYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[LastOrderYear]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[LastOrderYear]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[LastOrderYear]"
+                      name="LastOrderYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ProductLine]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ProductLine]"
+                      length="50"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[ProductLine]"
+                      name="ProductLine"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AddressLine1]"
+                      length="60"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AddressLine1]"
+                      name="AddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AddressLine2]"
+                      length="60"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AddressLine2]"
+                      name="AddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AnnualSales]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AnnualSales]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AnnualSales]"
+                      name="AnnualSales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[BankName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[BankName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[BankName]"
+                      name="BankName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[MinPaymentType]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[MinPaymentType]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[MinPaymentType]"
+                      name="MinPaymentType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[MinPaymentAmount]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[MinPaymentAmount]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[MinPaymentAmount]"
+                      name="MinPaymentAmount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AnnualRevenue]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AnnualRevenue]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[AnnualRevenue]"
+                      name="AnnualRevenue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[YearOpened]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[YearOpened]"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].Columns[YearOpened]"
+                      name="YearOpened"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ResellerKey]"
+                      dataType="i4"
+                      name="ResellerKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[GeographyKey]"
+                      dataType="i4"
+                      name="GeographyKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ResellerAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="ResellerAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[BusinessType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="BusinessType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ResellerName]"
+                      dataType="wstr"
+                      length="50"
+                      name="ResellerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[NumberEmployees]"
+                      dataType="i4"
+                      name="NumberEmployees" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[OrderFrequency]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="OrderFrequency" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[OrderMonth]"
+                      dataType="ui1"
+                      name="OrderMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[FirstOrderYear]"
+                      dataType="i4"
+                      name="FirstOrderYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[LastOrderYear]"
+                      dataType="i4"
+                      name="LastOrderYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[ProductLine]"
+                      dataType="wstr"
+                      length="50"
+                      name="ProductLine" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="AddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="AddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AnnualSales]"
+                      dataType="cy"
+                      name="AnnualSales" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[BankName]"
+                      dataType="wstr"
+                      length="50"
+                      name="BankName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[MinPaymentType]"
+                      dataType="ui1"
+                      name="MinPaymentType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[MinPaymentAmount]"
+                      dataType="cy"
+                      name="MinPaymentAmount" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[AnnualRevenue]"
+                      dataType="cy"
+                      name="AnnualRevenue" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output].ExternalColumns[YearOpened]"
+                      dataType="i4"
+                      name="YearOpened" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ResellerKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ResellerKey]"
+                      name="ResellerKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[GeographyKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[GeographyKey]"
+                      name="GeographyKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ResellerAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ResellerAlternateKey]"
+                      name="ResellerAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[Phone]"
+                      name="Phone" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[BusinessType]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[BusinessType]"
+                      name="BusinessType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ResellerName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ResellerName]"
+                      name="ResellerName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[NumberEmployees]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[NumberEmployees]"
+                      name="NumberEmployees" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[OrderFrequency]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[OrderFrequency]"
+                      name="OrderFrequency" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[OrderMonth]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[OrderMonth]"
+                      name="OrderMonth" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[FirstOrderYear]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[FirstOrderYear]"
+                      name="FirstOrderYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[LastOrderYear]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[LastOrderYear]"
+                      name="LastOrderYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ProductLine]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ProductLine]"
+                      name="ProductLine" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AddressLine1]"
+                      name="AddressLine1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AddressLine2]"
+                      name="AddressLine2" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AnnualSales]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AnnualSales]"
+                      name="AnnualSales" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[BankName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[BankName]"
+                      name="BankName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[MinPaymentType]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[MinPaymentType]"
+                      name="MinPaymentType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[MinPaymentAmount]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[MinPaymentAmount]"
+                      name="MinPaymentAmount" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AnnualRevenue]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[AnnualRevenue]"
+                      name="AnnualRevenue" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[YearOpened]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[YearOpened]"
+                      name="YearOpened" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimReseller.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimReseller\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimReseller\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimReseller.Paths[Source dbo DimReseller_Output_Add Load Date]"
+              endId="Package\Load dbo DimReseller\Add Load Date.Inputs[Source dbo DimReseller_Output_Add Load Date]"
+              name="Source dbo DimReseller_Output_Add Load Date"
+              startId="Package\Load dbo DimReseller\Source dbo DimReseller.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimReseller"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{9DED9BAF-3DBE-4824-81D8-23A56B5BBD6C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimReseller"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2FA1B271-E24A-4FDC-B587-222CB253EF16}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimReseller&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimReseller_To_Load dbo DimReseller]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE73536E-83EF-40A1-9AD8-F7FFC515D62A}"
+      DTS:From="Package\Truncate dbo DimReseller"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimReseller_To_Load dbo DimReseller"
+      DTS:To="Package\Load dbo DimReseller" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

@@ -1,0 +1,882 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:52 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{EFEB314E-C2CC-4CE4-83FB-583B3E8101A6}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Purchasing_PurchaseOrderLines"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{47FCB10A-13D3-45F5-BFB1-F3D3CA6002F3}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8384F948-4281-4BC0-9D23-EABBACE10BD3}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F49E8D38-93A8-44A5-8852-5D5B701B9301}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{53A390ED-CCAC-4E28-8054-A00D789DF876}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BE88F2CD-7936-4B68-A39F-CD4C106AE61B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{042F4DA2-28C4-4DDD-BBD7-D9870E9674F7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Purchasing PurchaseOrderLines"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{DB212CD0-0F8B-409E-8A40-F6B3621863CA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Purchasing PurchaseOrderLines"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Inputs[Source Purchasing PurchaseOrderLines_Output_Add Load Date]"
+                  name="Source Purchasing PurchaseOrderLines_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Inputs[Source Purchasing PurchaseOrderLines_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Inputs[Source Purchasing PurchaseOrderLines_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing PurchaseOrderLines\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing PurchaseOrderLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing PurchaseOrderLines\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Purchasing PurchaseOrderLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Purchasing PurchaseOrderLines"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [PurchaseOrderLineID]
+,[PurchaseOrderID]
+,[StockItemID]
+,[OrderedOuters]
+,[Description]
+,[ReceivedOuters]
+,[PackageTypeID]
+,[ExpectedUnitPricePerOuter]
+,[LastReceiptDate]
+,[IsOrderLineFinalized]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Purchasing].[PurchaseOrderLines]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PurchaseOrderLineID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[PurchaseOrderLineID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PurchaseOrderLineID]"
+                      name="PurchaseOrderLineID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PurchaseOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[PurchaseOrderID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PurchaseOrderID]"
+                      name="PurchaseOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[StockItemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[StockItemID]"
+                      name="StockItemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[OrderedOuters]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[OrderedOuters]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[OrderedOuters]"
+                      name="OrderedOuters"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[Description]"
+                      length="100"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[ReceivedOuters]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[ReceivedOuters]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[ReceivedOuters]"
+                      name="ReceivedOuters"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PackageTypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[PackageTypeID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PackageTypeID]"
+                      name="PackageTypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[ExpectedUnitPricePerOuter]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[ExpectedUnitPricePerOuter]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[ExpectedUnitPricePerOuter]"
+                      name="ExpectedUnitPricePerOuter"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastReceiptDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[LastReceiptDate]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastReceiptDate]"
+                      name="LastReceiptDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[IsOrderLineFinalized]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[IsOrderLineFinalized]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[IsOrderLineFinalized]"
+                      name="IsOrderLineFinalized"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[PurchaseOrderLineID]"
+                      dataType="i4"
+                      name="PurchaseOrderLineID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[PurchaseOrderID]"
+                      dataType="i4"
+                      name="PurchaseOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[OrderedOuters]"
+                      dataType="i4"
+                      name="OrderedOuters" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[ReceivedOuters]"
+                      dataType="i4"
+                      name="ReceivedOuters" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[PackageTypeID]"
+                      dataType="i4"
+                      name="PackageTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[ExpectedUnitPricePerOuter]"
+                      dataType="numeric"
+                      name="ExpectedUnitPricePerOuter"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[LastReceiptDate]"
+                      dataType="dbDate"
+                      name="LastReceiptDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[IsOrderLineFinalized]"
+                      dataType="bool"
+                      name="IsOrderLineFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[PurchaseOrderLineID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[PurchaseOrderLineID]"
+                      name="PurchaseOrderLineID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[PurchaseOrderID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[PurchaseOrderID]"
+                      name="PurchaseOrderID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[StockItemID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[StockItemID]"
+                      name="StockItemID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[OrderedOuters]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[OrderedOuters]"
+                      name="OrderedOuters" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ReceivedOuters]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ReceivedOuters]"
+                      name="ReceivedOuters" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[PackageTypeID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[PackageTypeID]"
+                      name="PackageTypeID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ExpectedUnitPricePerOuter]"
+                      dataType="numeric"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ExpectedUnitPricePerOuter]"
+                      name="ExpectedUnitPricePerOuter"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[LastReceiptDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[LastReceiptDate]"
+                      name="LastReceiptDate" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[IsOrderLineFinalized]"
+                      dataType="bool"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[IsOrderLineFinalized]"
+                      name="IsOrderLineFinalized" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi PurchaseOrderLines"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Purchasing].[PurchaseOrderLines]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi PurchaseOrderLines">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[PurchaseOrderLineID]"
+                      cachedDataType="i4"
+                      cachedName="PurchaseOrderLineID"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[PurchaseOrderLineID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PurchaseOrderLineID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[PurchaseOrderID]"
+                      cachedDataType="i4"
+                      cachedName="PurchaseOrderID"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[PurchaseOrderID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PurchaseOrderID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[StockItemID]"
+                      cachedDataType="i4"
+                      cachedName="StockItemID"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[StockItemID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[OrderedOuters]"
+                      cachedDataType="i4"
+                      cachedName="OrderedOuters"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[OrderedOuters]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[OrderedOuters]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Description"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[Description]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[Description]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[ReceivedOuters]"
+                      cachedDataType="i4"
+                      cachedName="ReceivedOuters"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[ReceivedOuters]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[ReceivedOuters]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[PackageTypeID]"
+                      cachedDataType="i4"
+                      cachedName="PackageTypeID"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[PackageTypeID]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[PackageTypeID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[ExpectedUnitPricePerOuter]"
+                      cachedDataType="numeric"
+                      cachedName="ExpectedUnitPricePerOuter"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[ExpectedUnitPricePerOuter]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[ExpectedUnitPricePerOuter]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[LastReceiptDate]"
+                      cachedDataType="dbDate"
+                      cachedName="LastReceiptDate"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[LastReceiptDate]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastReceiptDate]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[IsOrderLineFinalized]"
+                      cachedDataType="bool"
+                      cachedName="IsOrderLineFinalized"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[IsOrderLineFinalized]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[IsOrderLineFinalized]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[PurchaseOrderLineID]"
+                      dataType="i4"
+                      name="PurchaseOrderLineID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[PurchaseOrderID]"
+                      dataType="i4"
+                      name="PurchaseOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[OrderedOuters]"
+                      dataType="i4"
+                      name="OrderedOuters" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[ReceivedOuters]"
+                      dataType="i4"
+                      name="ReceivedOuters" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[PackageTypeID]"
+                      dataType="i4"
+                      name="PackageTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[ExpectedUnitPricePerOuter]"
+                      dataType="numeric"
+                      name="ExpectedUnitPricePerOuter"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[LastReceiptDate]"
+                      dataType="dbDate"
+                      name="LastReceiptDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[IsOrderLineFinalized]"
+                      dataType="bool"
+                      name="IsOrderLineFinalized" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Purchasing PurchaseOrderLines.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Purchasing PurchaseOrderLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Purchasing PurchaseOrderLines.Paths[Count New Rows_Output_Staging wwi PurchaseOrderLines]"
+              endId="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines.Inputs[Count New Rows_Output_Staging wwi PurchaseOrderLines]"
+              name="Count New Rows_Output_Staging wwi PurchaseOrderLines"
+              startId="Package\Load Purchasing PurchaseOrderLines\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Purchasing PurchaseOrderLines.Paths[Source Purchasing PurchaseOrderLines_Output_Add Load Date]"
+              endId="Package\Load Purchasing PurchaseOrderLines\Add Load Date.Inputs[Source Purchasing PurchaseOrderLines_Output_Add Load Date]"
+              name="Source Purchasing PurchaseOrderLines_Output_Add Load Date"
+              startId="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="265,42"
+          Id="Package\Load Purchasing PurchaseOrderLines"
+          TopLeft="5.5,5.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Purchasing PurchaseOrderLines">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Load Purchasing PurchaseOrderLines\Count New Rows"
+          TopLeft="61.5,209.5" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load Purchasing PurchaseOrderLines\Add Load Date"
+          TopLeft="67.5,107.5" />
+        <NodeLayout
+          Size="242,42"
+          Id="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines"
+          TopLeft="22.5000000000001,311.5" />
+        <NodeLayout
+          Size="276,42"
+          Id="Package\Load Purchasing PurchaseOrderLines\Source Purchasing PurchaseOrderLines"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package\Load Purchasing PurchaseOrderLines.Paths[Count New Rows_Output_Staging wwi PurchaseOrderLines]"
+          TopLeft="143.5,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Purchasing PurchaseOrderLines.Paths[Add Load Date_Output_Count New Rows]"
+          TopLeft="143.5,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Purchasing PurchaseOrderLines.Paths[Source Purchasing PurchaseOrderLines_Output_Add Load Date]"
+          TopLeft="143.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Purchasing PurchaseOrderLines\Staging wwi PurchaseOrderLines">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

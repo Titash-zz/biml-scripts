@@ -1,0 +1,353 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{FC982B1F-E4C1-4BCE-A184-D1FC74105321}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_FactInternetSalesReason"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{98AD2545-23B8-4E64-9C0D-871E2C3B8889}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{369AFB27-6433-4E61-A32C-365C4CCB6B7F}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D58AB628-9EFC-4232-8AA0-EC55451ED8AB}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E0B6EDCE-F50F-4123-B755-BEE6E01A9C3F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo FactInternetSalesReason"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{953FB407-AED0-4E62-BEDF-085650BCB609}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo FactInternetSalesReason"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo FactInternetSalesReason\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactInternetSalesReason\Add Load Date.Inputs[Source dbo FactInternetSalesReason_Output_Add Load Date]"
+                  name="Source dbo FactInternetSalesReason_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactInternetSalesReason\Add Load Date.Inputs[Source dbo FactInternetSalesReason_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo FactInternetSalesReason\Add Load Date.Inputs[Source dbo FactInternetSalesReason_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactInternetSalesReason\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo FactInternetSalesReason\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactInternetSalesReason\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo FactInternetSalesReason\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo FactInternetSalesReason"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [SalesOrderNumber]
+,[SalesOrderLineNumber]
+,[SalesReasonKey]
+FROM [dbo].[FactInternetSalesReason]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].ExternalColumns[SalesOrderNumber]"
+                      length="20"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].Columns[SalesOrderLineNumber]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].ExternalColumns[SalesOrderLineNumber]"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].Columns[SalesOrderLineNumber]"
+                      name="SalesOrderLineNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].Columns[SalesReasonKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].ExternalColumns[SalesReasonKey]"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].Columns[SalesReasonKey]"
+                      name="SalesReasonKey"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].ExternalColumns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="SalesOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].ExternalColumns[SalesOrderLineNumber]"
+                      dataType="ui1"
+                      name="SalesOrderLineNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output].ExternalColumns[SalesReasonKey]"
+                      dataType="i4"
+                      name="SalesReasonKey" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[SalesOrderLineNumber]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[SalesOrderLineNumber]"
+                      name="SalesOrderLineNumber" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[SalesReasonKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[SalesReasonKey]"
+                      name="SalesReasonKey" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo FactInternetSalesReason.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo FactInternetSalesReason\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo FactInternetSalesReason\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo FactInternetSalesReason.Paths[Source dbo FactInternetSalesReason_Output_Add Load Date]"
+              endId="Package\Load dbo FactInternetSalesReason\Add Load Date.Inputs[Source dbo FactInternetSalesReason_Output_Add Load Date]"
+              name="Source dbo FactInternetSalesReason_Output_Add Load Date"
+              startId="Package\Load dbo FactInternetSalesReason\Source dbo FactInternetSalesReason.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo FactInternetSalesReason"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{08865D44-4343-4D71-8D64-86DFD5D82025}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo FactInternetSalesReason"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D58AB628-9EFC-4232-8AA0-EC55451ED8AB}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.FactInternetSalesReason&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo FactInternetSalesReason_To_Load dbo FactInternetSalesReason]"
+      DTS:CreationName=""
+      DTS:DTSID="{654A0662-34F4-416E-98BE-BA979C423E64}"
+      DTS:From="Package\Truncate dbo FactInternetSalesReason"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo FactInternetSalesReason_To_Load dbo FactInternetSalesReason"
+      DTS:To="Package\Load dbo FactInternetSalesReason" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

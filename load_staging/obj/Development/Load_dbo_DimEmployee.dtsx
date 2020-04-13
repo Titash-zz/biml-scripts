@@ -1,0 +1,927 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{A23776B3-231B-4AAD-B1E7-47ABFABCD536}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimEmployee"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{D6E6DC64-03B4-4BC6-845A-B1EA387259C9}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{97728C5F-1169-4038-B442-94CC8C8FD5B6}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{589B4039-E5AD-4BD5-ADB4-B3936929155D}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{97735546-E41E-4D0A-A86E-A1D63DB5F330}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimEmployee"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{E1A356EF-4066-4F46-828B-877C7FAC306A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimEmployee"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimEmployee\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimEmployee\Add Load Date.Inputs[Source dbo DimEmployee_Output_Add Load Date]"
+                  name="Source dbo DimEmployee_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimEmployee\Add Load Date.Inputs[Source dbo DimEmployee_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimEmployee\Add Load Date.Inputs[Source dbo DimEmployee_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimEmployee\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimEmployee\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimEmployee\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimEmployee\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimEmployee\Source dbo DimEmployee"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimEmployee"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [EmployeeKey]
+,[ParentEmployeeKey]
+,[EmployeeNationalIDAlternateKey]
+,[ParentEmployeeNationalIDAlternateKey]
+,[SalesTerritoryKey]
+,[FirstName]
+,[LastName]
+,[MiddleName]
+,[NameStyle]
+,[Title]
+,[HireDate]
+,[BirthDate]
+,[LoginID]
+,[EmailAddress]
+,[Phone]
+,[MaritalStatus]
+,[EmergencyContactName]
+,[EmergencyContactPhone]
+,[SalariedFlag]
+,[Gender]
+,[PayFrequency]
+,[BaseRate]
+,[VacationHours]
+,[SickLeaveHours]
+,[CurrentFlag]
+,[SalesPersonFlag]
+,[DepartmentName]
+,[StartDate]
+,[EndDate]
+,[Status]
+,[EmployeePhoto]
+FROM [dbo].[DimEmployee]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmployeeKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmployeeKey]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmployeeKey]"
+                      name="EmployeeKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[ParentEmployeeKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[ParentEmployeeKey]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[ParentEmployeeKey]"
+                      name="ParentEmployeeKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmployeeNationalIDAlternateKey]"
+                      length="15"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmployeeNationalIDAlternateKey]"
+                      name="EmployeeNationalIDAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[ParentEmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[ParentEmployeeNationalIDAlternateKey]"
+                      length="15"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[ParentEmployeeNationalIDAlternateKey]"
+                      name="ParentEmployeeNationalIDAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SalesTerritoryKey]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[FirstName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[FirstName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[LastName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[LastName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[MiddleName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[MiddleName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[MiddleName]"
+                      name="MiddleName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[NameStyle]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[NameStyle]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[NameStyle]"
+                      name="NameStyle"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Title]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Title]"
+                      name="Title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[HireDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[HireDate]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[HireDate]"
+                      name="HireDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[BirthDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[BirthDate]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[BirthDate]"
+                      name="BirthDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[LoginID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[LoginID]"
+                      length="256"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[LoginID]"
+                      name="LoginID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmailAddress]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmailAddress]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmailAddress]"
+                      name="EmailAddress"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Phone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Phone]"
+                      length="25"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Phone]"
+                      name="Phone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[MaritalStatus]"
+                      length="1"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[MaritalStatus]"
+                      name="MaritalStatus"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmergencyContactName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmergencyContactName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmergencyContactName]"
+                      name="EmergencyContactName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmergencyContactPhone]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmergencyContactPhone]"
+                      length="25"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmergencyContactPhone]"
+                      name="EmergencyContactPhone"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SalariedFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SalariedFlag]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SalariedFlag]"
+                      name="SalariedFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Gender]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Gender]"
+                      length="1"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Gender]"
+                      name="Gender"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[PayFrequency]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[PayFrequency]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[PayFrequency]"
+                      name="PayFrequency"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[BaseRate]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[BaseRate]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[BaseRate]"
+                      name="BaseRate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[VacationHours]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[VacationHours]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[VacationHours]"
+                      name="VacationHours"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SickLeaveHours]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SickLeaveHours]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SickLeaveHours]"
+                      name="SickLeaveHours"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[CurrentFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[CurrentFlag]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[CurrentFlag]"
+                      name="CurrentFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SalesPersonFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SalesPersonFlag]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[SalesPersonFlag]"
+                      name="SalesPersonFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[DepartmentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[DepartmentName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[DepartmentName]"
+                      name="DepartmentName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[StartDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[StartDate]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[StartDate]"
+                      name="StartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EndDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EndDate]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EndDate]"
+                      name="EndDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Status]"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[Status]"
+                      name="Status"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmployeePhoto]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmployeePhoto]"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].Columns[EmployeePhoto]"
+                      name="EmployeePhoto"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmployeeKey]"
+                      dataType="i4"
+                      name="EmployeeKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[ParentEmployeeKey]"
+                      dataType="i4"
+                      name="ParentEmployeeKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="EmployeeNationalIDAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[ParentEmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      name="ParentEmployeeNationalIDAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SalesTerritoryKey]"
+                      dataType="i4"
+                      name="SalesTerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[NameStyle]"
+                      dataType="bool"
+                      name="NameStyle" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="50"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[HireDate]"
+                      dataType="dbDate"
+                      name="HireDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[BirthDate]"
+                      dataType="dbDate"
+                      name="BirthDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[LoginID]"
+                      dataType="wstr"
+                      length="256"
+                      name="LoginID" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      name="Phone" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      name="MaritalStatus" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmergencyContactName]"
+                      dataType="wstr"
+                      length="50"
+                      name="EmergencyContactName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmergencyContactPhone]"
+                      dataType="wstr"
+                      length="25"
+                      name="EmergencyContactPhone" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SalariedFlag]"
+                      dataType="bool"
+                      name="SalariedFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      name="Gender" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[PayFrequency]"
+                      dataType="ui1"
+                      name="PayFrequency" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[BaseRate]"
+                      dataType="cy"
+                      name="BaseRate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[VacationHours]"
+                      dataType="i2"
+                      name="VacationHours" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SickLeaveHours]"
+                      dataType="i2"
+                      name="SickLeaveHours" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[CurrentFlag]"
+                      dataType="bool"
+                      name="CurrentFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[SalesPersonFlag]"
+                      dataType="bool"
+                      name="SalesPersonFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      name="DepartmentName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[StartDate]"
+                      dataType="dbDate"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EndDate]"
+                      dataType="dbDate"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      name="Status" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output].ExternalColumns[EmployeePhoto]"
+                      dataType="image"
+                      name="EmployeePhoto" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmployeeKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmployeeKey]"
+                      name="EmployeeKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ParentEmployeeKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ParentEmployeeKey]"
+                      name="ParentEmployeeKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmployeeNationalIDAlternateKey]"
+                      name="EmployeeNationalIDAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ParentEmployeeNationalIDAlternateKey]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ParentEmployeeNationalIDAlternateKey]"
+                      name="ParentEmployeeNationalIDAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[FirstName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[LastName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[MiddleName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[MiddleName]"
+                      name="MiddleName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[NameStyle]"
+                      dataType="bool"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[NameStyle]"
+                      name="NameStyle" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Title]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Title]"
+                      name="Title" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[HireDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[HireDate]"
+                      name="HireDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[BirthDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[BirthDate]"
+                      name="BirthDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[LoginID]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[LoginID]"
+                      name="LoginID" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmailAddress]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmailAddress]"
+                      name="EmailAddress" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Phone]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Phone]"
+                      name="Phone" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[MaritalStatus]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[MaritalStatus]"
+                      name="MaritalStatus" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmergencyContactName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmergencyContactName]"
+                      name="EmergencyContactName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmergencyContactPhone]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmergencyContactPhone]"
+                      name="EmergencyContactPhone" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SalariedFlag]"
+                      dataType="bool"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SalariedFlag]"
+                      name="SalariedFlag" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Gender]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Gender]"
+                      name="Gender" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[PayFrequency]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[PayFrequency]"
+                      name="PayFrequency" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[BaseRate]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[BaseRate]"
+                      name="BaseRate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[VacationHours]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[VacationHours]"
+                      name="VacationHours" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SickLeaveHours]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SickLeaveHours]"
+                      name="SickLeaveHours" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[CurrentFlag]"
+                      dataType="bool"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[CurrentFlag]"
+                      name="CurrentFlag" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SalesPersonFlag]"
+                      dataType="bool"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[SalesPersonFlag]"
+                      name="SalesPersonFlag" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[DepartmentName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[DepartmentName]"
+                      name="DepartmentName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[StartDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[StartDate]"
+                      name="StartDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EndDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EndDate]"
+                      name="EndDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Status]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmployeePhoto]"
+                      dataType="image"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[EmployeePhoto]"
+                      name="EmployeePhoto" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimEmployee.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimEmployee\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimEmployee\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimEmployee.Paths[Source dbo DimEmployee_Output_Add Load Date]"
+              endId="Package\Load dbo DimEmployee\Add Load Date.Inputs[Source dbo DimEmployee_Output_Add Load Date]"
+              name="Source dbo DimEmployee_Output_Add Load Date"
+              startId="Package\Load dbo DimEmployee\Source dbo DimEmployee.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimEmployee"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{47828198-2B01-4915-87A9-2F84200422B5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimEmployee"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{589B4039-E5AD-4BD5-ADB4-B3936929155D}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimEmployee&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimEmployee_To_Load dbo DimEmployee]"
+      DTS:CreationName=""
+      DTS:DTSID="{B1265A99-256B-4F76-8661-F38F682172F4}"
+      DTS:From="Package\Truncate dbo DimEmployee"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimEmployee_To_Load dbo DimEmployee"
+      DTS:To="Package\Load dbo DimEmployee" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

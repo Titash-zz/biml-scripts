@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{BC540375-75DF-4E08-B4CB-E0D2B4CC270C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimAccount"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{25CC3C79-892C-4E8B-B593-A30B21E1B91F}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8F0F7576-2AF7-438E-BB76-F8B46FB9A26F}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9F537BF9-90E0-4D35-91C7-FA08F7997B29}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AD6AC209-7828-493F-A4F0-15A732E70B01}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimAccount"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{CA8E9CD2-7971-4D6C-AC2F-E8A457C02989}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimAccount"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimAccount\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimAccount\Add Load Date.Inputs[Source dbo DimAccount_Output_Add Load Date]"
+                  name="Source dbo DimAccount_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimAccount\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimAccount\Add Load Date.Inputs[Source dbo DimAccount_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimAccount\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimAccount\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimAccount\Add Load Date.Inputs[Source dbo DimAccount_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimAccount\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimAccount\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimAccount\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimAccount\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimAccount\Source dbo DimAccount"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimAccount"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [AccountKey]
+,[ParentAccountKey]
+,[AccountCodeAlternateKey]
+,[ParentAccountCodeAlternateKey]
+,[AccountDescription]
+,[AccountType]
+,[Operator]
+,[CustomMembers]
+,[ValueType]
+,[CustomMemberOptions]
+FROM [dbo].[DimAccount]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimAccount\Source dbo DimAccount.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountKey]"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountKey]"
+                      name="AccountKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[ParentAccountKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[ParentAccountKey]"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[ParentAccountKey]"
+                      name="ParentAccountKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountCodeAlternateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountCodeAlternateKey]"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountCodeAlternateKey]"
+                      name="AccountCodeAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[ParentAccountCodeAlternateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[ParentAccountCodeAlternateKey]"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[ParentAccountCodeAlternateKey]"
+                      name="ParentAccountCodeAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountDescription]"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountDescription]"
+                      name="AccountDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountType]"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[AccountType]"
+                      name="AccountType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[Operator]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[Operator]"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[Operator]"
+                      name="Operator"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[CustomMembers]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[CustomMembers]"
+                      length="300"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[CustomMembers]"
+                      name="CustomMembers"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[ValueType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[ValueType]"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[ValueType]"
+                      name="ValueType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[CustomMemberOptions]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[CustomMemberOptions]"
+                      length="200"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].Columns[CustomMemberOptions]"
+                      name="CustomMemberOptions"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountKey]"
+                      dataType="i4"
+                      name="AccountKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[ParentAccountKey]"
+                      dataType="i4"
+                      name="ParentAccountKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountCodeAlternateKey]"
+                      dataType="i4"
+                      name="AccountCodeAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[ParentAccountCodeAlternateKey]"
+                      dataType="i4"
+                      name="ParentAccountCodeAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountDescription]"
+                      dataType="wstr"
+                      length="50"
+                      name="AccountDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[AccountType]"
+                      dataType="wstr"
+                      length="50"
+                      name="AccountType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[Operator]"
+                      dataType="wstr"
+                      length="50"
+                      name="Operator" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[CustomMembers]"
+                      dataType="wstr"
+                      length="300"
+                      name="CustomMembers" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[ValueType]"
+                      dataType="wstr"
+                      length="50"
+                      name="ValueType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output].ExternalColumns[CustomMemberOptions]"
+                      dataType="wstr"
+                      length="200"
+                      name="CustomMemberOptions" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountKey]"
+                      name="AccountKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ParentAccountKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ParentAccountKey]"
+                      name="ParentAccountKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountCodeAlternateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountCodeAlternateKey]"
+                      name="AccountCodeAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ParentAccountCodeAlternateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ParentAccountCodeAlternateKey]"
+                      name="ParentAccountCodeAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountDescription]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountDescription]"
+                      name="AccountDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountType]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[AccountType]"
+                      name="AccountType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[Operator]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[Operator]"
+                      name="Operator" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[CustomMembers]"
+                      dataType="wstr"
+                      length="300"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[CustomMembers]"
+                      name="CustomMembers" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ValueType]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ValueType]"
+                      name="ValueType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[CustomMemberOptions]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[CustomMemberOptions]"
+                      name="CustomMemberOptions" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimAccount.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimAccount\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimAccount\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimAccount.Paths[Source dbo DimAccount_Output_Add Load Date]"
+              endId="Package\Load dbo DimAccount\Add Load Date.Inputs[Source dbo DimAccount_Output_Add Load Date]"
+              name="Source dbo DimAccount_Output_Add Load Date"
+              startId="Package\Load dbo DimAccount\Source dbo DimAccount.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimAccount"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F5D8AE26-CF57-4941-96E1-B43836863970}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimAccount"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9F537BF9-90E0-4D35-91C7-FA08F7997B29}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimAccount&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimAccount_To_Load dbo DimAccount]"
+      DTS:CreationName=""
+      DTS:DTSID="{3FDF24E8-1C7D-4864-A078-A90E01AECD6E}"
+      DTS:From="Package\Truncate dbo DimAccount"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimAccount_To_Load dbo DimAccount"
+      DTS:To="Package\Load dbo DimAccount" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

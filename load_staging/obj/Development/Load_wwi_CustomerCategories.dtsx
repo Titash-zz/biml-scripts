@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:08:02 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{0070A817-C2CC-4E3C-9B0D-045FFFC8A536}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_wwi_CustomerCategories"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{FFC5F445-E3D3-4B64-BC36-9C48DB78A8DD}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1F79B550-A6B1-4735-8025-EB4C0D7E35D6}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{832F4DAE-08AB-4D09-AC76-B5389626ABD3}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{347DBB1A-C993-4F0F-989B-0AB56041F75C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table CustomerCategories"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{4E8BAEA9-5505-406B-A8F4-9375E8C23140}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table CustomerCategories"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{832F4DAE-08AB-4D09-AC76-B5389626ABD3}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[CustomerCategories]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[CustomerCategories]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[CustomerCategories]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerCategoryID] int NOT NULL &#xA;, [CustomerCategoryName] nvarchar(50) NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_CustomerCategories] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CustomerCategoryID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [UQ_Sales_CustomerCategories_CustomerCategoryName]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [CustomerCategoryName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales CustomerCategories"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{BD296EAA-1BE6-462A-B54D-AF518F3C4E15}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales CustomerCategories"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales CustomerCategories\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales CustomerCategories\Add Load Date.Inputs[Source Sales CustomerCategories_Output_Add Load Date]"
+                  name="Source Sales CustomerCategories_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales CustomerCategories\Add Load Date.Inputs[Source Sales CustomerCategories_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales CustomerCategories\Add Load Date.Inputs[Source Sales CustomerCategories_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales CustomerCategories\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales CustomerCategories\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerCategories\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales CustomerCategories\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales CustomerCategories"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [CustomerCategoryID]
+,[CustomerCategoryName]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Sales].[CustomerCategories]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[CustomerCategoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[CustomerCategoryID]"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[CustomerCategoryID]"
+                      name="CustomerCategoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[CustomerCategoryName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[CustomerCategoryName]"
+                      length="50"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[CustomerCategoryName]"
+                      name="CustomerCategoryName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[CustomerCategoryID]"
+                      dataType="i4"
+                      name="CustomerCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[CustomerCategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      name="CustomerCategoryName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[CustomerCategoryID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[CustomerCategoryID]"
+                      name="CustomerCategoryID" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[CustomerCategoryName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[CustomerCategoryName]"
+                      name="CustomerCategoryName" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales CustomerCategories.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales CustomerCategories\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales CustomerCategories\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales CustomerCategories.Paths[Source Sales CustomerCategories_Output_Add Load Date]"
+              endId="Package\Load Sales CustomerCategories\Add Load Date.Inputs[Source Sales CustomerCategories_Output_Add Load Date]"
+              name="Source Sales CustomerCategories_Output_Add Load Date"
+              startId="Package\Load Sales CustomerCategories\Source Sales CustomerCategories.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table CustomerCategories_To_Load Sales CustomerCategories]"
+      DTS:CreationName=""
+      DTS:DTSID="{A86A3687-CF73-4AEB-A0D1-94B1D41ED6A5}"
+      DTS:From="Package\Create Table CustomerCategories"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table CustomerCategories_To_Load Sales CustomerCategories"
+      DTS:To="Package\Load Sales CustomerCategories" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

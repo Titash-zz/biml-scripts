@@ -1,0 +1,624 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{9D1CEAED-7F91-4D7E-A93E-B243C0247741}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimPromotion"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{D71798C6-FE40-4510-A83C-31E1B1222E47}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{00F48228-85A4-439E-A646-25A4701A858A}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E74F591C-4642-487E-8CA2-2CC92613397E}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E946B8E4-D932-4C5B-AC25-AFFA370E90D9}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimPromotion"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{B45C7086-B2EE-4232-A3E0-E160ED722A33}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimPromotion"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimPromotion\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimPromotion\Add Load Date.Inputs[Source dbo DimPromotion_Output_Add Load Date]"
+                  name="Source dbo DimPromotion_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimPromotion\Add Load Date.Inputs[Source dbo DimPromotion_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimPromotion\Add Load Date.Inputs[Source dbo DimPromotion_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimPromotion\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimPromotion\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimPromotion\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimPromotion\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimPromotion\Source dbo DimPromotion"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimPromotion"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [PromotionKey]
+,[PromotionAlternateKey]
+,[EnglishPromotionName]
+,[SpanishPromotionName]
+,[FrenchPromotionName]
+,[DiscountPct]
+,[EnglishPromotionType]
+,[SpanishPromotionType]
+,[FrenchPromotionType]
+,[EnglishPromotionCategory]
+,[SpanishPromotionCategory]
+,[FrenchPromotionCategory]
+,[StartDate]
+,[EndDate]
+,[MinQty]
+,[MaxQty]
+FROM [dbo].[DimPromotion]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[PromotionKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[PromotionKey]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[PromotionKey]"
+                      name="PromotionKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[PromotionAlternateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[PromotionAlternateKey]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[PromotionAlternateKey]"
+                      name="PromotionAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EnglishPromotionName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EnglishPromotionName]"
+                      length="255"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EnglishPromotionName]"
+                      name="EnglishPromotionName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[SpanishPromotionName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[SpanishPromotionName]"
+                      length="255"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[SpanishPromotionName]"
+                      name="SpanishPromotionName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[FrenchPromotionName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[FrenchPromotionName]"
+                      length="255"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[FrenchPromotionName]"
+                      name="FrenchPromotionName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[DiscountPct]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[DiscountPct]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[DiscountPct]"
+                      name="DiscountPct"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EnglishPromotionType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EnglishPromotionType]"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EnglishPromotionType]"
+                      name="EnglishPromotionType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[SpanishPromotionType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[SpanishPromotionType]"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[SpanishPromotionType]"
+                      name="SpanishPromotionType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[FrenchPromotionType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[FrenchPromotionType]"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[FrenchPromotionType]"
+                      name="FrenchPromotionType"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EnglishPromotionCategory]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EnglishPromotionCategory]"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EnglishPromotionCategory]"
+                      name="EnglishPromotionCategory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[SpanishPromotionCategory]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[SpanishPromotionCategory]"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[SpanishPromotionCategory]"
+                      name="SpanishPromotionCategory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[FrenchPromotionCategory]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[FrenchPromotionCategory]"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[FrenchPromotionCategory]"
+                      name="FrenchPromotionCategory"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[StartDate]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[StartDate]"
+                      name="StartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EndDate]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[EndDate]"
+                      name="EndDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[MinQty]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[MinQty]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[MinQty]"
+                      name="MinQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[MaxQty]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[MaxQty]"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].Columns[MaxQty]"
+                      name="MaxQty"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[PromotionKey]"
+                      dataType="i4"
+                      name="PromotionKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[PromotionAlternateKey]"
+                      dataType="i4"
+                      name="PromotionAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EnglishPromotionName]"
+                      dataType="wstr"
+                      length="255"
+                      name="EnglishPromotionName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[SpanishPromotionName]"
+                      dataType="wstr"
+                      length="255"
+                      name="SpanishPromotionName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[FrenchPromotionName]"
+                      dataType="wstr"
+                      length="255"
+                      name="FrenchPromotionName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[DiscountPct]"
+                      dataType="r8"
+                      name="DiscountPct" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EnglishPromotionType]"
+                      dataType="wstr"
+                      length="50"
+                      name="EnglishPromotionType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[SpanishPromotionType]"
+                      dataType="wstr"
+                      length="50"
+                      name="SpanishPromotionType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[FrenchPromotionType]"
+                      dataType="wstr"
+                      length="50"
+                      name="FrenchPromotionType" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EnglishPromotionCategory]"
+                      dataType="wstr"
+                      length="50"
+                      name="EnglishPromotionCategory" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[SpanishPromotionCategory]"
+                      dataType="wstr"
+                      length="50"
+                      name="SpanishPromotionCategory" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[FrenchPromotionCategory]"
+                      dataType="wstr"
+                      length="50"
+                      name="FrenchPromotionCategory" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[StartDate]"
+                      dataType="dbTimeStamp"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[EndDate]"
+                      dataType="dbTimeStamp"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[MinQty]"
+                      dataType="i4"
+                      name="MinQty" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output].ExternalColumns[MaxQty]"
+                      dataType="i4"
+                      name="MaxQty" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[PromotionKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[PromotionKey]"
+                      name="PromotionKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[PromotionAlternateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[PromotionAlternateKey]"
+                      name="PromotionAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EnglishPromotionName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EnglishPromotionName]"
+                      name="EnglishPromotionName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[SpanishPromotionName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[SpanishPromotionName]"
+                      name="SpanishPromotionName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[FrenchPromotionName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[FrenchPromotionName]"
+                      name="FrenchPromotionName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[DiscountPct]"
+                      dataType="r8"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[DiscountPct]"
+                      name="DiscountPct" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EnglishPromotionType]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EnglishPromotionType]"
+                      name="EnglishPromotionType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[SpanishPromotionType]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[SpanishPromotionType]"
+                      name="SpanishPromotionType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[FrenchPromotionType]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[FrenchPromotionType]"
+                      name="FrenchPromotionType" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EnglishPromotionCategory]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EnglishPromotionCategory]"
+                      name="EnglishPromotionCategory" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[SpanishPromotionCategory]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[SpanishPromotionCategory]"
+                      name="SpanishPromotionCategory" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[FrenchPromotionCategory]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[FrenchPromotionCategory]"
+                      name="FrenchPromotionCategory" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[StartDate]"
+                      name="StartDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[EndDate]"
+                      name="EndDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[MinQty]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[MinQty]"
+                      name="MinQty" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[MaxQty]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[MaxQty]"
+                      name="MaxQty" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimPromotion.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimPromotion\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimPromotion\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimPromotion.Paths[Source dbo DimPromotion_Output_Add Load Date]"
+              endId="Package\Load dbo DimPromotion\Add Load Date.Inputs[Source dbo DimPromotion_Output_Add Load Date]"
+              name="Source dbo DimPromotion_Output_Add Load Date"
+              startId="Package\Load dbo DimPromotion\Source dbo DimPromotion.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimPromotion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{67A2F480-7DC9-44B9-870D-9CD94EAFFDBA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimPromotion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E74F591C-4642-487E-8CA2-2CC92613397E}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimPromotion&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimPromotion_To_Load dbo DimPromotion]"
+      DTS:CreationName=""
+      DTS:DTSID="{A8077387-0965-4D7D-89F2-77443460BB56}"
+      DTS:From="Package\Truncate dbo DimPromotion"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimPromotion_To_Load dbo DimPromotion"
+      DTS:To="Package\Load dbo DimPromotion" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

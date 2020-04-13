@@ -1,0 +1,869 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:53 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{836A0A54-6BC6-48D6-B7D1-61FBED376CE9}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_Orders"
+  DTS:VersionGUID="{CDF7B730-3F9C-4430-8353-BFAF0AFC4F4E}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{25BE3819-8952-4414-B642-184429323DB0}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{401F3DEE-C5C3-4FD9-8042-C5D1FF01ACC0}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{36D48D34-305C-42FB-A147-B27ADC4EE7C5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BA7A2BB3-5FD5-4B1A-9B5E-2536D07292B7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{32DD242A-FB4B-4914-A747-F60D6E0433C2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales Orders"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{624044FF-9641-46AD-A893-76D24084EEFA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales Orders"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales Orders\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales Orders\Add Load Date.Inputs[Source Sales Orders_Output_Add Load Date]"
+                  name="Source Sales Orders_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Orders\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales Orders\Add Load Date.Inputs[Source Sales Orders_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales Orders\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales Orders\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales Orders\Add Load Date.Inputs[Source Sales Orders_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Orders\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales Orders\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Orders\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales Orders\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Orders\Source Sales Orders"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales Orders"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [OrderID]
+,[CustomerID]
+,[SalespersonPersonID]
+,[PickedByPersonID]
+,[ContactPersonID]
+,[BackorderOrderID]
+,[OrderDate]
+,[ExpectedDeliveryDate]
+,[CustomerPurchaseOrderNumber]
+,[IsUndersupplyBackordered]
+,[Comments]
+,[DeliveryInstructions]
+,[InternalComments]
+,[PickingCompletedWhen]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Sales].[Orders]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales Orders\Source Sales Orders.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[OrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[OrderID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[OrderID]"
+                      name="OrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[SalespersonPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[SalespersonPersonID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[SalespersonPersonID]"
+                      name="SalespersonPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[PickedByPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[PickedByPersonID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[PickedByPersonID]"
+                      name="PickedByPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[ContactPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[ContactPersonID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[ContactPersonID]"
+                      name="ContactPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[BackorderOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[BackorderOrderID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[BackorderOrderID]"
+                      name="BackorderOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[OrderDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[ExpectedDeliveryDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[ExpectedDeliveryDate]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[ExpectedDeliveryDate]"
+                      name="ExpectedDeliveryDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      length="20"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[CustomerPurchaseOrderNumber]"
+                      name="CustomerPurchaseOrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[IsUndersupplyBackordered]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[IsUndersupplyBackordered]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[IsUndersupplyBackordered]"
+                      name="IsUndersupplyBackordered"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[Comments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[Comments]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[Comments]"
+                      name="Comments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[DeliveryInstructions]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[DeliveryInstructions]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[DeliveryInstructions]"
+                      name="DeliveryInstructions"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[InternalComments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[InternalComments]"
+                      name="InternalComments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[PickingCompletedWhen]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[PickingCompletedWhen]"
+                      name="PickingCompletedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[OrderID]"
+                      dataType="i4"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[SalespersonPersonID]"
+                      dataType="i4"
+                      name="SalespersonPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[PickedByPersonID]"
+                      dataType="i4"
+                      name="PickedByPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[ContactPersonID]"
+                      dataType="i4"
+                      name="ContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[BackorderOrderID]"
+                      dataType="i4"
+                      name="BackorderOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[OrderDate]"
+                      dataType="dbDate"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[ExpectedDeliveryDate]"
+                      dataType="dbDate"
+                      name="ExpectedDeliveryDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="CustomerPurchaseOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[IsUndersupplyBackordered]"
+                      dataType="bool"
+                      name="IsUndersupplyBackordered" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[Comments]"
+                      dataType="nText"
+                      name="Comments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[DeliveryInstructions]"
+                      dataType="nText"
+                      name="DeliveryInstructions" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="PickingCompletedWhen"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[OrderID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[OrderID]"
+                      name="OrderID" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[SalespersonPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[SalespersonPersonID]"
+                      name="SalespersonPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[PickedByPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[PickedByPersonID]"
+                      name="PickedByPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ContactPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ContactPersonID]"
+                      name="ContactPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[BackorderOrderID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[BackorderOrderID]"
+                      name="BackorderOrderID" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[OrderDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ExpectedDeliveryDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ExpectedDeliveryDate]"
+                      name="ExpectedDeliveryDate" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[CustomerPurchaseOrderNumber]"
+                      name="CustomerPurchaseOrderNumber" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[IsUndersupplyBackordered]"
+                      dataType="bool"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[IsUndersupplyBackordered]"
+                      name="IsUndersupplyBackordered" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[Comments]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[Comments]"
+                      name="Comments" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[DeliveryInstructions]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[DeliveryInstructions]"
+                      name="DeliveryInstructions" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[InternalComments]"
+                      dataType="nText"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[InternalComments]"
+                      name="InternalComments" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[PickingCompletedWhen]"
+                      name="PickingCompletedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Orders\Staging wwi Orders"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi Orders"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[Orders]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales Orders\Staging wwi Orders.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi Orders">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[OrderID]"
+                      cachedDataType="i4"
+                      cachedName="OrderID"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[OrderID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[OrderID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[SalespersonPersonID]"
+                      cachedDataType="i4"
+                      cachedName="SalespersonPersonID"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[SalespersonPersonID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[SalespersonPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[PickedByPersonID]"
+                      cachedDataType="i4"
+                      cachedName="PickedByPersonID"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[PickedByPersonID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[PickedByPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[ContactPersonID]"
+                      cachedDataType="i4"
+                      cachedName="ContactPersonID"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[ContactPersonID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[ContactPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[BackorderOrderID]"
+                      cachedDataType="i4"
+                      cachedName="BackorderOrderID"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[BackorderOrderID]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[BackorderOrderID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[OrderDate]"
+                      cachedDataType="dbDate"
+                      cachedName="OrderDate"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[OrderDate]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[OrderDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[ExpectedDeliveryDate]"
+                      cachedDataType="dbDate"
+                      cachedName="ExpectedDeliveryDate"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[ExpectedDeliveryDate]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[ExpectedDeliveryDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[CustomerPurchaseOrderNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="CustomerPurchaseOrderNumber"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[CustomerPurchaseOrderNumber]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[IsUndersupplyBackordered]"
+                      cachedDataType="bool"
+                      cachedName="IsUndersupplyBackordered"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[IsUndersupplyBackordered]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[IsUndersupplyBackordered]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[Comments]"
+                      cachedDataType="nText"
+                      cachedName="Comments"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[Comments]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[Comments]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[DeliveryInstructions]"
+                      cachedDataType="nText"
+                      cachedName="DeliveryInstructions"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[DeliveryInstructions]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[DeliveryInstructions]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[InternalComments]"
+                      cachedDataType="nText"
+                      cachedName="InternalComments"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[InternalComments]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[PickingCompletedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="PickingCompletedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[PickingCompletedWhen]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[PickingCompletedWhen]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[OrderID]"
+                      dataType="i4"
+                      name="OrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[SalespersonPersonID]"
+                      dataType="i4"
+                      name="SalespersonPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[PickedByPersonID]"
+                      dataType="i4"
+                      name="PickedByPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[ContactPersonID]"
+                      dataType="i4"
+                      name="ContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[BackorderOrderID]"
+                      dataType="i4"
+                      name="BackorderOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[OrderDate]"
+                      dataType="dbDate"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[ExpectedDeliveryDate]"
+                      dataType="dbDate"
+                      name="ExpectedDeliveryDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[CustomerPurchaseOrderNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="CustomerPurchaseOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[IsUndersupplyBackordered]"
+                      dataType="bool"
+                      name="IsUndersupplyBackordered" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[Comments]"
+                      dataType="nText"
+                      name="Comments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[DeliveryInstructions]"
+                      dataType="nText"
+                      name="DeliveryInstructions" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[PickingCompletedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="PickingCompletedWhen"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Orders\Staging wwi Orders.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Staging wwi Orders.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Orders\Staging wwi Orders.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Orders\Staging wwi Orders.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales Orders.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales Orders\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales Orders\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales Orders.Paths[Count New Rows_Output_Staging wwi Orders]"
+              endId="Package\Load Sales Orders\Staging wwi Orders.Inputs[Count New Rows_Output_Staging wwi Orders]"
+              name="Count New Rows_Output_Staging wwi Orders"
+              startId="Package\Load Sales Orders\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales Orders.Paths[Source Sales Orders_Output_Add Load Date]"
+              endId="Package\Load Sales Orders\Add Load Date.Inputs[Source Sales Orders_Output_Add Load Date]"
+              name="Source Sales Orders_Output_Add Load Date"
+              startId="Package\Load Sales Orders\Source Sales Orders.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

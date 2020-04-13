@@ -1,0 +1,1379 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:52 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{05202424-8DBA-4BC1-A1BC-CCB76BDA0BF3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_Customers_Archive"
+  DTS:VersionGUID="{6C137B53-5F38-4504-9BEC-A192153D5256}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{90418008-1FB8-4C03-B9D1-7D9C060DB3A3}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4D03D5C1-7D50-438C-8686-DBD924E33B7C}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5FD60519-C5F5-493F-BB01-74EE970178A6}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6AA42EF8-D5FA-464D-8772-AE715634DE90}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{59F805CA-DFC4-4B4D-880E-46FDF590F4D7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales Customers_Archive"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{C1BA48AC-FC95-49DD-88AB-0D87C7E04264}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales Customers_Archive"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales Customers_Archive\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales Customers_Archive\Add Load Date.Inputs[Source Sales Customers_Archive_Output_Add Load Date]"
+                  name="Source Sales Customers_Archive_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales Customers_Archive\Add Load Date.Inputs[Source Sales Customers_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales Customers_Archive\Add Load Date.Inputs[Source Sales Customers_Archive_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Customers_Archive\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales Customers_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Customers_Archive\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales Customers_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales Customers_Archive"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [CustomerID]
+,[CustomerName]
+,[BillToCustomerID]
+,[CustomerCategoryID]
+,[BuyingGroupID]
+,[PrimaryContactPersonID]
+,[AlternateContactPersonID]
+,[DeliveryMethodID]
+,[DeliveryCityID]
+,[PostalCityID]
+,[CreditLimit]
+,[AccountOpenedDate]
+,[StandardDiscountPercentage]
+,[IsStatementSent]
+,[IsOnCreditHold]
+,[PaymentDays]
+,[PhoneNumber]
+,[FaxNumber]
+,[DeliveryRun]
+,[RunPosition]
+,[WebsiteURL]
+,[DeliveryAddressLine1]
+,[DeliveryAddressLine2]
+,[DeliveryPostalCode]
+,[DeliveryLocation]
+,[PostalAddressLine1]
+,[PostalAddressLine2]
+,[PostalPostalCode]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Sales].[Customers_Archive]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CustomerName]"
+                      length="100"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerName]"
+                      name="CustomerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[BillToCustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[BillToCustomerID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[BillToCustomerID]"
+                      name="BillToCustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerCategoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CustomerCategoryID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerCategoryID]"
+                      name="CustomerCategoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[BuyingGroupID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[BuyingGroupID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[BuyingGroupID]"
+                      name="BuyingGroupID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PrimaryContactPersonID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PrimaryContactPersonID]"
+                      name="PrimaryContactPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[AlternateContactPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[AlternateContactPersonID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[AlternateContactPersonID]"
+                      name="AlternateContactPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryMethodID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryMethodID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryMethodID]"
+                      name="DeliveryMethodID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryCityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryCityID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryCityID]"
+                      name="DeliveryCityID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalCityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalCityID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalCityID]"
+                      name="PostalCityID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CreditLimit]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CreditLimit]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CreditLimit]"
+                      name="CreditLimit"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[AccountOpenedDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[AccountOpenedDate]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[AccountOpenedDate]"
+                      name="AccountOpenedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[StandardDiscountPercentage]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[StandardDiscountPercentage]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[StandardDiscountPercentage]"
+                      name="StandardDiscountPercentage"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[IsStatementSent]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[IsStatementSent]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[IsStatementSent]"
+                      name="IsStatementSent"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[IsOnCreditHold]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[IsOnCreditHold]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[IsOnCreditHold]"
+                      name="IsOnCreditHold"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PaymentDays]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PaymentDays]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PaymentDays]"
+                      name="PaymentDays"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PhoneNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PhoneNumber]"
+                      length="20"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PhoneNumber]"
+                      name="PhoneNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[FaxNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[FaxNumber]"
+                      length="20"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[FaxNumber]"
+                      name="FaxNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryRun]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryRun]"
+                      length="5"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryRun]"
+                      name="DeliveryRun"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[RunPosition]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[RunPosition]"
+                      length="5"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[RunPosition]"
+                      name="RunPosition"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[WebsiteURL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[WebsiteURL]"
+                      length="256"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[WebsiteURL]"
+                      name="WebsiteURL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryAddressLine1]"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryAddressLine1]"
+                      name="DeliveryAddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryAddressLine2]"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryAddressLine2]"
+                      name="DeliveryAddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryPostalCode]"
+                      length="10"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryPostalCode]"
+                      name="DeliveryPostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryLocation]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryLocation]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryLocation]"
+                      name="DeliveryLocation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalAddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalAddressLine1]"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalAddressLine1]"
+                      name="PostalAddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalAddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalAddressLine2]"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalAddressLine2]"
+                      name="PostalAddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalPostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalPostalCode]"
+                      length="10"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalPostalCode]"
+                      name="PostalPostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CustomerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="CustomerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[BillToCustomerID]"
+                      dataType="i4"
+                      name="BillToCustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CustomerCategoryID]"
+                      dataType="i4"
+                      name="CustomerCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[BuyingGroupID]"
+                      dataType="i4"
+                      name="BuyingGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      name="PrimaryContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[AlternateContactPersonID]"
+                      dataType="i4"
+                      name="AlternateContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryMethodID]"
+                      dataType="i4"
+                      name="DeliveryMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryCityID]"
+                      dataType="i4"
+                      name="DeliveryCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalCityID]"
+                      dataType="i4"
+                      name="PostalCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[CreditLimit]"
+                      dataType="numeric"
+                      name="CreditLimit"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[AccountOpenedDate]"
+                      dataType="dbDate"
+                      name="AccountOpenedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[StandardDiscountPercentage]"
+                      dataType="numeric"
+                      name="StandardDiscountPercentage"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[IsStatementSent]"
+                      dataType="bool"
+                      name="IsStatementSent" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[IsOnCreditHold]"
+                      dataType="bool"
+                      name="IsOnCreditHold" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PaymentDays]"
+                      dataType="i4"
+                      name="PaymentDays" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="FaxNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryRun]"
+                      dataType="wstr"
+                      length="5"
+                      name="DeliveryRun" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[RunPosition]"
+                      dataType="wstr"
+                      length="5"
+                      name="RunPosition" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[WebsiteURL]"
+                      dataType="wstr"
+                      length="256"
+                      name="WebsiteURL" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="DeliveryPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[DeliveryLocation]"
+                      dataType="image"
+                      name="DeliveryLocation" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CustomerName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CustomerName]"
+                      name="CustomerName" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[BillToCustomerID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[BillToCustomerID]"
+                      name="BillToCustomerID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CustomerCategoryID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CustomerCategoryID]"
+                      name="CustomerCategoryID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[BuyingGroupID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[BuyingGroupID]"
+                      name="BuyingGroupID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PrimaryContactPersonID]"
+                      name="PrimaryContactPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[AlternateContactPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[AlternateContactPersonID]"
+                      name="AlternateContactPersonID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryMethodID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryMethodID]"
+                      name="DeliveryMethodID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryCityID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryCityID]"
+                      name="DeliveryCityID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalCityID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalCityID]"
+                      name="PostalCityID" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CreditLimit]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[CreditLimit]"
+                      name="CreditLimit"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[AccountOpenedDate]"
+                      dataType="dbDate"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[AccountOpenedDate]"
+                      name="AccountOpenedDate" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[StandardDiscountPercentage]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[StandardDiscountPercentage]"
+                      name="StandardDiscountPercentage"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[IsStatementSent]"
+                      dataType="bool"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[IsStatementSent]"
+                      name="IsStatementSent" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[IsOnCreditHold]"
+                      dataType="bool"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[IsOnCreditHold]"
+                      name="IsOnCreditHold" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PaymentDays]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PaymentDays]"
+                      name="PaymentDays" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PhoneNumber]"
+                      name="PhoneNumber" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[FaxNumber]"
+                      name="FaxNumber" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryRun]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryRun]"
+                      name="DeliveryRun" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[RunPosition]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[RunPosition]"
+                      name="RunPosition" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[WebsiteURL]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[WebsiteURL]"
+                      name="WebsiteURL" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryAddressLine1]"
+                      name="DeliveryAddressLine1" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryAddressLine2]"
+                      name="DeliveryAddressLine2" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryPostalCode]"
+                      name="DeliveryPostalCode" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryLocation]"
+                      dataType="image"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[DeliveryLocation]"
+                      name="DeliveryLocation" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalAddressLine1]"
+                      name="PostalAddressLine1" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalAddressLine2]"
+                      name="PostalAddressLine2" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[PostalPostalCode]"
+                      name="PostalPostalCode" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi Customers_Archive"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[Customers_Archive]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi Customers_Archive">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CustomerID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[CustomerName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="CustomerName"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CustomerName]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerName]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[BillToCustomerID]"
+                      cachedDataType="i4"
+                      cachedName="BillToCustomerID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[BillToCustomerID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[BillToCustomerID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[CustomerCategoryID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerCategoryID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CustomerCategoryID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CustomerCategoryID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[BuyingGroupID]"
+                      cachedDataType="i4"
+                      cachedName="BuyingGroupID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[BuyingGroupID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[BuyingGroupID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PrimaryContactPersonID]"
+                      cachedDataType="i4"
+                      cachedName="PrimaryContactPersonID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PrimaryContactPersonID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PrimaryContactPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[AlternateContactPersonID]"
+                      cachedDataType="i4"
+                      cachedName="AlternateContactPersonID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[AlternateContactPersonID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[AlternateContactPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryMethodID]"
+                      cachedDataType="i4"
+                      cachedName="DeliveryMethodID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryMethodID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryMethodID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryCityID]"
+                      cachedDataType="i4"
+                      cachedName="DeliveryCityID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryCityID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryCityID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PostalCityID]"
+                      cachedDataType="i4"
+                      cachedName="PostalCityID"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalCityID]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalCityID]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[CreditLimit]"
+                      cachedDataType="numeric"
+                      cachedName="CreditLimit"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CreditLimit]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[CreditLimit]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[AccountOpenedDate]"
+                      cachedDataType="dbDate"
+                      cachedName="AccountOpenedDate"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[AccountOpenedDate]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[AccountOpenedDate]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[StandardDiscountPercentage]"
+                      cachedDataType="numeric"
+                      cachedName="StandardDiscountPercentage"
+                      cachedPrecision="18"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[StandardDiscountPercentage]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[StandardDiscountPercentage]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[IsStatementSent]"
+                      cachedDataType="bool"
+                      cachedName="IsStatementSent"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[IsStatementSent]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[IsStatementSent]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[IsOnCreditHold]"
+                      cachedDataType="bool"
+                      cachedName="IsOnCreditHold"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[IsOnCreditHold]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[IsOnCreditHold]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PaymentDays]"
+                      cachedDataType="i4"
+                      cachedName="PaymentDays"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PaymentDays]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PaymentDays]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PhoneNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PhoneNumber"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PhoneNumber]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PhoneNumber]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[FaxNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="FaxNumber"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[FaxNumber]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[FaxNumber]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryRun]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="DeliveryRun"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryRun]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryRun]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[RunPosition]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="RunPosition"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[RunPosition]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[RunPosition]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[WebsiteURL]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="WebsiteURL"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[WebsiteURL]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[WebsiteURL]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryAddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="DeliveryAddressLine1"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryAddressLine1]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryAddressLine1]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryAddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="DeliveryAddressLine2"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryAddressLine2]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryAddressLine2]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryPostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DeliveryPostalCode"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryPostalCode]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryPostalCode]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[DeliveryLocation]"
+                      cachedDataType="image"
+                      cachedName="DeliveryLocation"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryLocation]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[DeliveryLocation]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PostalAddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="PostalAddressLine1"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalAddressLine1]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalAddressLine1]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PostalAddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="PostalAddressLine2"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalAddressLine2]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalAddressLine2]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[PostalPostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PostalPostalCode"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalPostalCode]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[PostalPostalCode]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[ValidFrom]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ValidFrom"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[ValidFrom]" />
+                    <inputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].Columns[ValidTo]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ValidTo"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output].Columns[ValidTo]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CustomerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="CustomerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[BillToCustomerID]"
+                      dataType="i4"
+                      name="BillToCustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CustomerCategoryID]"
+                      dataType="i4"
+                      name="CustomerCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[BuyingGroupID]"
+                      dataType="i4"
+                      name="BuyingGroupID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      name="PrimaryContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[AlternateContactPersonID]"
+                      dataType="i4"
+                      name="AlternateContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryMethodID]"
+                      dataType="i4"
+                      name="DeliveryMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryCityID]"
+                      dataType="i4"
+                      name="DeliveryCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalCityID]"
+                      dataType="i4"
+                      name="PostalCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[CreditLimit]"
+                      dataType="numeric"
+                      name="CreditLimit"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[AccountOpenedDate]"
+                      dataType="dbDate"
+                      name="AccountOpenedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[StandardDiscountPercentage]"
+                      dataType="numeric"
+                      name="StandardDiscountPercentage"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[IsStatementSent]"
+                      dataType="bool"
+                      name="IsStatementSent" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[IsOnCreditHold]"
+                      dataType="bool"
+                      name="IsOnCreditHold" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PaymentDays]"
+                      dataType="i4"
+                      name="PaymentDays" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="FaxNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryRun]"
+                      dataType="wstr"
+                      length="5"
+                      name="DeliveryRun" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[RunPosition]"
+                      dataType="wstr"
+                      length="5"
+                      name="RunPosition" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[WebsiteURL]"
+                      dataType="wstr"
+                      length="256"
+                      name="WebsiteURL" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="DeliveryPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[DeliveryLocation]"
+                      dataType="image"
+                      name="DeliveryLocation" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales Customers_Archive.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales Customers_Archive\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales Customers_Archive\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales Customers_Archive.Paths[Count New Rows_Output_Staging wwi Customers_Archive]"
+              endId="Package\Load Sales Customers_Archive\Staging wwi Customers_Archive.Inputs[Count New Rows_Output_Staging wwi Customers_Archive]"
+              name="Count New Rows_Output_Staging wwi Customers_Archive"
+              startId="Package\Load Sales Customers_Archive\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales Customers_Archive.Paths[Source Sales Customers_Archive_Output_Add Load Date]"
+              endId="Package\Load Sales Customers_Archive\Add Load Date.Inputs[Source Sales Customers_Archive_Output_Add Load Date]"
+              name="Source Sales Customers_Archive_Output_Add Load Date"
+              startId="Package\Load Sales Customers_Archive\Source Sales Customers_Archive.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

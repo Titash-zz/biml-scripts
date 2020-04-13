@@ -1,0 +1,67 @@
+﻿<#
+    var sourceSchemas = new List<string> {"Sales","Purchasing"};
+    var destinationSchema = "wwi";
+    var sourceConnection = SchemaManager.CreateConnectionNode("Source",@"Data Source=localhost\SQLEXPRESS;Initial Catalog=WideWorldImporters;Provider=SQLNCLI11.0;Integrated Security=SSPI;");
+    var sourceMetadata = sourceConnection.GetDatabaseSchema(ImportOptions.ExcludeViews | ImportOptions.ExcludeCheckConstraint | ImportOptions.ExcludeForeignKey | ImportOptions.ExcludeIndex);
+
+#>
+
+<#@ include file="_functions.biml" #>
+
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    
+<Connections>
+    <#@include file="_connections.biml"#>
+</Connections> 
+
+<Packages>    
+         <# foreach (var table in sourceMetadata.TableNodes) { 
+         
+         if (sourceSchemas.Any(str => str.Contains(table.SchemaName))) {
+         
+         #>
+
+        <Package Name="<#=AddLoad(table.SchemaName)#>_<#=table.Name#>" ConstraintMode="Linear" ProtectionLevel="EncryptSensitiveWithUserKey">
+        
+          <Variables>
+                <#@ include file="_variables.biml"#>
+            </Variables>
+                
+          
+              <Tasks>
+            
+                 <Dataflow Name="Load <#=table.Schema.Name#> <#=table.Name#>">
+                    <Transformations>
+                        
+                    <OleDbSource Name="Source <#=table.Schema.Name#> <#=table.Name#>" ConnectionName="Source">
+                            <DirectInput><#=table.GetSelectSql()#></DirectInput>
+                    </OleDbSource>
+                        
+                    <DerivedColumns Name="Add Load Date">
+                        <Columns>
+                            <Column Name="LoadDate" DataType="DateTime">@[System::StartTime]</Column>
+                        </Columns>
+                    </DerivedColumns>        
+                    
+                    <RowCount Name="Count New Rows" VariableName = "Audit.NewRows" />
+                    
+                    <OleDbDestination Name="Staging <#=destinationSchema#> <#=table.Name#>" ConnectionName="Staging" KeepIdentity="true">
+                         <ExternalTableOutput Table="<#=table.SchemaQualifiedName#>"/>
+                    </OleDbDestination> 
+                
+
+                    </Transformations>
+               </Dataflow>
+            
+         </Tasks>
+      
+            
+            
+        
+    </Package>    
+
+    <# } } #>        
+
+</Packages>
+
+</Biml>

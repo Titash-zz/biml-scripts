@@ -1,0 +1,15 @@
+﻿<Projects>
+    <PackageProject
+            ProjectSubPath = "C:\\Users\\titashrc\\source\\repos\\test\\"
+            Name = "newTest/HelloDolores"
+            ProtectionLevel = "EncryptSensitiveWithPassword"
+            ProjectPassword = "Password"
+            >
+        <Parameters>
+            <!-- Add Parameters here -->
+        </Parameters>
+        <Packages>
+            <Package PackageName = "Package 1" />
+        </Packages>
+    </PackageProject>
+</Projects>

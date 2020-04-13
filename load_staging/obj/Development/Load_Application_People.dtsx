@@ -1,0 +1,719 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:02:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{CF2493B0-A91A-4CC3-9273-8F67A7117799}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Application_People"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{4F4536C5-1485-4B79-976D-2839CA25515C}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{36C7F50C-1EBE-4CF3-942A-B50989F703EC}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{44913C0E-A03F-45EF-A894-FCB48F4FCE90}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DF5CCC3F-9786-4358-A1B6-C3100C6DA4CF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table People"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{C4975E24-0E08-4F29-BE92-329DF46FA238}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table People"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{44913C0E-A03F-45EF-A894-FCB48F4FCE90}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Application].[People]') AND type IN (N'U'))&#xA;DROP TABLE [Application].[People]&#xA;GO&#xA;&#xA;CREATE TABLE [Application].[People]&#xA;(&#xA;-- Columns Definition&#xA; [PersonID] int NOT NULL &#xA;, [FullName] nvarchar(50) NOT NULL &#xA;, [PreferredName] nvarchar(50) NOT NULL &#xA;, [SearchName] nvarchar(101) NOT NULL &#xA;, [IsPermittedToLogon] bit NOT NULL &#xA;, [LogonName] nvarchar(50) &#xA;, [IsExternalLogonProvider] bit NOT NULL &#xA;, [HashedPassword] varbinary(max) &#xA;, [IsSystemUser] bit NOT NULL &#xA;, [IsEmployee] bit NOT NULL &#xA;, [IsSalesperson] bit NOT NULL &#xA;, [UserPreferences] nvarchar(max) &#xA;, [PhoneNumber] nvarchar(20) &#xA;, [FaxNumber] nvarchar(20) &#xA;, [EmailAddress] nvarchar(256) &#xA;, [Photo] varbinary(max) &#xA;, [CustomFields] nvarchar(max) &#xA;, [OtherLanguages] nvarchar(max) &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Application_People] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [PersonID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE  NONCLUSTERED INDEX [IX_Application_People_IsEmployee] ON [Application].[People]&#xA;      (&#xA;      [IsEmployee] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [IX_Application_People_IsSalesperson] ON [Application].[People]&#xA;      (&#xA;      [IsSalesperson] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [IX_Application_People_FullName] ON [Application].[People]&#xA;      (&#xA;      [FullName] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [IX_Application_People_Perf_20160301_05] ON [Application].[People]&#xA;      (&#xA;      [IsPermittedToLogon] Asc,[PersonID] Asc&#xA;      )&#xA;      INCLUDE ([FullName],[EmailAddress])&#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Application People"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{A9D98E04-33E7-46D1-B1C8-69B7B09AACC7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Application People"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Application People\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Application People\Add Load Date.Inputs[Source Application People_Output_Add Load Date]"
+                  name="Source Application People_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Application People\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Application People\Add Load Date.Inputs[Source Application People_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application People\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Application People\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Application People\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Application People\Add Load Date.Inputs[Source Application People_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application People\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Application People\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Application People\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Application People\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Application People\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Application People\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Application People\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Application People\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Application People\Source Application People"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Application People"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [PersonID]
+,[FullName]
+,[PreferredName]
+,[SearchName]
+,[IsPermittedToLogon]
+,[LogonName]
+,[IsExternalLogonProvider]
+,[HashedPassword]
+,[IsSystemUser]
+,[IsEmployee]
+,[IsSalesperson]
+,[UserPreferences]
+,[PhoneNumber]
+,[FaxNumber]
+,[EmailAddress]
+,[Photo]
+,[CustomFields]
+,[OtherLanguages]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Application].[People]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Application People\Source Application People.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Application People\Source Application People.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[PersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[PersonID]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[PersonID]"
+                      name="PersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[FullName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[FullName]"
+                      length="50"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[FullName]"
+                      name="FullName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[PreferredName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[PreferredName]"
+                      length="50"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[PreferredName]"
+                      name="PreferredName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[SearchName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[SearchName]"
+                      length="101"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[SearchName]"
+                      name="SearchName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsPermittedToLogon]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsPermittedToLogon]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsPermittedToLogon]"
+                      name="IsPermittedToLogon"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[LogonName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[LogonName]"
+                      length="50"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[LogonName]"
+                      name="LogonName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsExternalLogonProvider]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsExternalLogonProvider]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsExternalLogonProvider]"
+                      name="IsExternalLogonProvider"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[HashedPassword]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[HashedPassword]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[HashedPassword]"
+                      name="HashedPassword"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsSystemUser]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsSystemUser]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsSystemUser]"
+                      name="IsSystemUser"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsEmployee]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsEmployee]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsEmployee]"
+                      name="IsEmployee"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsSalesperson]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsSalesperson]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[IsSalesperson]"
+                      name="IsSalesperson"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[UserPreferences]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[UserPreferences]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[UserPreferences]"
+                      name="UserPreferences"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[PhoneNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[PhoneNumber]"
+                      length="20"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[PhoneNumber]"
+                      name="PhoneNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[FaxNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[FaxNumber]"
+                      length="20"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[FaxNumber]"
+                      name="FaxNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[EmailAddress]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[EmailAddress]"
+                      length="256"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[EmailAddress]"
+                      name="EmailAddress"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[Photo]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[Photo]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[Photo]"
+                      name="Photo"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[CustomFields]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[CustomFields]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[CustomFields]"
+                      name="CustomFields"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[OtherLanguages]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[OtherLanguages]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[OtherLanguages]"
+                      name="OtherLanguages"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[PersonID]"
+                      dataType="i4"
+                      name="PersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[FullName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FullName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[PreferredName]"
+                      dataType="wstr"
+                      length="50"
+                      name="PreferredName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[SearchName]"
+                      dataType="wstr"
+                      length="101"
+                      name="SearchName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsPermittedToLogon]"
+                      dataType="bool"
+                      name="IsPermittedToLogon" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[LogonName]"
+                      dataType="wstr"
+                      length="50"
+                      name="LogonName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsExternalLogonProvider]"
+                      dataType="bool"
+                      name="IsExternalLogonProvider" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[HashedPassword]"
+                      dataType="image"
+                      name="HashedPassword" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsSystemUser]"
+                      dataType="bool"
+                      name="IsSystemUser" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsEmployee]"
+                      dataType="bool"
+                      name="IsEmployee" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[IsSalesperson]"
+                      dataType="bool"
+                      name="IsSalesperson" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[UserPreferences]"
+                      dataType="nText"
+                      name="UserPreferences" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="FaxNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[EmailAddress]"
+                      dataType="wstr"
+                      length="256"
+                      name="EmailAddress" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[Photo]"
+                      dataType="image"
+                      name="Photo" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[CustomFields]"
+                      dataType="nText"
+                      name="CustomFields" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[OtherLanguages]"
+                      dataType="nText"
+                      name="OtherLanguages" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Application People\Source Application People.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[PersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[PersonID]"
+                      name="PersonID" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[FullName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[FullName]"
+                      name="FullName" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[PreferredName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[PreferredName]"
+                      name="PreferredName" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[SearchName]"
+                      dataType="wstr"
+                      length="101"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[SearchName]"
+                      name="SearchName" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsPermittedToLogon]"
+                      dataType="bool"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsPermittedToLogon]"
+                      name="IsPermittedToLogon" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[LogonName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[LogonName]"
+                      name="LogonName" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsExternalLogonProvider]"
+                      dataType="bool"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsExternalLogonProvider]"
+                      name="IsExternalLogonProvider" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[HashedPassword]"
+                      dataType="image"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[HashedPassword]"
+                      name="HashedPassword" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsSystemUser]"
+                      dataType="bool"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsSystemUser]"
+                      name="IsSystemUser" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsEmployee]"
+                      dataType="bool"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsEmployee]"
+                      name="IsEmployee" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsSalesperson]"
+                      dataType="bool"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[IsSalesperson]"
+                      name="IsSalesperson" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[UserPreferences]"
+                      dataType="nText"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[UserPreferences]"
+                      name="UserPreferences" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[PhoneNumber]"
+                      name="PhoneNumber" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[FaxNumber]"
+                      name="FaxNumber" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[EmailAddress]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[EmailAddress]"
+                      name="EmailAddress" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[Photo]"
+                      dataType="image"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[Photo]"
+                      name="Photo" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[CustomFields]"
+                      dataType="nText"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[CustomFields]"
+                      name="CustomFields" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[OtherLanguages]"
+                      dataType="nText"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[OtherLanguages]"
+                      name="OtherLanguages" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Application People\Source Application People.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Application People.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Application People\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Application People\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Application People.Paths[Source Application People_Output_Add Load Date]"
+              endId="Package\Load Application People\Add Load Date.Inputs[Source Application People_Output_Add Load Date]"
+              name="Source Application People_Output_Add Load Date"
+              startId="Package\Load Application People\Source Application People.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table People_To_Load Application People]"
+      DTS:CreationName=""
+      DTS:DTSID="{D14054EE-61AD-4DAC-9105-998682559F82}"
+      DTS:From="Package\Create Table People"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table People_To_Load Application People"
+      DTS:To="Package\Load Application People" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

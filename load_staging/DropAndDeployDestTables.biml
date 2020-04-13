@@ -1,0 +1,27 @@
+﻿<#
+    var destinationSchema = "adworks";
+    var sourceConnection = SchemaManager.CreateConnectionNode("Source",@"Data Source=localhost\SQLEXPRESS;Initial Catalog=AdventureWorksDW2017;Provider=SQLNCLI11.0;Integrated Security=SSPI;");
+    var sourceMetadata = sourceConnection.GetDatabaseSchema(ImportOptions.ExcludeViews);
+
+#>
+
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+<Connections>
+<OleDbConnection Name="Staging"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Staging;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+</OleDbConnection>
+</Connections>
+    <Packages>
+        <Package Name="MasterDeployePackage" ConstraintMode="Linear">
+            <Tasks>
+                <# foreach (var table in sourceMetadata.TableNodes) { #>
+                <ExecuteSQL Name="Create Table <#=table.Name#>" ConnectionName="Staging">
+                    <DirectInput><#=table.GetDropAndCreateDdl()#></DirectInput>
+                </ExecuteSQL>
+                <# } #>    
+            </Tasks>
+            
+        </Package>
+    </Packages>
+</Biml>

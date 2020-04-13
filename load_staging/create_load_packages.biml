@@ -1,0 +1,73 @@
+﻿<#
+    var destinationSchema = "wwi";
+    var sourceConnection = SchemaManager.CreateConnectionNode("Source",@"Data Source=localhost\SQLEXPRESS;Initial Catalog=WideWorldImporters;Provider=SQLNCLI11.0;Integrated Security=SSPI;");
+    var sourceMetadata = sourceConnection.GetDatabaseSchema(ImportOptions.ExcludeViews);
+
+#>
+
+<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <Connections>
+      <OleDbConnection Name="Source"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=WideWorldImporters;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+        </OleDbConnection>
+    
+    <OleDbConnection Name="Audit"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Audit;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+        </OleDbConnection>
+    
+    <OleDbConnection Name="Staging"
+            ConnectionString="Data Source=localhost\SQLEXPRESS;Initial Catalog=Staging;Provider=SQLNCLI11.0;Integrated Security=SSPI;"
+            CreatePackageConfiguration="true">
+        </OleDbConnection>
+</Connections>
+
+<Packages>
+    <# foreach (var table in sourceMetadata.TableNodes) { #>
+        <Package Name="Load_<#=destinationSchema#>_<#=table.Name#>" ConstraintMode="Linear">
+            <Variables>
+                <Variable Name="NewRows" DataType="Int32">0</Variable>
+            </Variables>
+            
+            <Tasks>
+                 <ExecuteSQL Name="Create Table <#=table.Name#>" ConnectionName="Staging">
+                    <DirectInput><#=table.GetDropAndCreateDdl()#></DirectInput>
+            </ExecuteSQL>
+                
+                <!-- This portion of the script is when you have to enable truncate load
+                <ExecuteSQL Name="Truncate <#=table.Schema.Name#> <#=table.Name#>" ConnectionName="Staging">
+                    <DirectInput>
+                        truncate table <#=destinationSchema#>.<#=table.Name#>
+                    </DirectInput>
+                </ExecuteSQL>
+                -->
+                
+                <Dataflow Name="Load <#=table.Schema.Name#> <#=table.Name#>">
+                    <Transformations>
+                        
+                    <OleDbSource Name="Source <#=table.Schema.Name#> <#=table.Name#>" ConnectionName="Source">
+                            <DirectInput><#=table.GetSelectSql()#></DirectInput>
+                        </OleDbSource>
+                        
+                    <DerivedColumns Name="Add Load Date">
+                        <Columns>
+                            <Column Name="LoadDate" DataType="DateTime">@[System::StartTime]</Column>
+                        </Columns>
+                    </DerivedColumns>        
+                    
+                    <RowCount Name="Count New Rows" VariableName = "User.NewRows" />
+                    
+                    <OleDbDestination Name="Staging <#=destinationSchema#> <#=table.Name#>" ConnectionName="Staging" KeepIdentity="true">
+                         <ExternalTableOutput Table="<#=table.SchemaQualifiedName#>"/>
+                    </OleDbDestination> 
+                
+
+                    </Transformations>
+               </Dataflow>
+            </Tasks>
+        </Package>
+    <# } #>    
+</Packages>    
+    
+</Biml>

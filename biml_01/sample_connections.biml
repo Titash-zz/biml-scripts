@@ -1,0 +1,16 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <Connections>
+        <OleDbConnection Name="AdventureWorksDW" ConnectionString="Server=localhost\SQLEXPRESS;Initial Catalog=AdventureWorksDW2017;Integrated Security=SSPI;Provider=SQLNCLI11;" />
+    </Connections>
+    <Packages>
+        <Package Name="MyFourthBimlPackage">
+            <Connections>
+                <Connection ConnectionName="AdventureWorksDW">
+                    <Expressions>
+                        <Expression ExternalProperty="ConnectionString">"Server=localhost\\SQLEXPRESS;Initial Catalog=AdventureWorksDW2017;Integrated Security=SSPI;Provider=SQLNCLI11;"</Expression>
+                    </Expressions>
+                </Connection>
+            </Connections>
+        </Package>
+    </Packages>
+</Biml>

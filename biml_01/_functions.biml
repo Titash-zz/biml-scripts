@@ -1,0 +1,18 @@
+﻿<#@ template tier="0"#>
+
+<!-- includes all customs functions from function -->
+
+
+<#+
+    
+        private string AllLower(string value)
+        {
+            return value.ToLower();
+        }
+        
+        private string AddLoad(string value)
+        {
+            return $"staging_{value}";
+        }
+    
+#>

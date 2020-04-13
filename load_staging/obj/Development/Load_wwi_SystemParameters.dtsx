@@ -1,0 +1,561 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:08:01 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{49D3EF4E-E06E-445F-A391-9FE3BC89B217}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_wwi_SystemParameters"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{2AB2BC93-5C94-47BF-904D-ECCED5050441}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C3BA4BE8-3A12-4FF1-84D1-05BE914BA969}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7FD69767-26BF-401F-8654-F8103F1D19AD}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{442BC397-F27E-4007-86D6-6952F528A848}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table SystemParameters"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{76A5FEA0-0ACE-49B0-B785-E8B2B124099D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table SystemParameters"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7FD69767-26BF-401F-8654-F8103F1D19AD}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Application].[SystemParameters]') AND type IN (N'U'))&#xA;DROP TABLE [Application].[SystemParameters]&#xA;GO&#xA;&#xA;CREATE TABLE [Application].[SystemParameters]&#xA;(&#xA;-- Columns Definition&#xA; [SystemParameterID] int NOT NULL &#xA;, [DeliveryAddressLine1] nvarchar(60) NOT NULL &#xA;, [DeliveryAddressLine2] nvarchar(60) &#xA;, [DeliveryPostalCode] nvarchar(10) NOT NULL &#xA;, [DeliveryLocation] geography NOT NULL &#xA;, [PostalAddressLine1] nvarchar(60) NOT NULL &#xA;, [PostalAddressLine2] nvarchar(60) &#xA;, [PostalPostalCode] nvarchar(10) NOT NULL &#xA;, [ApplicationSettings] nvarchar(max) NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Application_SystemParameters] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SystemParameterID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE  NONCLUSTERED INDEX [FK_Application_SystemParameters_DeliveryCityID] ON [Application].[SystemParameters]&#xA;      (&#xA;      [DeliveryCityID] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;CREATE  NONCLUSTERED INDEX [FK_Application_SystemParameters_PostalCityID] ON [Application].[SystemParameters]&#xA;      (&#xA;      [PostalCityID] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Application SystemParameters"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{9E09C78C-BB5D-4499-8DC1-AE05E01E62DD}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Application SystemParameters"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Application SystemParameters\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Application SystemParameters\Add Load Date.Inputs[Source Application SystemParameters_Output_Add Load Date]"
+                  name="Source Application SystemParameters_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Application SystemParameters\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Application SystemParameters\Add Load Date.Inputs[Source Application SystemParameters_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Application SystemParameters\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Application SystemParameters\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Application SystemParameters\Add Load Date.Inputs[Source Application SystemParameters_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Application SystemParameters\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Application SystemParameters\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Application SystemParameters\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Application SystemParameters\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Application SystemParameters\Source Application SystemParameters"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Application SystemParameters"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [SystemParameterID]
+,[DeliveryAddressLine1]
+,[DeliveryAddressLine2]
+,[DeliveryCityID]
+,[DeliveryPostalCode]
+,[DeliveryLocation]
+,[PostalAddressLine1]
+,[PostalAddressLine2]
+,[PostalCityID]
+,[PostalPostalCode]
+,[ApplicationSettings]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Application].[SystemParameters]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Application SystemParameters\Source Application SystemParameters.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[SystemParameterID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[SystemParameterID]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[SystemParameterID]"
+                      name="SystemParameterID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryAddressLine1]"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryAddressLine1]"
+                      name="DeliveryAddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryAddressLine2]"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryAddressLine2]"
+                      name="DeliveryAddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryCityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryCityID]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryCityID]"
+                      name="DeliveryCityID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryPostalCode]"
+                      length="10"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryPostalCode]"
+                      name="DeliveryPostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryLocation]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryLocation]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[DeliveryLocation]"
+                      name="DeliveryLocation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalAddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalAddressLine1]"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalAddressLine1]"
+                      name="PostalAddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalAddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalAddressLine2]"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalAddressLine2]"
+                      name="PostalAddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalCityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalCityID]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalCityID]"
+                      name="PostalCityID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalPostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalPostalCode]"
+                      length="10"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[PostalPostalCode]"
+                      name="PostalPostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[ApplicationSettings]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[ApplicationSettings]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[ApplicationSettings]"
+                      name="ApplicationSettings"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[SystemParameterID]"
+                      dataType="i4"
+                      name="SystemParameterID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryCityID]"
+                      dataType="i4"
+                      name="DeliveryCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="DeliveryPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[DeliveryLocation]"
+                      dataType="image"
+                      name="DeliveryLocation" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalCityID]"
+                      dataType="i4"
+                      name="PostalCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[ApplicationSettings]"
+                      dataType="nText"
+                      name="ApplicationSettings" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[SystemParameterID]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[SystemParameterID]"
+                      name="SystemParameterID" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryAddressLine1]"
+                      name="DeliveryAddressLine1" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryAddressLine2]"
+                      name="DeliveryAddressLine2" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryCityID]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryCityID]"
+                      name="DeliveryCityID" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryPostalCode]"
+                      name="DeliveryPostalCode" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryLocation]"
+                      dataType="image"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[DeliveryLocation]"
+                      name="DeliveryLocation" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalAddressLine1]"
+                      name="PostalAddressLine1" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalAddressLine2]"
+                      name="PostalAddressLine2" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalCityID]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalCityID]"
+                      name="PostalCityID" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[PostalPostalCode]"
+                      name="PostalPostalCode" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[ApplicationSettings]"
+                      dataType="nText"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[ApplicationSettings]"
+                      name="ApplicationSettings" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Application SystemParameters.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Application SystemParameters\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Application SystemParameters\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Application SystemParameters.Paths[Source Application SystemParameters_Output_Add Load Date]"
+              endId="Package\Load Application SystemParameters\Add Load Date.Inputs[Source Application SystemParameters_Output_Add Load Date]"
+              name="Source Application SystemParameters_Output_Add Load Date"
+              startId="Package\Load Application SystemParameters\Source Application SystemParameters.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table SystemParameters_To_Load Application SystemParameters]"
+      DTS:CreationName=""
+      DTS:DTSID="{208613FD-1AC3-42D5-ADC2-51AE8934EE27}"
+      DTS:From="Package\Create Table SystemParameters"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table SystemParameters_To_Load Application SystemParameters"
+      DTS:To="Package\Load Application SystemParameters" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

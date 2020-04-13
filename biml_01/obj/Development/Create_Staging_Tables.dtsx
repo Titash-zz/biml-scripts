@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:15:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{A24BFDFA-6CDA-47B1-BDE2-8C5EADBF20F8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Create_Staging_Tables"
+  DTS:VersionGUID="{AE99A795-2509-4D3F-A1CC-C92816B0B096}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table BuyingGroups"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{BFE145DB-B81F-4AEB-9CC4-85618C9F4B0A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table BuyingGroups"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[BuyingGroups]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[BuyingGroups]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[BuyingGroups]&#xA;(&#xA;-- Columns Definition&#xA; [BuyingGroupID] int NOT NULL &#xA;, [BuyingGroupName] nvarchar(50) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_BuyingGroups] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [BuyingGroupID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [UQ_Sales_BuyingGroups_BuyingGroupName]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [BuyingGroupName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table BuyingGroups_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{6E07854D-8D72-4CE7-9A5E-2FEB33EF70EA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table BuyingGroups_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[BuyingGroups_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[BuyingGroups_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[BuyingGroups_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [BuyingGroupID] int NOT NULL &#xA;, [BuyingGroupName] nvarchar(50) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table CustomerCategories"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{75838B97-2F0C-4A00-97F1-818A57AE0B17}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table CustomerCategories"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[CustomerCategories]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[CustomerCategories]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[CustomerCategories]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerCategoryID] int NOT NULL &#xA;, [CustomerCategoryName] nvarchar(50) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_CustomerCategories] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CustomerCategoryID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [UQ_Sales_CustomerCategories_CustomerCategoryName]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [CustomerCategoryName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table CustomerCategories_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7585A057-E910-481D-A5B8-4E3908FCA23F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table CustomerCategories_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="4">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[CustomerCategories_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[CustomerCategories_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[CustomerCategories_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerCategoryID] int NOT NULL &#xA;, [CustomerCategoryName] nvarchar(50) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Customers"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{60A2B1C9-F75B-49DD-B1BD-E759F830FB19}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Customers"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="11">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[Customers]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[Customers]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[Customers]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerID] int NOT NULL &#xA;, [CustomerName] nvarchar(100) NOT NULL &#xA;, [BillToCustomerID] int NOT NULL &#xA;, [CustomerCategoryID] int NOT NULL &#xA;, [BuyingGroupID] int &#xA;, [PrimaryContactPersonID] int NOT NULL &#xA;, [AlternateContactPersonID] int &#xA;, [DeliveryMethodID] int NOT NULL &#xA;, [DeliveryCityID] int NOT NULL &#xA;, [PostalCityID] int NOT NULL &#xA;, [CreditLimit] decimal(18,2) &#xA;, [AccountOpenedDate] date NOT NULL &#xA;, [StandardDiscountPercentage] decimal(18,3) NOT NULL &#xA;, [IsStatementSent] bit NOT NULL &#xA;, [IsOnCreditHold] bit NOT NULL &#xA;, [PaymentDays] int NOT NULL &#xA;, [PhoneNumber] nvarchar(20) NOT NULL &#xA;, [FaxNumber] nvarchar(20) NOT NULL &#xA;, [DeliveryRun] nvarchar(5) &#xA;, [RunPosition] nvarchar(5) &#xA;, [WebsiteURL] nvarchar(256) NOT NULL &#xA;, [DeliveryAddressLine1] nvarchar(60) NOT NULL &#xA;, [DeliveryAddressLine2] nvarchar(60) &#xA;, [DeliveryPostalCode] nvarchar(10) NOT NULL &#xA;, [DeliveryLocation] geography &#xA;, [PostalAddressLine1] nvarchar(60) NOT NULL &#xA;, [PostalAddressLine2] nvarchar(60) &#xA;, [PostalPostalCode] nvarchar(10) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_Customers] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CustomerID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [UQ_Sales_Customers_CustomerName]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [CustomerName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Customers_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{810AE574-93A2-49B1-8D35-164596A33AF6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Customers_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="12">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[Customers_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[Customers_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[Customers_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerID] int NOT NULL &#xA;, [CustomerName] nvarchar(100) NOT NULL &#xA;, [BillToCustomerID] int NOT NULL &#xA;, [CustomerCategoryID] int NOT NULL &#xA;, [BuyingGroupID] int &#xA;, [PrimaryContactPersonID] int NOT NULL &#xA;, [AlternateContactPersonID] int &#xA;, [DeliveryMethodID] int NOT NULL &#xA;, [DeliveryCityID] int NOT NULL &#xA;, [PostalCityID] int NOT NULL &#xA;, [CreditLimit] decimal(18,2) &#xA;, [AccountOpenedDate] date NOT NULL &#xA;, [StandardDiscountPercentage] decimal(18,3) NOT NULL &#xA;, [IsStatementSent] bit NOT NULL &#xA;, [IsOnCreditHold] bit NOT NULL &#xA;, [PaymentDays] int NOT NULL &#xA;, [PhoneNumber] nvarchar(20) NOT NULL &#xA;, [FaxNumber] nvarchar(20) NOT NULL &#xA;, [DeliveryRun] nvarchar(5) &#xA;, [RunPosition] nvarchar(5) &#xA;, [WebsiteURL] nvarchar(256) NOT NULL &#xA;, [DeliveryAddressLine1] nvarchar(60) NOT NULL &#xA;, [DeliveryAddressLine2] nvarchar(60) &#xA;, [DeliveryPostalCode] nvarchar(10) NOT NULL &#xA;, [DeliveryLocation] geography &#xA;, [PostalAddressLine1] nvarchar(60) NOT NULL &#xA;, [PostalAddressLine2] nvarchar(60) &#xA;, [PostalPostalCode] nvarchar(10) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table CustomerTransactions"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{2F061F83-E523-4C87-A7F8-7020AABBA173}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table CustomerTransactions"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[CustomerTransactions]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[CustomerTransactions]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[CustomerTransactions]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerTransactionID] int NOT NULL &#xA;, [CustomerID] int NOT NULL &#xA;, [TransactionTypeID] int NOT NULL &#xA;, [InvoiceID] int &#xA;, [PaymentMethodID] int &#xA;, [TransactionDate] date NOT NULL &#xA;, [AmountExcludingTax] decimal(18,2) NOT NULL &#xA;, [TaxAmount] decimal(18,2) NOT NULL &#xA;, [TransactionAmount] decimal(18,2) NOT NULL &#xA;, [OutstandingBalance] decimal(18,2) NOT NULL &#xA;, [FinalizationDate] date &#xA;, [IsFinalized] bit &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_CustomerTransactions] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CustomerTransactionID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table InvoiceLines"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{6CD55AD8-3D6D-48CC-8427-E534FDA737E6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table InvoiceLines"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="6">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[InvoiceLines]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[InvoiceLines]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[InvoiceLines]&#xA;(&#xA;-- Columns Definition&#xA; [InvoiceLineID] int NOT NULL &#xA;, [InvoiceID] int NOT NULL &#xA;, [StockItemID] int NOT NULL &#xA;, [Description] nvarchar(100) NOT NULL &#xA;, [PackageTypeID] int NOT NULL &#xA;, [Quantity] int NOT NULL &#xA;, [UnitPrice] decimal(18,2) &#xA;, [TaxRate] decimal(18,3) NOT NULL &#xA;, [TaxAmount] decimal(18,2) NOT NULL &#xA;, [LineProfit] decimal(18,2) NOT NULL &#xA;, [ExtendedPrice] decimal(18,2) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_InvoiceLines] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [InvoiceLineID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Invoices"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F43806C2-A861-4854-A749-57D252858F34}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Invoices"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="7">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[Invoices]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[Invoices]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[Invoices]&#xA;(&#xA;-- Columns Definition&#xA; [InvoiceID] int NOT NULL &#xA;, [CustomerID] int NOT NULL &#xA;, [BillToCustomerID] int NOT NULL &#xA;, [OrderID] int &#xA;, [DeliveryMethodID] int NOT NULL &#xA;, [ContactPersonID] int NOT NULL &#xA;, [AccountsPersonID] int NOT NULL &#xA;, [SalespersonPersonID] int NOT NULL &#xA;, [PackedByPersonID] int NOT NULL &#xA;, [InvoiceDate] date NOT NULL &#xA;, [CustomerPurchaseOrderNumber] nvarchar(20) &#xA;, [IsCreditNote] bit NOT NULL &#xA;, [CreditNoteReason] nvarchar(max) &#xA;, [Comments] nvarchar(max) &#xA;, [DeliveryInstructions] nvarchar(max) &#xA;, [InternalComments] nvarchar(max) &#xA;, [TotalDryItems] int NOT NULL &#xA;, [TotalChillerItems] int NOT NULL &#xA;, [DeliveryRun] nvarchar(5) &#xA;, [RunPosition] nvarchar(5) &#xA;, [ReturnedDeliveryData] nvarchar(max) &#xA;, [ConfirmedDeliveryTime] datetime2(7) &#xA;, [ConfirmedReceivedBy] nvarchar(4000) &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_Invoices] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [InvoiceID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table OrderLines"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{23DC039C-8C29-4027-A2E3-4DEADF56502E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table OrderLines"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="8">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[OrderLines]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[OrderLines]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[OrderLines]&#xA;(&#xA;-- Columns Definition&#xA; [OrderLineID] int NOT NULL &#xA;, [OrderID] int NOT NULL &#xA;, [StockItemID] int NOT NULL &#xA;, [Description] nvarchar(100) NOT NULL &#xA;, [PackageTypeID] int NOT NULL &#xA;, [Quantity] int NOT NULL &#xA;, [UnitPrice] decimal(18,2) &#xA;, [TaxRate] decimal(18,3) NOT NULL &#xA;, [PickedQuantity] int NOT NULL &#xA;, [PickingCompletedWhen] datetime2(7) &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_OrderLines] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [OrderLineID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Orders"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7EC16258-72EA-40D9-91E6-BE672D4ECC44}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Orders"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="9">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[Orders]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[Orders]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[Orders]&#xA;(&#xA;-- Columns Definition&#xA; [OrderID] int NOT NULL &#xA;, [CustomerID] int NOT NULL &#xA;, [SalespersonPersonID] int NOT NULL &#xA;, [PickedByPersonID] int &#xA;, [ContactPersonID] int NOT NULL &#xA;, [BackorderOrderID] int &#xA;, [OrderDate] date NOT NULL &#xA;, [ExpectedDeliveryDate] date NOT NULL &#xA;, [CustomerPurchaseOrderNumber] nvarchar(20) &#xA;, [IsUndersupplyBackordered] bit NOT NULL &#xA;, [Comments] nvarchar(max) &#xA;, [DeliveryInstructions] nvarchar(max) &#xA;, [InternalComments] nvarchar(max) &#xA;, [PickingCompletedWhen] datetime2(7) &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_Orders] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [OrderID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table PurchaseOrderLines"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{1FB4E7CB-82A5-4850-BF21-5CC8ADCAC7D4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table PurchaseOrderLines"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="18">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[PurchaseOrderLines]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[PurchaseOrderLines]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[PurchaseOrderLines]&#xA;(&#xA;-- Columns Definition&#xA; [PurchaseOrderLineID] int NOT NULL &#xA;, [PurchaseOrderID] int NOT NULL &#xA;, [StockItemID] int NOT NULL &#xA;, [OrderedOuters] int NOT NULL &#xA;, [Description] nvarchar(100) NOT NULL &#xA;, [ReceivedOuters] int NOT NULL &#xA;, [PackageTypeID] int NOT NULL &#xA;, [ExpectedUnitPricePerOuter] decimal(18,2) &#xA;, [LastReceiptDate] date &#xA;, [IsOrderLineFinalized] bit NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Purchasing_PurchaseOrderLines] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [PurchaseOrderLineID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table PurchaseOrders"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{B2590006-9877-4331-85D4-77A39D4F93B6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table PurchaseOrders"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="13">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[PurchaseOrders]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[PurchaseOrders]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[PurchaseOrders]&#xA;(&#xA;-- Columns Definition&#xA; [PurchaseOrderID] int NOT NULL &#xA;, [SupplierID] int NOT NULL &#xA;, [OrderDate] date NOT NULL &#xA;, [DeliveryMethodID] int NOT NULL &#xA;, [ContactPersonID] int NOT NULL &#xA;, [ExpectedDeliveryDate] date &#xA;, [SupplierReference] nvarchar(20) &#xA;, [IsOrderFinalized] bit NOT NULL &#xA;, [Comments] nvarchar(max) &#xA;, [InternalComments] nvarchar(max) &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Purchasing_PurchaseOrders] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [PurchaseOrderID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table SpecialDeals"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7B10A70E-4153-41BB-A3AB-E7BF400F2779}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table SpecialDeals"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="10">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Sales].[SpecialDeals]') AND type IN (N'U'))&#xA;DROP TABLE [Sales].[SpecialDeals]&#xA;GO&#xA;&#xA;CREATE TABLE [Sales].[SpecialDeals]&#xA;(&#xA;-- Columns Definition&#xA; [SpecialDealID] int NOT NULL &#xA;, [StockItemID] int &#xA;, [CustomerID] int &#xA;, [BuyingGroupID] int &#xA;, [CustomerCategoryID] int &#xA;, [StockGroupID] int &#xA;, [DealDescription] nvarchar(30) NOT NULL &#xA;, [StartDate] date NOT NULL &#xA;, [EndDate] date NOT NULL &#xA;, [DiscountAmount] decimal(18,2) &#xA;, [DiscountPercentage] decimal(18,3) &#xA;, [UnitPrice] decimal(18,2) &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Sales_SpecialDeals] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SpecialDealID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table SupplierCategories"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7504C794-079D-4562-9936-CA5F5668FD43}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table SupplierCategories"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="14">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[SupplierCategories]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[SupplierCategories]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[SupplierCategories]&#xA;(&#xA;-- Columns Definition&#xA; [SupplierCategoryID] int NOT NULL &#xA;, [SupplierCategoryName] nvarchar(50) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Purchasing_SupplierCategories] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SupplierCategoryID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [UQ_Purchasing_SupplierCategories_SupplierCategoryName]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [SupplierCategoryName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table SupplierCategories_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7949ED51-1E9F-4BD6-AFC3-FFF9027029DC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table SupplierCategories_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="15">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[SupplierCategories_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[SupplierCategories_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[SupplierCategories_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [SupplierCategoryID] int NOT NULL &#xA;, [SupplierCategoryName] nvarchar(50) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Suppliers"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F85F72B2-09D6-4C94-A0EE-BA0A52CD13C3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Suppliers"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="16">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[Suppliers]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[Suppliers]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[Suppliers]&#xA;(&#xA;-- Columns Definition&#xA; [SupplierID] int NOT NULL &#xA;, [SupplierName] nvarchar(100) NOT NULL &#xA;, [SupplierCategoryID] int NOT NULL &#xA;, [PrimaryContactPersonID] int NOT NULL &#xA;, [AlternateContactPersonID] int NOT NULL &#xA;, [DeliveryMethodID] int &#xA;, [DeliveryCityID] int NOT NULL &#xA;, [PostalCityID] int NOT NULL &#xA;, [SupplierReference] nvarchar(20) &#xA;, [BankAccountName] nvarchar(50) &#xA;, [BankAccountBranch] nvarchar(50) &#xA;, [BankAccountCode] nvarchar(20) &#xA;, [BankAccountNumber] nvarchar(20) &#xA;, [BankInternationalCode] nvarchar(20) &#xA;, [PaymentDays] int NOT NULL &#xA;, [InternalComments] nvarchar(max) &#xA;, [PhoneNumber] nvarchar(20) NOT NULL &#xA;, [FaxNumber] nvarchar(20) NOT NULL &#xA;, [WebsiteURL] nvarchar(256) NOT NULL &#xA;, [DeliveryAddressLine1] nvarchar(60) NOT NULL &#xA;, [DeliveryAddressLine2] nvarchar(60) &#xA;, [DeliveryPostalCode] nvarchar(10) NOT NULL &#xA;, [DeliveryLocation] geography &#xA;, [PostalAddressLine1] nvarchar(60) NOT NULL &#xA;, [PostalAddressLine2] nvarchar(60) &#xA;, [PostalPostalCode] nvarchar(10) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Purchasing_Suppliers] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SupplierID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [UQ_Purchasing_Suppliers_SupplierName]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [SupplierName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table Suppliers_Archive"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F288D33B-8A3A-45EA-BF1E-3E7D6D32990F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table Suppliers_Archive"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="17">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[Suppliers_Archive]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[Suppliers_Archive]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[Suppliers_Archive]&#xA;(&#xA;-- Columns Definition&#xA; [SupplierID] int NOT NULL &#xA;, [SupplierName] nvarchar(100) NOT NULL &#xA;, [SupplierCategoryID] int NOT NULL &#xA;, [PrimaryContactPersonID] int NOT NULL &#xA;, [AlternateContactPersonID] int NOT NULL &#xA;, [DeliveryMethodID] int &#xA;, [DeliveryCityID] int NOT NULL &#xA;, [PostalCityID] int NOT NULL &#xA;, [SupplierReference] nvarchar(20) &#xA;, [BankAccountName] nvarchar(50) &#xA;, [BankAccountBranch] nvarchar(50) &#xA;, [BankAccountCode] nvarchar(20) &#xA;, [BankAccountNumber] nvarchar(20) &#xA;, [BankInternationalCode] nvarchar(20) &#xA;, [PaymentDays] int NOT NULL &#xA;, [InternalComments] nvarchar(max) &#xA;, [PhoneNumber] nvarchar(20) NOT NULL &#xA;, [FaxNumber] nvarchar(20) NOT NULL &#xA;, [WebsiteURL] nvarchar(256) NOT NULL &#xA;, [DeliveryAddressLine1] nvarchar(60) NOT NULL &#xA;, [DeliveryAddressLine2] nvarchar(60) &#xA;, [DeliveryPostalCode] nvarchar(10) NOT NULL &#xA;, [DeliveryLocation] geography &#xA;, [PostalAddressLine1] nvarchar(60) NOT NULL &#xA;, [PostalAddressLine2] nvarchar(60) &#xA;, [PostalPostalCode] nvarchar(10) NOT NULL &#xA;, [LastEditedBy] int NOT NULL &#xA;, [ValidFrom] datetime2(7) NOT NULL &#xA;, [ValidTo] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = PAGE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table SupplierTransactions"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{26F27437-7B39-4053-86A2-FA0880B48E05}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table SupplierTransactions"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B8366DFE-6194-4094-A939-D56CD54BA25E}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Purchasing].[SupplierTransactions]') AND type IN (N'U'))&#xA;DROP TABLE [Purchasing].[SupplierTransactions]&#xA;GO&#xA;&#xA;CREATE TABLE [Purchasing].[SupplierTransactions]&#xA;(&#xA;-- Columns Definition&#xA; [SupplierTransactionID] int NOT NULL &#xA;, [SupplierID] int NOT NULL &#xA;, [TransactionTypeID] int NOT NULL &#xA;, [PurchaseOrderID] int &#xA;, [PaymentMethodID] int &#xA;, [SupplierInvoiceNumber] nvarchar(20) &#xA;, [TransactionDate] date NOT NULL &#xA;, [AmountExcludingTax] decimal(18,2) NOT NULL &#xA;, [TaxAmount] decimal(18,2) NOT NULL &#xA;, [TransactionAmount] decimal(18,2) NOT NULL &#xA;, [OutstandingBalance] decimal(18,2) NOT NULL &#xA;, [FinalizationDate] date &#xA;, [IsFinalized] bit &#xA;, [LastEditedBy] int NOT NULL &#xA;, [LastEditedWhen] datetime2(7) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Purchasing_SupplierTransactions] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SupplierTransactionID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

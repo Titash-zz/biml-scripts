@@ -1,0 +1,416 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{A9B50345-1E87-4744-8A4F-9E6D58044D47}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimSalesTerritory"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{411B6AD5-153E-4ECF-AE24-93FDB3815DD2}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B2BC80AB-D99E-4A73-B0C7-7CC191D7FB76}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C008AFAA-3E99-4416-8E3E-B942A6CC924F}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1863ED6B-C77E-40B2-A311-30A95C248C4E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimSalesTerritory"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{95BA1E80-2CE2-418B-8C5D-92B2B9B9858E}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimSalesTerritory"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimSalesTerritory\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimSalesTerritory\Add Load Date.Inputs[Source dbo DimSalesTerritory_Output_Add Load Date]"
+                  name="Source dbo DimSalesTerritory_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimSalesTerritory\Add Load Date.Inputs[Source dbo DimSalesTerritory_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimSalesTerritory\Add Load Date.Inputs[Source dbo DimSalesTerritory_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimSalesTerritory\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimSalesTerritory\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimSalesTerritory\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimSalesTerritory\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimSalesTerritory"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [SalesTerritoryKey]
+,[SalesTerritoryAlternateKey]
+,[SalesTerritoryRegion]
+,[SalesTerritoryCountry]
+,[SalesTerritoryGroup]
+,[SalesTerritoryImage]
+FROM [dbo].[DimSalesTerritory]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryKey]"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryAlternateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryAlternateKey]"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryAlternateKey]"
+                      name="SalesTerritoryAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryRegion]"
+                      length="50"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryRegion]"
+                      name="SalesTerritoryRegion"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryCountry]"
+                      length="50"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryCountry]"
+                      name="SalesTerritoryCountry"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryGroup]"
+                      length="50"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryGroup]"
+                      name="SalesTerritoryGroup"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryImage]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryImage]"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].Columns[SalesTerritoryImage]"
+                      name="SalesTerritoryImage"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryKey]"
+                      dataType="i4"
+                      name="SalesTerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryAlternateKey]"
+                      dataType="i4"
+                      name="SalesTerritoryAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryRegion" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryCountry" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      name="SalesTerritoryGroup" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output].ExternalColumns[SalesTerritoryImage]"
+                      dataType="image"
+                      name="SalesTerritoryImage" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryKey]"
+                      name="SalesTerritoryKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryAlternateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryAlternateKey]"
+                      name="SalesTerritoryAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryRegion]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryRegion]"
+                      name="SalesTerritoryRegion" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryCountry]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryCountry]"
+                      name="SalesTerritoryCountry" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryGroup]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryGroup]"
+                      name="SalesTerritoryGroup" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryImage]"
+                      dataType="image"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[SalesTerritoryImage]"
+                      name="SalesTerritoryImage" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimSalesTerritory.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimSalesTerritory\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimSalesTerritory\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimSalesTerritory.Paths[Source dbo DimSalesTerritory_Output_Add Load Date]"
+              endId="Package\Load dbo DimSalesTerritory\Add Load Date.Inputs[Source dbo DimSalesTerritory_Output_Add Load Date]"
+              name="Source dbo DimSalesTerritory_Output_Add Load Date"
+              startId="Package\Load dbo DimSalesTerritory\Source dbo DimSalesTerritory.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimSalesTerritory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{263DD5DD-A0C4-4900-AB79-7E64CA9403C2}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimSalesTerritory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C008AFAA-3E99-4416-8E3E-B942A6CC924F}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimSalesTerritory&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimSalesTerritory_To_Load dbo DimSalesTerritory]"
+      DTS:CreationName=""
+      DTS:DTSID="{FF9D315C-2F19-4053-86A6-3F33A677A1EE}"
+      DTS:From="Package\Truncate dbo DimSalesTerritory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimSalesTerritory_To_Load dbo DimSalesTerritory"
+      DTS:To="Package\Load dbo DimSalesTerritory" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

@@ -1,0 +1,771 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 5:23:18 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{214D36B3-2086-4AA9-B758-703124145E67}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="MasterDeployePackage"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{40C35CD9-7823-43EC-901F-7D6ED0F155CF}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table AdventureWorksDWBuildVersion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{3863E5A4-0243-4D6F-BF9F-D255B86B894D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table AdventureWorksDWBuildVersion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[AdventureWorksDWBuildVersion]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[AdventureWorksDWBuildVersion]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[AdventureWorksDWBuildVersion]&#xA;(&#xA;-- Columns Definition&#xA; [DBVersion] nvarchar(50) &#xA;, [VersionDate] datetime &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DatabaseLog"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{FD9C73EE-27AF-4C12-A4F7-3EC1C734E810}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DatabaseLog"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DatabaseLog]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DatabaseLog]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DatabaseLog]&#xA;(&#xA;-- Columns Definition&#xA; [DatabaseLogID] int IDENTITY(1,1) NOT NULL &#xA;, [PostTime] datetime NOT NULL &#xA;, [DatabaseUser] nvarchar(128) NOT NULL &#xA;, [Event] nvarchar(128) NOT NULL &#xA;, [Schema] nvarchar(128) &#xA;, [Object] nvarchar(128) &#xA;, [TSQL] nvarchar(max) NOT NULL &#xA;, [XmlEvent] xml NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DatabaseLog_DatabaseLogID] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [DatabaseLogID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimAccount"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7E91F889-1810-4083-ADF9-2E687E04F7E7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimAccount"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimAccount]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimAccount]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimAccount]&#xA;(&#xA;-- Columns Definition&#xA; [AccountKey] int IDENTITY(1,1) NOT NULL &#xA;, [AccountCodeAlternateKey] int &#xA;, [ParentAccountCodeAlternateKey] int &#xA;, [AccountDescription] nvarchar(50) &#xA;, [AccountType] nvarchar(50) &#xA;, [Operator] nvarchar(50) &#xA;, [CustomMembers] nvarchar(300) &#xA;, [ValueType] nvarchar(50) &#xA;, [CustomMemberOptions] nvarchar(200) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimAccount] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [AccountKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimCurrency"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F2557C95-6AAE-4B96-8A5D-F1260186A7D9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimCurrency"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimCurrency]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimCurrency]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimCurrency]&#xA;(&#xA;-- Columns Definition&#xA; [CurrencyKey] int IDENTITY(1,1) NOT NULL &#xA;, [CurrencyAlternateKey] nchar(3) NOT NULL &#xA;, [CurrencyName] nvarchar(50) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimCurrency_CurrencyKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CurrencyKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE UNIQUE NONCLUSTERED INDEX [AK_DimCurrency_CurrencyAlternateKey] ON [dbo].[DimCurrency]&#xA;      (&#xA;      [CurrencyAlternateKey] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimCustomer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{6D675AE7-E66B-4041-8053-2053D4C6A56C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimCustomer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimCustomer]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimCustomer]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimCustomer]&#xA;(&#xA;-- Columns Definition&#xA; [CustomerKey] int IDENTITY(1,1) NOT NULL &#xA;, [CustomerAlternateKey] nvarchar(15) NOT NULL &#xA;, [Title] nvarchar(8) &#xA;, [FirstName] nvarchar(50) &#xA;, [MiddleName] nvarchar(50) &#xA;, [LastName] nvarchar(50) &#xA;, [NameStyle] bit &#xA;, [BirthDate] date &#xA;, [MaritalStatus] nchar(1) &#xA;, [Suffix] nvarchar(10) &#xA;, [Gender] nvarchar(1) &#xA;, [EmailAddress] nvarchar(50) &#xA;, [YearlyIncome] money &#xA;, [TotalChildren] tinyint &#xA;, [NumberChildrenAtHome] tinyint &#xA;, [EnglishEducation] nvarchar(40) &#xA;, [SpanishEducation] nvarchar(40) &#xA;, [FrenchEducation] nvarchar(40) &#xA;, [EnglishOccupation] nvarchar(100) &#xA;, [SpanishOccupation] nvarchar(100) &#xA;, [FrenchOccupation] nvarchar(100) &#xA;, [HouseOwnerFlag] nchar(1) &#xA;, [NumberCarsOwned] tinyint &#xA;, [AddressLine1] nvarchar(120) &#xA;, [AddressLine2] nvarchar(120) &#xA;, [Phone] nvarchar(20) &#xA;, [DateFirstPurchase] date &#xA;, [CommuteDistance] nvarchar(15) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimCustomer_CustomerKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CustomerKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE UNIQUE NONCLUSTERED INDEX [IX_DimCustomer_CustomerAlternateKey] ON [dbo].[DimCustomer]&#xA;      (&#xA;      [CustomerAlternateKey] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimDate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{8E70822E-27A1-4F92-9434-1530A87062D5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimDate"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimDate]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimDate]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimDate]&#xA;(&#xA;-- Columns Definition&#xA; [DateKey] int NOT NULL &#xA;, [FullDateAlternateKey] date NOT NULL &#xA;, [DayNumberOfWeek] tinyint NOT NULL &#xA;, [EnglishDayNameOfWeek] nvarchar(10) NOT NULL &#xA;, [SpanishDayNameOfWeek] nvarchar(10) NOT NULL &#xA;, [FrenchDayNameOfWeek] nvarchar(10) NOT NULL &#xA;, [DayNumberOfMonth] tinyint NOT NULL &#xA;, [DayNumberOfYear] smallint NOT NULL &#xA;, [WeekNumberOfYear] tinyint NOT NULL &#xA;, [EnglishMonthName] nvarchar(10) NOT NULL &#xA;, [SpanishMonthName] nvarchar(10) NOT NULL &#xA;, [FrenchMonthName] nvarchar(10) NOT NULL &#xA;, [MonthNumberOfYear] tinyint NOT NULL &#xA;, [CalendarQuarter] tinyint NOT NULL &#xA;, [CalendarYear] smallint NOT NULL &#xA;, [CalendarSemester] tinyint NOT NULL &#xA;, [FiscalQuarter] tinyint NOT NULL &#xA;, [FiscalYear] smallint NOT NULL &#xA;, [FiscalSemester] tinyint NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimDate_DateKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [DateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE UNIQUE NONCLUSTERED INDEX [AK_DimDate_FullDateAlternateKey] ON [dbo].[DimDate]&#xA;      (&#xA;      [FullDateAlternateKey] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimDepartmentGroup"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{CFB11372-128D-4E95-88F6-5E4CF89D6853}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimDepartmentGroup"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimDepartmentGroup]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimDepartmentGroup]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimDepartmentGroup]&#xA;(&#xA;-- Columns Definition&#xA; [DepartmentGroupKey] int IDENTITY(1,1) NOT NULL &#xA;, [DepartmentGroupName] nvarchar(50) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimDepartmentGroup] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [DepartmentGroupKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimEmployee"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{67F20A5F-314D-4F6B-8EAC-4F36FF3AE59A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimEmployee"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimEmployee]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimEmployee]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimEmployee]&#xA;(&#xA;-- Columns Definition&#xA; [EmployeeKey] int IDENTITY(1,1) NOT NULL &#xA;, [EmployeeNationalIDAlternateKey] nvarchar(15) &#xA;, [ParentEmployeeNationalIDAlternateKey] nvarchar(15) &#xA;, [FirstName] nvarchar(50) NOT NULL &#xA;, [LastName] nvarchar(50) NOT NULL &#xA;, [MiddleName] nvarchar(50) &#xA;, [NameStyle] bit NOT NULL &#xA;, [Title] nvarchar(50) &#xA;, [HireDate] date &#xA;, [BirthDate] date &#xA;, [LoginID] nvarchar(256) &#xA;, [EmailAddress] nvarchar(50) &#xA;, [Phone] nvarchar(25) &#xA;, [MaritalStatus] nchar(1) &#xA;, [EmergencyContactName] nvarchar(50) &#xA;, [EmergencyContactPhone] nvarchar(25) &#xA;, [SalariedFlag] bit &#xA;, [Gender] nchar(1) &#xA;, [PayFrequency] tinyint &#xA;, [BaseRate] money &#xA;, [VacationHours] smallint &#xA;, [SickLeaveHours] smallint &#xA;, [CurrentFlag] bit NOT NULL &#xA;, [SalesPersonFlag] bit NOT NULL &#xA;, [DepartmentName] nvarchar(50) &#xA;, [StartDate] date &#xA;, [EndDate] date &#xA;, [Status] nvarchar(50) &#xA;, [EmployeePhoto] varbinary(max) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimEmployee_EmployeeKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [EmployeeKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimGeography"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{82AABB79-7422-4D11-B504-6BF97B25C339}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimGeography"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimGeography]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimGeography]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimGeography]&#xA;(&#xA;-- Columns Definition&#xA; [GeographyKey] int IDENTITY(1,1) NOT NULL &#xA;, [City] nvarchar(30) &#xA;, [StateProvinceCode] nvarchar(3) &#xA;, [StateProvinceName] nvarchar(50) &#xA;, [CountryRegionCode] nvarchar(3) &#xA;, [EnglishCountryRegionName] nvarchar(50) &#xA;, [SpanishCountryRegionName] nvarchar(50) &#xA;, [FrenchCountryRegionName] nvarchar(50) &#xA;, [PostalCode] nvarchar(15) &#xA;, [IpAddressLocator] nvarchar(15) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimGeography_GeographyKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [GeographyKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimOrganization"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{FC25542D-4FFD-4B7B-A732-62E06C5DF5CD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimOrganization"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimOrganization]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimOrganization]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimOrganization]&#xA;(&#xA;-- Columns Definition&#xA; [OrganizationKey] int IDENTITY(1,1) NOT NULL &#xA;, [PercentageOfOwnership] nvarchar(16) &#xA;, [OrganizationName] nvarchar(50) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimOrganization] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [OrganizationKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimProduct"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{B071C277-1AC5-45D2-9487-CBF74EE7D6F4}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimProduct"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimProduct]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimProduct]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimProduct]&#xA;(&#xA;-- Columns Definition&#xA; [ProductKey] int IDENTITY(1,1) NOT NULL &#xA;, [ProductAlternateKey] nvarchar(25) &#xA;, [WeightUnitMeasureCode] nchar(3) &#xA;, [SizeUnitMeasureCode] nchar(3) &#xA;, [EnglishProductName] nvarchar(50) NOT NULL &#xA;, [SpanishProductName] nvarchar(50) NOT NULL &#xA;, [FrenchProductName] nvarchar(50) NOT NULL &#xA;, [StandardCost] money &#xA;, [FinishedGoodsFlag] bit NOT NULL &#xA;, [Color] nvarchar(15) NOT NULL &#xA;, [SafetyStockLevel] smallint &#xA;, [ReorderPoint] smallint &#xA;, [ListPrice] money &#xA;, [Size] nvarchar(50) &#xA;, [SizeRange] nvarchar(50) &#xA;, [Weight] float(53) &#xA;, [DaysToManufacture] int &#xA;, [ProductLine] nchar(2) &#xA;, [DealerPrice] money &#xA;, [Class] nchar(2) &#xA;, [Style] nchar(2) &#xA;, [ModelName] nvarchar(50) &#xA;, [LargePhoto] varbinary(max) &#xA;, [EnglishDescription] nvarchar(400) &#xA;, [FrenchDescription] nvarchar(400) &#xA;, [ChineseDescription] nvarchar(400) &#xA;, [ArabicDescription] nvarchar(400) &#xA;, [HebrewDescription] nvarchar(400) &#xA;, [ThaiDescription] nvarchar(400) &#xA;, [GermanDescription] nvarchar(400) &#xA;, [JapaneseDescription] nvarchar(400) &#xA;, [TurkishDescription] nvarchar(400) &#xA;, [StartDate] datetime &#xA;, [EndDate] datetime &#xA;, [Status] nvarchar(7) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_DimProduct_ProductAlternateKey_StartDate]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [ProductAlternateKey] Asc,[StartDate] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_DimProduct_ProductKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ProductKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimProductCategory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{BDFFCDBD-A8E5-4D95-9F1D-514C908656A9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimProductCategory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimProductCategory]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimProductCategory]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimProductCategory]&#xA;(&#xA;-- Columns Definition&#xA; [ProductCategoryKey] int IDENTITY(1,1) NOT NULL &#xA;, [ProductCategoryAlternateKey] int &#xA;, [EnglishProductCategoryName] nvarchar(50) NOT NULL &#xA;, [SpanishProductCategoryName] nvarchar(50) NOT NULL &#xA;, [FrenchProductCategoryName] nvarchar(50) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_DimProductCategory_ProductCategoryAlternateKey]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [ProductCategoryAlternateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_DimProductCategory_ProductCategoryKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ProductCategoryKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimProductSubcategory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F6CB4291-C728-4064-8074-9C9D320F99CC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimProductSubcategory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimProductSubcategory]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimProductSubcategory]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimProductSubcategory]&#xA;(&#xA;-- Columns Definition&#xA; [ProductSubcategoryKey] int IDENTITY(1,1) NOT NULL &#xA;, [ProductSubcategoryAlternateKey] int &#xA;, [EnglishProductSubcategoryName] nvarchar(50) NOT NULL &#xA;, [SpanishProductSubcategoryName] nvarchar(50) NOT NULL &#xA;, [FrenchProductSubcategoryName] nvarchar(50) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_DimProductSubcategory_ProductSubcategoryAlternateKey]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [ProductSubcategoryAlternateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_DimProductSubcategory_ProductSubcategoryKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ProductSubcategoryKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimPromotion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7B85551A-D1EE-45F9-BCD0-9F36820DF817}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimPromotion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimPromotion]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimPromotion]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimPromotion]&#xA;(&#xA;-- Columns Definition&#xA; [PromotionKey] int IDENTITY(1,1) NOT NULL &#xA;, [PromotionAlternateKey] int &#xA;, [EnglishPromotionName] nvarchar(255) &#xA;, [SpanishPromotionName] nvarchar(255) &#xA;, [FrenchPromotionName] nvarchar(255) &#xA;, [DiscountPct] float(53) &#xA;, [EnglishPromotionType] nvarchar(50) &#xA;, [SpanishPromotionType] nvarchar(50) &#xA;, [FrenchPromotionType] nvarchar(50) &#xA;, [EnglishPromotionCategory] nvarchar(50) &#xA;, [SpanishPromotionCategory] nvarchar(50) &#xA;, [FrenchPromotionCategory] nvarchar(50) &#xA;, [StartDate] datetime NOT NULL &#xA;, [EndDate] datetime &#xA;, [MinQty] int &#xA;, [MaxQty] int &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_DimPromotion_PromotionAlternateKey]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [PromotionAlternateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_DimPromotion_PromotionKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [PromotionKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimReseller"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{616382AD-3DA7-41B8-94EF-AFEB5EEA83E3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimReseller"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimReseller]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimReseller]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimReseller]&#xA;(&#xA;-- Columns Definition&#xA; [ResellerKey] int IDENTITY(1,1) NOT NULL &#xA;, [ResellerAlternateKey] nvarchar(15) &#xA;, [Phone] nvarchar(25) &#xA;, [BusinessType] varchar(20) NOT NULL &#xA;, [ResellerName] nvarchar(50) NOT NULL &#xA;, [NumberEmployees] int &#xA;, [OrderFrequency] char(1) &#xA;, [OrderMonth] tinyint &#xA;, [FirstOrderYear] int &#xA;, [LastOrderYear] int &#xA;, [ProductLine] nvarchar(50) &#xA;, [AddressLine1] nvarchar(60) &#xA;, [AddressLine2] nvarchar(60) &#xA;, [AnnualSales] money &#xA;, [BankName] nvarchar(50) &#xA;, [MinPaymentType] tinyint &#xA;, [MinPaymentAmount] money &#xA;, [AnnualRevenue] money &#xA;, [YearOpened] int &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_DimReseller_ResellerAlternateKey]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [ResellerAlternateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_DimReseller_ResellerKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ResellerKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimSalesReason"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{EFA2DB80-1ACD-46E5-AFF0-0F290C885956}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimSalesReason"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimSalesReason]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimSalesReason]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimSalesReason]&#xA;(&#xA;-- Columns Definition&#xA; [SalesReasonKey] int IDENTITY(1,1) NOT NULL &#xA;, [SalesReasonAlternateKey] int NOT NULL &#xA;, [SalesReasonName] nvarchar(50) NOT NULL &#xA;, [SalesReasonReasonType] nvarchar(50) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimSalesReason_SalesReasonKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SalesReasonKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimSalesTerritory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{4D89ABFB-03B4-4990-AC31-8F862955A847}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimSalesTerritory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimSalesTerritory]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimSalesTerritory]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimSalesTerritory]&#xA;(&#xA;-- Columns Definition&#xA; [SalesTerritoryKey] int IDENTITY(1,1) NOT NULL &#xA;, [SalesTerritoryAlternateKey] int &#xA;, [SalesTerritoryRegion] nvarchar(50) NOT NULL &#xA;, [SalesTerritoryCountry] nvarchar(50) NOT NULL &#xA;, [SalesTerritoryGroup] nvarchar(50) &#xA;, [SalesTerritoryImage] varbinary(max) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_DimSalesTerritory_SalesTerritoryAlternateKey]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [SalesTerritoryAlternateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_DimSalesTerritory_SalesTerritoryKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SalesTerritoryKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table DimScenario"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{71E56F3C-ACC2-48F5-92A6-D98EDBEC96FA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table DimScenario"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DimScenario]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[DimScenario]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[DimScenario]&#xA;(&#xA;-- Columns Definition&#xA; [ScenarioKey] int IDENTITY(1,1) NOT NULL &#xA;, [ScenarioName] nvarchar(50) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_DimScenario] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ScenarioKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactAdditionalInternationalProductDescription"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{23BA4F6A-1D67-43EB-9402-5CE64F6CB8C1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactAdditionalInternationalProductDescription"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactAdditionalInternationalProductDescription]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactAdditionalInternationalProductDescription]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactAdditionalInternationalProductDescription]&#xA;(&#xA;-- Columns Definition&#xA; [ProductKey] int NOT NULL &#xA;, [CultureName] nvarchar(50) NOT NULL &#xA;, [ProductDescription] nvarchar(max) NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactAdditionalInternationalProductDescription_ProductKey_CultureName] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ProductKey] Asc,[CultureName] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactCallCenter"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{01673AD4-0A77-4241-AEAB-862413EA5729}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactCallCenter"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactCallCenter]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactCallCenter]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactCallCenter]&#xA;(&#xA;-- Columns Definition&#xA; [FactCallCenterID] int IDENTITY(1,1) NOT NULL &#xA;, [WageType] nvarchar(15) NOT NULL &#xA;, [Shift] nvarchar(20) NOT NULL &#xA;, [LevelOneOperators] smallint NOT NULL &#xA;, [LevelTwoOperators] smallint NOT NULL &#xA;, [TotalOperators] smallint NOT NULL &#xA;, [Calls] int NOT NULL &#xA;, [AutomaticResponses] int NOT NULL &#xA;, [Orders] int NOT NULL &#xA;, [IssuesRaised] smallint NOT NULL &#xA;, [AverageTimePerIssue] smallint NOT NULL &#xA;, [ServiceGrade] float(53) NOT NULL &#xA;, [Date] datetime &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [AK_FactCallCenter_DateKey_Shift]  UNIQUE NONCLUSTERED&#xA;(&#xA;  [DateKey] Asc,[Shift] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;,CONSTRAINT [PK_FactCallCenter_FactCallCenterID] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [FactCallCenterID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactCurrencyRate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{0041F6E1-4DAE-4544-8133-2D12A6357225}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactCurrencyRate"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactCurrencyRate]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactCurrencyRate]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactCurrencyRate]&#xA;(&#xA;-- Columns Definition&#xA; [AverageRate] float(53) NOT NULL &#xA;, [EndOfDayRate] float(53) NOT NULL &#xA;, [Date] datetime &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactCurrencyRate_CurrencyKey_DateKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [CurrencyKey] Asc,[DateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactFinance"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{20FC8AB3-B3F5-405E-89C0-1E4AC19F922C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactFinance"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactFinance]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactFinance]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactFinance]&#xA;(&#xA;-- Columns Definition&#xA; [FinanceKey] int IDENTITY(1,1) NOT NULL &#xA;, [Amount] float(53) NOT NULL &#xA;, [Date] datetime &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactInternetSales"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{BA5DB314-A4BD-4E00-A265-AB57A2F03687}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactInternetSales"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactInternetSales]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactInternetSales]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactInternetSales]&#xA;(&#xA;-- Columns Definition&#xA; [SalesOrderNumber] nvarchar(20) NOT NULL &#xA;, [SalesOrderLineNumber] tinyint NOT NULL &#xA;, [RevisionNumber] tinyint NOT NULL &#xA;, [OrderQuantity] smallint NOT NULL &#xA;, [UnitPrice] money NOT NULL &#xA;, [ExtendedAmount] money NOT NULL &#xA;, [UnitPriceDiscountPct] float(53) NOT NULL &#xA;, [DiscountAmount] float(53) NOT NULL &#xA;, [ProductStandardCost] money NOT NULL &#xA;, [TotalProductCost] money NOT NULL &#xA;, [SalesAmount] money NOT NULL &#xA;, [TaxAmt] money NOT NULL &#xA;, [Freight] money NOT NULL &#xA;, [CarrierTrackingNumber] nvarchar(25) &#xA;, [CustomerPONumber] nvarchar(25) &#xA;, [OrderDate] datetime &#xA;, [DueDate] datetime &#xA;, [ShipDate] datetime &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactInternetSales_SalesOrderNumber_SalesOrderLineNumber] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SalesOrderNumber] Asc,[SalesOrderLineNumber] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactInternetSalesReason"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{06471E9D-B608-4D6E-B2B8-90AC68510126}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactInternetSalesReason"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactInternetSalesReason]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactInternetSalesReason]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactInternetSalesReason]&#xA;(&#xA;-- Columns Definition&#xA; [SalesOrderNumber] int NOT NULL &#xA;, [SalesOrderLineNumber] int NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactInternetSalesReason_SalesOrderNumber_SalesOrderLineNumber_SalesReasonKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SalesOrderNumber] Asc,[SalesOrderLineNumber] Asc,[SalesReasonKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;ALTER TABLE [dbo].[FactInternetSalesReason]  WITH CHECK ADD CONSTRAINT [FK_FactInternetSalesReason_FactInternetSales] FOREIGN KEY([SalesOrderNumber],[SalesOrderLineNumber])&#xA;REFERENCES [dbo].[FactInternetSales] ([SalesOrderNumber],[SalesOrderLineNumber])&#xA;GO&#xA;&#xA;ALTER TABLE [dbo].[FactInternetSalesReason] CHECK CONSTRAINT [FK_FactInternetSalesReason_FactInternetSales]&#xA;GO&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactProductInventory"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{3708A0C3-3B53-4C71-ABBD-606E71E971FD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactProductInventory"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactProductInventory]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactProductInventory]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactProductInventory]&#xA;(&#xA;-- Columns Definition&#xA; [MovementDate] date NOT NULL &#xA;, [UnitCost] money NOT NULL &#xA;, [UnitsIn] int NOT NULL &#xA;, [UnitsOut] int NOT NULL &#xA;, [UnitsBalance] int NOT NULL &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactProductInventory] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ProductKey] Asc,[DateKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactResellerSales"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{1B43BB8A-2F48-4CFC-8E30-74E473192DBC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactResellerSales"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactResellerSales]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactResellerSales]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactResellerSales]&#xA;(&#xA;-- Columns Definition&#xA; [SalesOrderNumber] nvarchar(20) NOT NULL &#xA;, [SalesOrderLineNumber] tinyint NOT NULL &#xA;, [RevisionNumber] tinyint &#xA;, [OrderQuantity] smallint &#xA;, [UnitPrice] money &#xA;, [ExtendedAmount] money &#xA;, [UnitPriceDiscountPct] float(53) &#xA;, [DiscountAmount] float(53) &#xA;, [ProductStandardCost] money &#xA;, [TotalProductCost] money &#xA;, [SalesAmount] money &#xA;, [TaxAmt] money &#xA;, [Freight] money &#xA;, [CarrierTrackingNumber] nvarchar(25) &#xA;, [CustomerPONumber] nvarchar(25) &#xA;, [OrderDate] datetime &#xA;, [DueDate] datetime &#xA;, [ShipDate] datetime &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactResellerSales_SalesOrderNumber_SalesOrderLineNumber] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SalesOrderNumber] Asc,[SalesOrderLineNumber] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactSalesQuota"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{769EFA33-536D-49BC-A227-C2ECB1C36EC9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactSalesQuota"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactSalesQuota]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactSalesQuota]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactSalesQuota]&#xA;(&#xA;-- Columns Definition&#xA; [SalesQuotaKey] int IDENTITY(1,1) NOT NULL &#xA;, [CalendarYear] smallint NOT NULL &#xA;, [CalendarQuarter] tinyint NOT NULL &#xA;, [SalesAmountQuota] money NOT NULL &#xA;, [Date] datetime &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactSalesQuota_SalesQuotaKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SalesQuotaKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table FactSurveyResponse"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{73DA42AE-088D-40DC-A8F1-CAAE7FD32440}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table FactSurveyResponse"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[FactSurveyResponse]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[FactSurveyResponse]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[FactSurveyResponse]&#xA;(&#xA;-- Columns Definition&#xA; [SurveyResponseKey] int IDENTITY(1,1) NOT NULL &#xA;, [ProductCategoryKey] int NOT NULL &#xA;, [EnglishProductCategoryName] nvarchar(50) NOT NULL &#xA;, [ProductSubcategoryKey] int NOT NULL &#xA;, [EnglishProductSubcategoryName] nvarchar(50) NOT NULL &#xA;, [Date] datetime &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_FactSurveyResponse_SurveyResponseKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [SurveyResponseKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table NewFactCurrencyRate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{70226403-8871-4859-A838-77E98E186692}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table NewFactCurrencyRate"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[NewFactCurrencyRate]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[NewFactCurrencyRate]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[NewFactCurrencyRate]&#xA;(&#xA;-- Columns Definition&#xA; [AverageRate] real &#xA;, [CurrencyID] nvarchar(3) &#xA;, [CurrencyDate] date &#xA;, [EndOfDayRate] real &#xA;, [CurrencyKey] int &#xA;, [DateKey] int &#xA;&#xA;-- Constraints&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table ProspectiveBuyer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F400E4B5-68AB-4FB8-91ED-75D1FA77F2B8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table ProspectiveBuyer"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ProspectiveBuyer]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[ProspectiveBuyer]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[ProspectiveBuyer]&#xA;(&#xA;-- Columns Definition&#xA; [ProspectiveBuyerKey] int IDENTITY(1,1) NOT NULL &#xA;, [ProspectAlternateKey] nvarchar(15) &#xA;, [FirstName] nvarchar(50) &#xA;, [MiddleName] nvarchar(50) &#xA;, [LastName] nvarchar(50) &#xA;, [BirthDate] datetime &#xA;, [MaritalStatus] nchar(1) &#xA;, [Gender] nvarchar(1) &#xA;, [EmailAddress] nvarchar(50) &#xA;, [YearlyIncome] money &#xA;, [TotalChildren] tinyint &#xA;, [NumberChildrenAtHome] tinyint &#xA;, [Education] nvarchar(40) &#xA;, [Occupation] nvarchar(100) &#xA;, [HouseOwnerFlag] nchar(1) &#xA;, [NumberCarsOwned] tinyint &#xA;, [AddressLine1] nvarchar(120) &#xA;, [AddressLine2] nvarchar(120) &#xA;, [City] nvarchar(30) &#xA;, [StateProvinceCode] nvarchar(3) &#xA;, [PostalCode] nvarchar(15) &#xA;, [Phone] nvarchar(20) &#xA;, [Salutation] nvarchar(8) &#xA;, [Unknown] int &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_ProspectiveBuyer_ProspectiveBuyerKey] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [ProspectiveBuyerKey] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create Table sysdiagrams"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{A6635FBB-8A6B-41B5-8ED9-B334652F7744}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table sysdiagrams"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{04C365DE-7B54-47DA-8D9C-A959EA3B1C2A}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[sysdiagrams]') AND type IN (N'U'))&#xA;DROP TABLE [dbo].[sysdiagrams]&#xA;GO&#xA;&#xA;CREATE TABLE [dbo].[sysdiagrams]&#xA;(&#xA;-- Columns Definition&#xA; [name] nvarchar(128) NOT NULL &#xA;, [principal_id] int NOT NULL &#xA;, [diagram_id] int IDENTITY(1,1) NOT NULL &#xA;, [version] int &#xA;, [definition] varbinary(max) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK__sysdiagr__C2B05B616B24EA82] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [diagram_id] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;CREATE UNIQUE NONCLUSTERED INDEX [UK_principal_name] ON [dbo].[sysdiagrams]&#xA;      (&#xA;      [principal_id] Asc,[name] Asc&#xA;      )&#xA;      &#xA;      WITH&#xA;      (&#xA;      PAD_INDEX = OFF,&#xA;SORT_IN_TEMPDB = OFF,&#xA;DROP_EXISTING = OFF,&#xA;IGNORE_DUP_KEY = OFF,&#xA;ONLINE = OFF&#xA;      )&#xA;      ON &quot;default&quot;&#xA;      GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table AdventureWorksDWBuildVersion_To_Create Table DatabaseLog]"
+      DTS:CreationName=""
+      DTS:DTSID="{88538364-D106-4762-AFF5-D807939BD2A4}"
+      DTS:From="Package\Create Table AdventureWorksDWBuildVersion"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table AdventureWorksDWBuildVersion_To_Create Table DatabaseLog"
+      DTS:To="Package\Create Table DatabaseLog" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DatabaseLog_To_Create Table DimAccount]"
+      DTS:CreationName=""
+      DTS:DTSID="{3616CB68-7C2E-4B11-9405-6AA7642B1C13}"
+      DTS:From="Package\Create Table DatabaseLog"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DatabaseLog_To_Create Table DimAccount"
+      DTS:To="Package\Create Table DimAccount" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimAccount_To_Create Table DimCurrency]"
+      DTS:CreationName=""
+      DTS:DTSID="{9B98345A-60E4-4985-ACF8-0B40362A5876}"
+      DTS:From="Package\Create Table DimAccount"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimAccount_To_Create Table DimCurrency"
+      DTS:To="Package\Create Table DimCurrency" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimCurrency_To_Create Table DimCustomer]"
+      DTS:CreationName=""
+      DTS:DTSID="{27102C43-C9C0-4A42-956F-552E96FEA0BE}"
+      DTS:From="Package\Create Table DimCurrency"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimCurrency_To_Create Table DimCustomer"
+      DTS:To="Package\Create Table DimCustomer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimCustomer_To_Create Table DimDate]"
+      DTS:CreationName=""
+      DTS:DTSID="{C36AE7E4-DBB7-490E-B24B-3BADC08F0A48}"
+      DTS:From="Package\Create Table DimCustomer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimCustomer_To_Create Table DimDate"
+      DTS:To="Package\Create Table DimDate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimDate_To_Create Table DimDepartmentGroup]"
+      DTS:CreationName=""
+      DTS:DTSID="{15EB3265-BF33-48B7-B5FE-63D01597BA07}"
+      DTS:From="Package\Create Table DimDate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimDate_To_Create Table DimDepartmentGroup"
+      DTS:To="Package\Create Table DimDepartmentGroup" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimDepartmentGroup_To_Create Table DimEmployee]"
+      DTS:CreationName=""
+      DTS:DTSID="{B5EBCDDC-DC46-40E2-BFFA-F9839C9929EF}"
+      DTS:From="Package\Create Table DimDepartmentGroup"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimDepartmentGroup_To_Create Table DimEmployee"
+      DTS:To="Package\Create Table DimEmployee" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimEmployee_To_Create Table DimGeography]"
+      DTS:CreationName=""
+      DTS:DTSID="{AC795515-5CE0-4E65-B441-3EDB76F3D63D}"
+      DTS:From="Package\Create Table DimEmployee"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimEmployee_To_Create Table DimGeography"
+      DTS:To="Package\Create Table DimGeography" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimGeography_To_Create Table DimOrganization]"
+      DTS:CreationName=""
+      DTS:DTSID="{CAFFE7B8-A666-459E-8418-544E5D816DD0}"
+      DTS:From="Package\Create Table DimGeography"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimGeography_To_Create Table DimOrganization"
+      DTS:To="Package\Create Table DimOrganization" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimOrganization_To_Create Table DimProduct]"
+      DTS:CreationName=""
+      DTS:DTSID="{573EE663-948C-476F-BF69-7994C31722BB}"
+      DTS:From="Package\Create Table DimOrganization"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimOrganization_To_Create Table DimProduct"
+      DTS:To="Package\Create Table DimProduct" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimProductCategory_To_Create Table DimProductSubcategory]"
+      DTS:CreationName=""
+      DTS:DTSID="{694DBEBB-8E97-4BEC-A074-1DE54B8443CF}"
+      DTS:From="Package\Create Table DimProductCategory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimProductCategory_To_Create Table DimProductSubcategory"
+      DTS:To="Package\Create Table DimProductSubcategory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimProductSubcategory_To_Create Table DimPromotion]"
+      DTS:CreationName=""
+      DTS:DTSID="{13E4FE5D-5AEA-4EDF-A6F4-CBA94F4CD6E2}"
+      DTS:From="Package\Create Table DimProductSubcategory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimProductSubcategory_To_Create Table DimPromotion"
+      DTS:To="Package\Create Table DimPromotion" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimProduct_To_Create Table DimProductCategory]"
+      DTS:CreationName=""
+      DTS:DTSID="{2033F98A-BDB0-4B32-A7E7-3A93EDC3A18E}"
+      DTS:From="Package\Create Table DimProduct"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimProduct_To_Create Table DimProductCategory"
+      DTS:To="Package\Create Table DimProductCategory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimPromotion_To_Create Table DimReseller]"
+      DTS:CreationName=""
+      DTS:DTSID="{8B46F38B-9908-4D4A-B1A7-EC78B2668A4B}"
+      DTS:From="Package\Create Table DimPromotion"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimPromotion_To_Create Table DimReseller"
+      DTS:To="Package\Create Table DimReseller" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimReseller_To_Create Table DimSalesReason]"
+      DTS:CreationName=""
+      DTS:DTSID="{83D2816E-A2E1-4D9F-8AB5-D9038E5E140E}"
+      DTS:From="Package\Create Table DimReseller"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimReseller_To_Create Table DimSalesReason"
+      DTS:To="Package\Create Table DimSalesReason" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimSalesReason_To_Create Table DimSalesTerritory]"
+      DTS:CreationName=""
+      DTS:DTSID="{F247C6E3-4190-4D07-BD37-71F71D59B318}"
+      DTS:From="Package\Create Table DimSalesReason"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimSalesReason_To_Create Table DimSalesTerritory"
+      DTS:To="Package\Create Table DimSalesTerritory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimSalesTerritory_To_Create Table DimScenario]"
+      DTS:CreationName=""
+      DTS:DTSID="{98C077CE-C7F4-474E-9DD6-74A752445969}"
+      DTS:From="Package\Create Table DimSalesTerritory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimSalesTerritory_To_Create Table DimScenario"
+      DTS:To="Package\Create Table DimScenario" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table DimScenario_To_Create Table FactAdditionalInternationalProductDescription]"
+      DTS:CreationName=""
+      DTS:DTSID="{41283B47-0D05-4730-8BBC-E2D2506C3440}"
+      DTS:From="Package\Create Table DimScenario"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table DimScenario_To_Create Table FactAdditionalInternationalProductDescription"
+      DTS:To="Package\Create Table FactAdditionalInternationalProductDescription" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactAdditionalInternationalProductDescription_To_Create Table FactCallCenter]"
+      DTS:CreationName=""
+      DTS:DTSID="{095FF4A0-84F5-44BE-B177-6B606AF54610}"
+      DTS:From="Package\Create Table FactAdditionalInternationalProductDescription"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactAdditionalInternationalProductDescription_To_Create Table FactCallCenter"
+      DTS:To="Package\Create Table FactCallCenter" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactCallCenter_To_Create Table FactCurrencyRate]"
+      DTS:CreationName=""
+      DTS:DTSID="{2A88C872-A2CC-4A09-8236-E3BCECA88FC7}"
+      DTS:From="Package\Create Table FactCallCenter"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactCallCenter_To_Create Table FactCurrencyRate"
+      DTS:To="Package\Create Table FactCurrencyRate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactCurrencyRate_To_Create Table FactFinance]"
+      DTS:CreationName=""
+      DTS:DTSID="{CE716507-ABD9-4A0E-823F-79D4A83EE718}"
+      DTS:From="Package\Create Table FactCurrencyRate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactCurrencyRate_To_Create Table FactFinance"
+      DTS:To="Package\Create Table FactFinance" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactFinance_To_Create Table FactInternetSales]"
+      DTS:CreationName=""
+      DTS:DTSID="{1404BBF4-44B8-4774-ADE3-377958213463}"
+      DTS:From="Package\Create Table FactFinance"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactFinance_To_Create Table FactInternetSales"
+      DTS:To="Package\Create Table FactInternetSales" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactInternetSalesReason_To_Create Table FactProductInventory]"
+      DTS:CreationName=""
+      DTS:DTSID="{EE579488-A264-4CC2-B608-9126A704094C}"
+      DTS:From="Package\Create Table FactInternetSalesReason"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactInternetSalesReason_To_Create Table FactProductInventory"
+      DTS:To="Package\Create Table FactProductInventory" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactInternetSales_To_Create Table FactInternetSalesReason]"
+      DTS:CreationName=""
+      DTS:DTSID="{FC2E2C55-636F-451F-9EFE-1F38E3F2ED99}"
+      DTS:From="Package\Create Table FactInternetSales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactInternetSales_To_Create Table FactInternetSalesReason"
+      DTS:To="Package\Create Table FactInternetSalesReason" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactProductInventory_To_Create Table FactResellerSales]"
+      DTS:CreationName=""
+      DTS:DTSID="{54D6DED9-76DC-4596-9F23-0650F64CC3B3}"
+      DTS:From="Package\Create Table FactProductInventory"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactProductInventory_To_Create Table FactResellerSales"
+      DTS:To="Package\Create Table FactResellerSales" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactResellerSales_To_Create Table FactSalesQuota]"
+      DTS:CreationName=""
+      DTS:DTSID="{2322A232-9C07-450A-8C49-75711D863A8E}"
+      DTS:From="Package\Create Table FactResellerSales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactResellerSales_To_Create Table FactSalesQuota"
+      DTS:To="Package\Create Table FactSalesQuota" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactSalesQuota_To_Create Table FactSurveyResponse]"
+      DTS:CreationName=""
+      DTS:DTSID="{D1CC42A2-4332-429E-9702-647BB2A03021}"
+      DTS:From="Package\Create Table FactSalesQuota"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactSalesQuota_To_Create Table FactSurveyResponse"
+      DTS:To="Package\Create Table FactSurveyResponse" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table FactSurveyResponse_To_Create Table NewFactCurrencyRate]"
+      DTS:CreationName=""
+      DTS:DTSID="{0D4AA25D-2062-4CBA-925D-F2065F69D873}"
+      DTS:From="Package\Create Table FactSurveyResponse"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table FactSurveyResponse_To_Create Table NewFactCurrencyRate"
+      DTS:To="Package\Create Table NewFactCurrencyRate" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table NewFactCurrencyRate_To_Create Table ProspectiveBuyer]"
+      DTS:CreationName=""
+      DTS:DTSID="{C345ABD4-6130-4C51-80B8-A38B7F9F79BC}"
+      DTS:From="Package\Create Table NewFactCurrencyRate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table NewFactCurrencyRate_To_Create Table ProspectiveBuyer"
+      DTS:To="Package\Create Table ProspectiveBuyer" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table ProspectiveBuyer_To_Create Table sysdiagrams]"
+      DTS:CreationName=""
+      DTS:DTSID="{86BC2D2E-F50F-443C-A485-E60D5D86FC7C}"
+      DTS:From="Package\Create Table ProspectiveBuyer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table ProspectiveBuyer_To_Create Table sysdiagrams"
+      DTS:To="Package\Create Table sysdiagrams" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

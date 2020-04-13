@@ -1,0 +1,827 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:53 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{13C27BC9-FAAC-43D1-9413-C552E95F9C96}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Sales_InvoiceLines"
+  DTS:VersionGUID="{24FFBC45-A277-4DAA-B51F-A9FC7B6449F1}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1B5CAF3B-A136-4D1C-A739-41274E9789CA}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BDA07757-B710-4DEB-ABC7-D8C9354E83F0}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A90C421F-0B5F-4CA7-B7A5-3FCF9098A3FE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{062D72A5-357F-49B6-8F69-33E17E7B284A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2F2B5ED1-7CEF-48A8-BA33-DDC85EC4235F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Sales InvoiceLines"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{270BA3F3-F0BD-47F7-B3D4-2C0080F57788}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Sales InvoiceLines"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Sales InvoiceLines\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Sales InvoiceLines\Add Load Date.Inputs[Source Sales InvoiceLines_Output_Add Load Date]"
+                  name="Source Sales InvoiceLines_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales InvoiceLines\Add Load Date.Inputs[Source Sales InvoiceLines_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales InvoiceLines\Add Load Date.Inputs[Source Sales InvoiceLines_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales InvoiceLines\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Sales InvoiceLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales InvoiceLines\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Sales InvoiceLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Sales InvoiceLines"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [InvoiceLineID]
+,[InvoiceID]
+,[StockItemID]
+,[Description]
+,[PackageTypeID]
+,[Quantity]
+,[UnitPrice]
+,[TaxRate]
+,[TaxAmount]
+,[LineProfit]
+,[ExtendedPrice]
+,[LastEditedBy]
+,[LastEditedWhen]
+FROM [Sales].[InvoiceLines]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[InvoiceLineID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[InvoiceLineID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[InvoiceLineID]"
+                      name="InvoiceLineID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[InvoiceID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[InvoiceID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[InvoiceID]"
+                      name="InvoiceID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[StockItemID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[StockItemID]"
+                      name="StockItemID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[Description]"
+                      length="100"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[PackageTypeID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[PackageTypeID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[PackageTypeID]"
+                      name="PackageTypeID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[Quantity]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[Quantity]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[Quantity]"
+                      name="Quantity"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[UnitPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[TaxRate]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[TaxRate]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[TaxRate]"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[TaxAmount]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LineProfit]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[LineProfit]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LineProfit]"
+                      name="LineProfit"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[ExtendedPrice]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[ExtendedPrice]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[ExtendedPrice]"
+                      name="ExtendedPrice"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[InvoiceLineID]"
+                      dataType="i4"
+                      name="InvoiceLineID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[InvoiceID]"
+                      dataType="i4"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[PackageTypeID]"
+                      dataType="i4"
+                      name="PackageTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[Quantity]"
+                      dataType="i4"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[TaxRate]"
+                      dataType="numeric"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[LineProfit]"
+                      dataType="numeric"
+                      name="LineProfit"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[ExtendedPrice]"
+                      dataType="numeric"
+                      name="ExtendedPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[InvoiceLineID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[InvoiceLineID]"
+                      name="InvoiceLineID" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[InvoiceID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[InvoiceID]"
+                      name="InvoiceID" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[StockItemID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[StockItemID]"
+                      name="StockItemID" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[PackageTypeID]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[PackageTypeID]"
+                      name="PackageTypeID" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[Quantity]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[Quantity]"
+                      name="Quantity" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[UnitPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[TaxRate]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[TaxRate]"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[TaxAmount]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[TaxAmount]"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[LineProfit]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[LineProfit]"
+                      name="LineProfit"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[ExtendedPrice]"
+                      dataType="numeric"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[ExtendedPrice]"
+                      name="ExtendedPrice"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[LastEditedWhen]"
+                      name="LastEditedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi InvoiceLines"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Sales].[InvoiceLines]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi InvoiceLines">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[InvoiceLineID]"
+                      cachedDataType="i4"
+                      cachedName="InvoiceLineID"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[InvoiceLineID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[InvoiceLineID]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[InvoiceID]"
+                      cachedDataType="i4"
+                      cachedName="InvoiceID"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[InvoiceID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[InvoiceID]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[StockItemID]"
+                      cachedDataType="i4"
+                      cachedName="StockItemID"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[StockItemID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[StockItemID]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Description"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[Description]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[Description]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[PackageTypeID]"
+                      cachedDataType="i4"
+                      cachedName="PackageTypeID"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[PackageTypeID]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[PackageTypeID]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[Quantity]"
+                      cachedDataType="i4"
+                      cachedName="Quantity"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[Quantity]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[Quantity]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[UnitPrice]"
+                      cachedDataType="numeric"
+                      cachedName="UnitPrice"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[UnitPrice]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[UnitPrice]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[TaxRate]"
+                      cachedDataType="numeric"
+                      cachedName="TaxRate"
+                      cachedPrecision="18"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[TaxRate]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[TaxRate]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[TaxAmount]"
+                      cachedDataType="numeric"
+                      cachedName="TaxAmount"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[TaxAmount]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[TaxAmount]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[LineProfit]"
+                      cachedDataType="numeric"
+                      cachedName="LineProfit"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[LineProfit]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LineProfit]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[ExtendedPrice]"
+                      cachedDataType="numeric"
+                      cachedName="ExtendedPrice"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[ExtendedPrice]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[ExtendedPrice]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].Columns[LastEditedWhen]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="LastEditedWhen"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[LastEditedWhen]"
+                      lineageId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output].Columns[LastEditedWhen]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[InvoiceLineID]"
+                      dataType="i4"
+                      name="InvoiceLineID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[InvoiceID]"
+                      dataType="i4"
+                      name="InvoiceID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[StockItemID]"
+                      dataType="i4"
+                      name="StockItemID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="100"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[PackageTypeID]"
+                      dataType="i4"
+                      name="PackageTypeID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[Quantity]"
+                      dataType="i4"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[UnitPrice]"
+                      dataType="numeric"
+                      name="UnitPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[TaxRate]"
+                      dataType="numeric"
+                      name="TaxRate"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[TaxAmount]"
+                      dataType="numeric"
+                      name="TaxAmount"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[LineProfit]"
+                      dataType="numeric"
+                      name="LineProfit"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[ExtendedPrice]"
+                      dataType="numeric"
+                      name="ExtendedPrice"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines].ExternalColumns[LastEditedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="LastEditedWhen"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Sales InvoiceLines.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Sales InvoiceLines\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Sales InvoiceLines\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales InvoiceLines.Paths[Count New Rows_Output_Staging wwi InvoiceLines]"
+              endId="Package\Load Sales InvoiceLines\Staging wwi InvoiceLines.Inputs[Count New Rows_Output_Staging wwi InvoiceLines]"
+              name="Count New Rows_Output_Staging wwi InvoiceLines"
+              startId="Package\Load Sales InvoiceLines\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Sales InvoiceLines.Paths[Source Sales InvoiceLines_Output_Add Load Date]"
+              endId="Package\Load Sales InvoiceLines\Add Load Date.Inputs[Source Sales InvoiceLines_Output_Add Load Date]"
+              name="Source Sales InvoiceLines_Output_Add Load Date"
+              startId="Package\Load Sales InvoiceLines\Source Sales InvoiceLines.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

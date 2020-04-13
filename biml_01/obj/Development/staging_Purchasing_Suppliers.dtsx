@@ -1,0 +1,1321 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/13/2020 5:27:52 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{E002898B-DA77-44EB-8DF1-998E1A59646E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="staging_Purchasing_Suppliers"
+  DTS:VersionGUID="{B2A3DC18-4FE7-4C0F-9764-DF582BBC5282}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9760D961-42C7-423D-8213-E135E981AE13}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{23A1FB06-1CEE-4FD9-B9A0-3E6C03CD98BB}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2B2A70D2-DFA7-494E-9D2A-10C9FD778C10}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="ChangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8FD04ADA-09E5-44C8-A014-222DBBBB2F3F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{506F2273-719D-4C83-86BE-71B6F4109A3D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="Audit"
+      DTS:ObjectName="UnchangedRows">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load Purchasing Suppliers"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{EAE4D4A8-662E-4DBC-AFBE-E44AF408A850}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Purchasing Suppliers"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Purchasing Suppliers\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing Suppliers\Add Load Date.Inputs[Source Purchasing Suppliers_Output_Add Load Date]"
+                  name="Source Purchasing Suppliers_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Purchasing Suppliers\Add Load Date.Inputs[Source Purchasing Suppliers_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Purchasing Suppliers\Add Load Date.Inputs[Source Purchasing Suppliers_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing Suppliers\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">Audit::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing Suppliers\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing Suppliers\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Purchasing Suppliers\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Purchasing Suppliers"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [SupplierID]
+,[SupplierName]
+,[SupplierCategoryID]
+,[PrimaryContactPersonID]
+,[AlternateContactPersonID]
+,[DeliveryMethodID]
+,[DeliveryCityID]
+,[PostalCityID]
+,[SupplierReference]
+,[BankAccountName]
+,[BankAccountBranch]
+,[BankAccountCode]
+,[BankAccountNumber]
+,[BankInternationalCode]
+,[PaymentDays]
+,[InternalComments]
+,[PhoneNumber]
+,[FaxNumber]
+,[WebsiteURL]
+,[DeliveryAddressLine1]
+,[DeliveryAddressLine2]
+,[DeliveryPostalCode]
+,[DeliveryLocation]
+,[PostalAddressLine1]
+,[PostalAddressLine2]
+,[PostalPostalCode]
+,[LastEditedBy]
+,[ValidFrom]
+,[ValidTo]
+FROM [Purchasing].[Suppliers]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierID]"
+                      name="SupplierID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierName]"
+                      length="100"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierName]"
+                      name="SupplierName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierCategoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierCategoryID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierCategoryID]"
+                      name="SupplierCategoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PrimaryContactPersonID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PrimaryContactPersonID]"
+                      name="PrimaryContactPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[AlternateContactPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[AlternateContactPersonID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[AlternateContactPersonID]"
+                      name="AlternateContactPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryMethodID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryMethodID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryMethodID]"
+                      name="DeliveryMethodID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryCityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryCityID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryCityID]"
+                      name="DeliveryCityID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalCityID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalCityID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalCityID]"
+                      name="PostalCityID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierReference]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierReference]"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierReference]"
+                      name="SupplierReference"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountName]"
+                      length="50"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountName]"
+                      name="BankAccountName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountBranch]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountBranch]"
+                      length="50"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountBranch]"
+                      name="BankAccountBranch"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountCode]"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountCode]"
+                      name="BankAccountCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountNumber]"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountNumber]"
+                      name="BankAccountNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankInternationalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankInternationalCode]"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankInternationalCode]"
+                      name="BankInternationalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PaymentDays]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PaymentDays]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PaymentDays]"
+                      name="PaymentDays"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[InternalComments]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[InternalComments]"
+                      name="InternalComments"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PhoneNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PhoneNumber]"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PhoneNumber]"
+                      name="PhoneNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[FaxNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[FaxNumber]"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[FaxNumber]"
+                      name="FaxNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[WebsiteURL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[WebsiteURL]"
+                      length="256"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[WebsiteURL]"
+                      name="WebsiteURL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryAddressLine1]"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryAddressLine1]"
+                      name="DeliveryAddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryAddressLine2]"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryAddressLine2]"
+                      name="DeliveryAddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryPostalCode]"
+                      length="10"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryPostalCode]"
+                      name="DeliveryPostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryLocation]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryLocation]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryLocation]"
+                      name="DeliveryLocation"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalAddressLine1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalAddressLine1]"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalAddressLine1]"
+                      name="PostalAddressLine1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalAddressLine2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalAddressLine2]"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalAddressLine2]"
+                      name="PostalAddressLine2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalPostalCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalPostalCode]"
+                      length="10"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalPostalCode]"
+                      name="PostalPostalCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[LastEditedBy]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[LastEditedBy]"
+                      name="LastEditedBy"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierID]"
+                      dataType="i4"
+                      name="SupplierID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SupplierName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierCategoryID]"
+                      dataType="i4"
+                      name="SupplierCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      name="PrimaryContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[AlternateContactPersonID]"
+                      dataType="i4"
+                      name="AlternateContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryMethodID]"
+                      dataType="i4"
+                      name="DeliveryMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryCityID]"
+                      dataType="i4"
+                      name="DeliveryCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalCityID]"
+                      dataType="i4"
+                      name="PostalCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[SupplierReference]"
+                      dataType="wstr"
+                      length="20"
+                      name="SupplierReference" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountName]"
+                      dataType="wstr"
+                      length="50"
+                      name="BankAccountName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountBranch]"
+                      dataType="wstr"
+                      length="50"
+                      name="BankAccountBranch" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountCode]"
+                      dataType="wstr"
+                      length="20"
+                      name="BankAccountCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankAccountNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="BankAccountNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[BankInternationalCode]"
+                      dataType="wstr"
+                      length="20"
+                      name="BankInternationalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PaymentDays]"
+                      dataType="i4"
+                      name="PaymentDays" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="FaxNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[WebsiteURL]"
+                      dataType="wstr"
+                      length="256"
+                      name="WebsiteURL" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="DeliveryPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[DeliveryLocation]"
+                      dataType="image"
+                      name="DeliveryLocation" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierID]"
+                      name="SupplierID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierName]"
+                      name="SupplierName" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierCategoryID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierCategoryID]"
+                      name="SupplierCategoryID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PrimaryContactPersonID]"
+                      name="PrimaryContactPersonID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[AlternateContactPersonID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[AlternateContactPersonID]"
+                      name="AlternateContactPersonID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryMethodID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryMethodID]"
+                      name="DeliveryMethodID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryCityID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryCityID]"
+                      name="DeliveryCityID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalCityID]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalCityID]"
+                      name="PostalCityID" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierReference]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[SupplierReference]"
+                      name="SupplierReference" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountName]"
+                      name="BankAccountName" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountBranch]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountBranch]"
+                      name="BankAccountBranch" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountCode]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountCode]"
+                      name="BankAccountCode" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankAccountNumber]"
+                      name="BankAccountNumber" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankInternationalCode]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[BankInternationalCode]"
+                      name="BankInternationalCode" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PaymentDays]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PaymentDays]"
+                      name="PaymentDays" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[InternalComments]"
+                      dataType="nText"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[InternalComments]"
+                      name="InternalComments" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PhoneNumber]"
+                      name="PhoneNumber" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[FaxNumber]"
+                      name="FaxNumber" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[WebsiteURL]"
+                      dataType="wstr"
+                      length="256"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[WebsiteURL]"
+                      name="WebsiteURL" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryAddressLine1]"
+                      name="DeliveryAddressLine1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryAddressLine2]"
+                      name="DeliveryAddressLine2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryPostalCode]"
+                      name="DeliveryPostalCode" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryLocation]"
+                      dataType="image"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[DeliveryLocation]"
+                      name="DeliveryLocation" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalAddressLine1]"
+                      name="PostalAddressLine1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalAddressLine2]"
+                      name="PostalAddressLine2" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[PostalPostalCode]"
+                      name="PostalPostalCode" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[LastEditedBy]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[LastEditedBy]"
+                      name="LastEditedBy" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ValidFrom]"
+                      name="ValidFrom"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ValidTo]"
+                      name="ValidTo"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              name="Staging wwi Suppliers"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Purchasing].[Suppliers]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Count New Rows_Output_Staging wwi Suppliers">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[SupplierID]"
+                      cachedDataType="i4"
+                      cachedName="SupplierID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[SupplierName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SupplierName"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierName]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierName]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[SupplierCategoryID]"
+                      cachedDataType="i4"
+                      cachedName="SupplierCategoryID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierCategoryID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierCategoryID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PrimaryContactPersonID]"
+                      cachedDataType="i4"
+                      cachedName="PrimaryContactPersonID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PrimaryContactPersonID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PrimaryContactPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[AlternateContactPersonID]"
+                      cachedDataType="i4"
+                      cachedName="AlternateContactPersonID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[AlternateContactPersonID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[AlternateContactPersonID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[DeliveryMethodID]"
+                      cachedDataType="i4"
+                      cachedName="DeliveryMethodID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryMethodID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryMethodID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[DeliveryCityID]"
+                      cachedDataType="i4"
+                      cachedName="DeliveryCityID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryCityID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryCityID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PostalCityID]"
+                      cachedDataType="i4"
+                      cachedName="PostalCityID"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalCityID]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalCityID]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[SupplierReference]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="SupplierReference"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierReference]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[SupplierReference]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[BankAccountName]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="BankAccountName"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountName]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountName]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[BankAccountBranch]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="BankAccountBranch"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountBranch]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountBranch]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[BankAccountCode]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="BankAccountCode"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountCode]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountCode]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[BankAccountNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="BankAccountNumber"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountNumber]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankAccountNumber]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[BankInternationalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="BankInternationalCode"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankInternationalCode]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[BankInternationalCode]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PaymentDays]"
+                      cachedDataType="i4"
+                      cachedName="PaymentDays"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PaymentDays]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PaymentDays]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[InternalComments]"
+                      cachedDataType="nText"
+                      cachedName="InternalComments"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[InternalComments]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[InternalComments]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PhoneNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PhoneNumber"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PhoneNumber]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PhoneNumber]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[FaxNumber]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="FaxNumber"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[FaxNumber]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[FaxNumber]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[WebsiteURL]"
+                      cachedDataType="wstr"
+                      cachedLength="256"
+                      cachedName="WebsiteURL"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[WebsiteURL]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[WebsiteURL]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[DeliveryAddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="DeliveryAddressLine1"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryAddressLine1]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryAddressLine1]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[DeliveryAddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="DeliveryAddressLine2"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryAddressLine2]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryAddressLine2]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[DeliveryPostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DeliveryPostalCode"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryPostalCode]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryPostalCode]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[DeliveryLocation]"
+                      cachedDataType="image"
+                      cachedName="DeliveryLocation"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryLocation]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[DeliveryLocation]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PostalAddressLine1]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="PostalAddressLine1"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalAddressLine1]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalAddressLine1]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PostalAddressLine2]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="PostalAddressLine2"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalAddressLine2]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalAddressLine2]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[PostalPostalCode]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="PostalPostalCode"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalPostalCode]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[PostalPostalCode]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[LastEditedBy]"
+                      cachedDataType="i4"
+                      cachedName="LastEditedBy"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[LastEditedBy]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[LastEditedBy]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[ValidFrom]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ValidFrom"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[ValidFrom]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[ValidFrom]" />
+                    <inputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].Columns[ValidTo]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="ValidTo"
+                      cachedScale="7"
+                      externalMetadataColumnId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[ValidTo]"
+                      lineageId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output].Columns[ValidTo]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierID]"
+                      dataType="i4"
+                      name="SupplierID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SupplierName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierCategoryID]"
+                      dataType="i4"
+                      name="SupplierCategoryID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PrimaryContactPersonID]"
+                      dataType="i4"
+                      name="PrimaryContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[AlternateContactPersonID]"
+                      dataType="i4"
+                      name="AlternateContactPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryMethodID]"
+                      dataType="i4"
+                      name="DeliveryMethodID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryCityID]"
+                      dataType="i4"
+                      name="DeliveryCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalCityID]"
+                      dataType="i4"
+                      name="PostalCityID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[SupplierReference]"
+                      dataType="wstr"
+                      length="20"
+                      name="SupplierReference" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountName]"
+                      dataType="wstr"
+                      length="50"
+                      name="BankAccountName" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountBranch]"
+                      dataType="wstr"
+                      length="50"
+                      name="BankAccountBranch" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountCode]"
+                      dataType="wstr"
+                      length="20"
+                      name="BankAccountCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankAccountNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="BankAccountNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[BankInternationalCode]"
+                      dataType="wstr"
+                      length="20"
+                      name="BankInternationalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PaymentDays]"
+                      dataType="i4"
+                      name="PaymentDays" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[InternalComments]"
+                      dataType="nText"
+                      name="InternalComments" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PhoneNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="PhoneNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[FaxNumber]"
+                      dataType="wstr"
+                      length="20"
+                      name="FaxNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[WebsiteURL]"
+                      dataType="wstr"
+                      length="256"
+                      name="WebsiteURL" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="DeliveryAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="DeliveryPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[DeliveryLocation]"
+                      dataType="image"
+                      name="DeliveryLocation" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalAddressLine1]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalAddressLine2]"
+                      dataType="wstr"
+                      length="60"
+                      name="PostalAddressLine2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[PostalPostalCode]"
+                      dataType="wstr"
+                      length="10"
+                      name="PostalPostalCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[LastEditedBy]"
+                      dataType="i4"
+                      name="LastEditedBy" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[ValidFrom]"
+                      dataType="dbTimeStamp2"
+                      name="ValidFrom"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers].ExternalColumns[ValidTo]"
+                      dataType="dbTimeStamp2"
+                      name="ValidTo"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Purchasing Suppliers.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Purchasing Suppliers\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Purchasing Suppliers\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Purchasing Suppliers.Paths[Count New Rows_Output_Staging wwi Suppliers]"
+              endId="Package\Load Purchasing Suppliers\Staging wwi Suppliers.Inputs[Count New Rows_Output_Staging wwi Suppliers]"
+              name="Count New Rows_Output_Staging wwi Suppliers"
+              startId="Package\Load Purchasing Suppliers\Count New Rows.Outputs[Output]" />
+            <path
+              refId="Package\Load Purchasing Suppliers.Paths[Source Purchasing Suppliers_Output_Add Load Date]"
+              endId="Package\Load Purchasing Suppliers\Add Load Date.Inputs[Source Purchasing Suppliers_Output_Add Load Date]"
+              name="Source Purchasing Suppliers_Output_Add Load Date"
+              startId="Package\Load Purchasing Suppliers\Source Purchasing Suppliers.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

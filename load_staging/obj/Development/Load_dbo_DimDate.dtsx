@@ -1,0 +1,672 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:42 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{A64DB644-5668-4C29-9A9F-0555043A0CC2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimDate"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{0B76144D-657E-4015-9D59-4933B0BFA76C}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BBB13605-D607-4D4F-88FD-1B7BD8704D09}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A23F7A82-E0AA-48BB-82B3-6ECFFC988C92}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7A44E56F-639E-4D73-9C9D-36840DD5F829}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimDate"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{3354AC1B-02CD-4903-B71C-7237D2D5BCD0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimDate"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimDate\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimDate\Add Load Date.Inputs[Source dbo DimDate_Output_Add Load Date]"
+                  name="Source dbo DimDate_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimDate\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimDate\Add Load Date.Inputs[Source dbo DimDate_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimDate\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimDate\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimDate\Add Load Date.Inputs[Source dbo DimDate_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDate\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDate\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimDate\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimDate\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimDate\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimDate\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimDate\Source dbo DimDate"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimDate"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [DateKey]
+,[FullDateAlternateKey]
+,[DayNumberOfWeek]
+,[EnglishDayNameOfWeek]
+,[SpanishDayNameOfWeek]
+,[FrenchDayNameOfWeek]
+,[DayNumberOfMonth]
+,[DayNumberOfYear]
+,[WeekNumberOfYear]
+,[EnglishMonthName]
+,[SpanishMonthName]
+,[FrenchMonthName]
+,[MonthNumberOfYear]
+,[CalendarQuarter]
+,[CalendarYear]
+,[CalendarSemester]
+,[FiscalQuarter]
+,[FiscalYear]
+,[FiscalSemester]
+FROM [dbo].[DimDate]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimDate\Source dbo DimDate.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DateKey]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FullDateAlternateKey]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FullDateAlternateKey]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FullDateAlternateKey]"
+                      name="FullDateAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DayNumberOfWeek]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DayNumberOfWeek]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DayNumberOfWeek]"
+                      name="DayNumberOfWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[EnglishDayNameOfWeek]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[EnglishDayNameOfWeek]"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[EnglishDayNameOfWeek]"
+                      name="EnglishDayNameOfWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[SpanishDayNameOfWeek]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[SpanishDayNameOfWeek]"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[SpanishDayNameOfWeek]"
+                      name="SpanishDayNameOfWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FrenchDayNameOfWeek]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FrenchDayNameOfWeek]"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FrenchDayNameOfWeek]"
+                      name="FrenchDayNameOfWeek"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DayNumberOfMonth]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DayNumberOfMonth]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DayNumberOfMonth]"
+                      name="DayNumberOfMonth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DayNumberOfYear]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DayNumberOfYear]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[DayNumberOfYear]"
+                      name="DayNumberOfYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[WeekNumberOfYear]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[WeekNumberOfYear]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[WeekNumberOfYear]"
+                      name="WeekNumberOfYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[EnglishMonthName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[EnglishMonthName]"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[EnglishMonthName]"
+                      name="EnglishMonthName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[SpanishMonthName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[SpanishMonthName]"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[SpanishMonthName]"
+                      name="SpanishMonthName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FrenchMonthName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FrenchMonthName]"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FrenchMonthName]"
+                      name="FrenchMonthName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[MonthNumberOfYear]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[MonthNumberOfYear]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[MonthNumberOfYear]"
+                      name="MonthNumberOfYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[CalendarQuarter]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[CalendarQuarter]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[CalendarQuarter]"
+                      name="CalendarQuarter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[CalendarYear]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[CalendarYear]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[CalendarYear]"
+                      name="CalendarYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[CalendarSemester]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[CalendarSemester]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[CalendarSemester]"
+                      name="CalendarSemester"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FiscalQuarter]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FiscalQuarter]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FiscalQuarter]"
+                      name="FiscalQuarter"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FiscalYear]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FiscalYear]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FiscalYear]"
+                      name="FiscalYear"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FiscalSemester]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FiscalSemester]"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].Columns[FiscalSemester]"
+                      name="FiscalSemester"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FullDateAlternateKey]"
+                      dataType="dbDate"
+                      name="FullDateAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DayNumberOfWeek]"
+                      dataType="ui1"
+                      name="DayNumberOfWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[EnglishDayNameOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      name="EnglishDayNameOfWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[SpanishDayNameOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      name="SpanishDayNameOfWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FrenchDayNameOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      name="FrenchDayNameOfWeek" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DayNumberOfMonth]"
+                      dataType="ui1"
+                      name="DayNumberOfMonth" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[DayNumberOfYear]"
+                      dataType="i2"
+                      name="DayNumberOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[WeekNumberOfYear]"
+                      dataType="ui1"
+                      name="WeekNumberOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[EnglishMonthName]"
+                      dataType="wstr"
+                      length="10"
+                      name="EnglishMonthName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[SpanishMonthName]"
+                      dataType="wstr"
+                      length="10"
+                      name="SpanishMonthName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FrenchMonthName]"
+                      dataType="wstr"
+                      length="10"
+                      name="FrenchMonthName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[MonthNumberOfYear]"
+                      dataType="ui1"
+                      name="MonthNumberOfYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[CalendarQuarter]"
+                      dataType="ui1"
+                      name="CalendarQuarter" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[CalendarYear]"
+                      dataType="i2"
+                      name="CalendarYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[CalendarSemester]"
+                      dataType="ui1"
+                      name="CalendarSemester" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FiscalQuarter]"
+                      dataType="ui1"
+                      name="FiscalQuarter" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FiscalYear]"
+                      dataType="i2"
+                      name="FiscalYear" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output].ExternalColumns[FiscalSemester]"
+                      dataType="ui1"
+                      name="FiscalSemester" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DateKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DateKey]"
+                      name="DateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FullDateAlternateKey]"
+                      dataType="dbDate"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FullDateAlternateKey]"
+                      name="FullDateAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DayNumberOfWeek]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DayNumberOfWeek]"
+                      name="DayNumberOfWeek" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[EnglishDayNameOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[EnglishDayNameOfWeek]"
+                      name="EnglishDayNameOfWeek" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[SpanishDayNameOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[SpanishDayNameOfWeek]"
+                      name="SpanishDayNameOfWeek" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FrenchDayNameOfWeek]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FrenchDayNameOfWeek]"
+                      name="FrenchDayNameOfWeek" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DayNumberOfMonth]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DayNumberOfMonth]"
+                      name="DayNumberOfMonth" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DayNumberOfYear]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[DayNumberOfYear]"
+                      name="DayNumberOfYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[WeekNumberOfYear]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[WeekNumberOfYear]"
+                      name="WeekNumberOfYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[EnglishMonthName]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[EnglishMonthName]"
+                      name="EnglishMonthName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[SpanishMonthName]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[SpanishMonthName]"
+                      name="SpanishMonthName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FrenchMonthName]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FrenchMonthName]"
+                      name="FrenchMonthName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[MonthNumberOfYear]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[MonthNumberOfYear]"
+                      name="MonthNumberOfYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[CalendarQuarter]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[CalendarQuarter]"
+                      name="CalendarQuarter" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[CalendarYear]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[CalendarYear]"
+                      name="CalendarYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[CalendarSemester]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[CalendarSemester]"
+                      name="CalendarSemester" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FiscalQuarter]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FiscalQuarter]"
+                      name="FiscalQuarter" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FiscalYear]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FiscalYear]"
+                      name="FiscalYear" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FiscalSemester]"
+                      dataType="ui1"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[FiscalSemester]"
+                      name="FiscalSemester" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimDate.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimDate\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimDate\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimDate.Paths[Source dbo DimDate_Output_Add Load Date]"
+              endId="Package\Load dbo DimDate\Add Load Date.Inputs[Source dbo DimDate_Output_Add Load Date]"
+              name="Source dbo DimDate_Output_Add Load Date"
+              startId="Package\Load dbo DimDate\Source dbo DimDate.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimDate"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{9D16A402-E1CD-46F8-AF92-FAC75ADAC99A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimDate"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A23F7A82-E0AA-48BB-82B3-6ECFFC988C92}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimDate&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimDate_To_Load dbo DimDate]"
+      DTS:CreationName=""
+      DTS:DTSID="{3300E523-ABE4-45BE-9E8C-380BD2A7F40B}"
+      DTS:From="Package\Truncate dbo DimDate"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimDate_To_Load dbo DimDate"
+      DTS:To="Package\Load dbo DimDate" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

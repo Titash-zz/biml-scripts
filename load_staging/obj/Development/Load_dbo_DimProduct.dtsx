@@ -1,0 +1,1046 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 4:47:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{67DF9CE8-310C-4531-8122-F9DC6405FED4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_dbo_DimProduct"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{EDC0F3C8-FA49-4E43-94CD-C1147029EEE2}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D631C68F-CE8A-4FC5-850E-E0B7AE234784}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=AdventureWorksDW2017;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AE456F3D-D06A-4382-976D-426023203B51}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{53DDE898-09F8-488B-9BBE-B02E1F9C7CB7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load dbo DimProduct"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{B0C84A4C-2558-4DA0-B043-5D0CBDE35D64}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dbo DimProduct"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load dbo DimProduct\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimProduct\Add Load Date.Inputs[Source dbo DimProduct_Output_Add Load Date]"
+                  name="Source dbo DimProduct_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimProduct\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimProduct\Add Load Date.Inputs[Source dbo DimProduct_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load dbo DimProduct\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load dbo DimProduct\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load dbo DimProduct\Add Load Date.Inputs[Source dbo DimProduct_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimProduct\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load dbo DimProduct\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimProduct\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load dbo DimProduct\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load dbo DimProduct\Source dbo DimProduct"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source dbo DimProduct"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [ProductKey]
+,[ProductAlternateKey]
+,[ProductSubcategoryKey]
+,[WeightUnitMeasureCode]
+,[SizeUnitMeasureCode]
+,[EnglishProductName]
+,[SpanishProductName]
+,[FrenchProductName]
+,[StandardCost]
+,[FinishedGoodsFlag]
+,[Color]
+,[SafetyStockLevel]
+,[ReorderPoint]
+,[ListPrice]
+,[Size]
+,[SizeRange]
+,[Weight]
+,[DaysToManufacture]
+,[ProductLine]
+,[DealerPrice]
+,[Class]
+,[Style]
+,[ModelName]
+,[LargePhoto]
+,[EnglishDescription]
+,[FrenchDescription]
+,[ChineseDescription]
+,[ArabicDescription]
+,[HebrewDescription]
+,[ThaiDescription]
+,[GermanDescription]
+,[JapaneseDescription]
+,[TurkishDescription]
+,[StartDate]
+,[EndDate]
+,[Status]
+FROM [dbo].[DimProduct]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load dbo DimProduct\Source dbo DimProduct.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductKey]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductKey]"
+                      name="ProductKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductAlternateKey]"
+                      length="25"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductAlternateKey]"
+                      name="ProductAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductSubcategoryKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductSubcategoryKey]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductSubcategoryKey]"
+                      name="ProductSubcategoryKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[WeightUnitMeasureCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[WeightUnitMeasureCode]"
+                      length="3"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[WeightUnitMeasureCode]"
+                      name="WeightUnitMeasureCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SizeUnitMeasureCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SizeUnitMeasureCode]"
+                      length="3"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SizeUnitMeasureCode]"
+                      name="SizeUnitMeasureCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[EnglishProductName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[EnglishProductName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[EnglishProductName]"
+                      name="EnglishProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SpanishProductName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SpanishProductName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SpanishProductName]"
+                      name="SpanishProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[FrenchProductName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[FrenchProductName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[FrenchProductName]"
+                      name="FrenchProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[StandardCost]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[StandardCost]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[StandardCost]"
+                      name="StandardCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[FinishedGoodsFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[FinishedGoodsFlag]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[FinishedGoodsFlag]"
+                      name="FinishedGoodsFlag"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Color]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Color]"
+                      length="15"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Color]"
+                      name="Color"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SafetyStockLevel]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SafetyStockLevel]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SafetyStockLevel]"
+                      name="SafetyStockLevel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ReorderPoint]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ReorderPoint]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ReorderPoint]"
+                      name="ReorderPoint"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ListPrice]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ListPrice]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ListPrice]"
+                      name="ListPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Size]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Size]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Size]"
+                      name="Size"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SizeRange]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SizeRange]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[SizeRange]"
+                      name="SizeRange"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Weight]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Weight]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Weight]"
+                      name="Weight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[DaysToManufacture]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[DaysToManufacture]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[DaysToManufacture]"
+                      name="DaysToManufacture"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductLine]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductLine]"
+                      length="2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ProductLine]"
+                      name="ProductLine"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[DealerPrice]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[DealerPrice]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[DealerPrice]"
+                      name="DealerPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Class]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Class]"
+                      length="2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Class]"
+                      name="Class"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Style]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Style]"
+                      length="2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Style]"
+                      name="Style"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ModelName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ModelName]"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ModelName]"
+                      name="ModelName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[LargePhoto]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[LargePhoto]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[LargePhoto]"
+                      name="LargePhoto"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[EnglishDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[EnglishDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[EnglishDescription]"
+                      name="EnglishDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[FrenchDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[FrenchDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[FrenchDescription]"
+                      name="FrenchDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ChineseDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ChineseDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ChineseDescription]"
+                      name="ChineseDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ArabicDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ArabicDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ArabicDescription]"
+                      name="ArabicDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[HebrewDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[HebrewDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[HebrewDescription]"
+                      name="HebrewDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ThaiDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ThaiDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[ThaiDescription]"
+                      name="ThaiDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[GermanDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[GermanDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[GermanDescription]"
+                      name="GermanDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[JapaneseDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[JapaneseDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[JapaneseDescription]"
+                      name="JapaneseDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[TurkishDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[TurkishDescription]"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[TurkishDescription]"
+                      name="TurkishDescription"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[StartDate]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[StartDate]"
+                      name="StartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[EndDate]"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[EndDate]"
+                      name="EndDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Status]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Status]"
+                      length="7"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].Columns[Status]"
+                      name="Status"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductKey]"
+                      dataType="i4"
+                      name="ProductKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductAlternateKey]"
+                      dataType="wstr"
+                      length="25"
+                      name="ProductAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductSubcategoryKey]"
+                      dataType="i4"
+                      name="ProductSubcategoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[WeightUnitMeasureCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="WeightUnitMeasureCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SizeUnitMeasureCode]"
+                      dataType="wstr"
+                      length="3"
+                      name="SizeUnitMeasureCode" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[EnglishProductName]"
+                      dataType="wstr"
+                      length="50"
+                      name="EnglishProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SpanishProductName]"
+                      dataType="wstr"
+                      length="50"
+                      name="SpanishProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[FrenchProductName]"
+                      dataType="wstr"
+                      length="50"
+                      name="FrenchProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[StandardCost]"
+                      dataType="cy"
+                      name="StandardCost" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[FinishedGoodsFlag]"
+                      dataType="bool"
+                      name="FinishedGoodsFlag" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Color]"
+                      dataType="wstr"
+                      length="15"
+                      name="Color" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SafetyStockLevel]"
+                      dataType="i2"
+                      name="SafetyStockLevel" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ReorderPoint]"
+                      dataType="i2"
+                      name="ReorderPoint" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ListPrice]"
+                      dataType="cy"
+                      name="ListPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Size]"
+                      dataType="wstr"
+                      length="50"
+                      name="Size" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[SizeRange]"
+                      dataType="wstr"
+                      length="50"
+                      name="SizeRange" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Weight]"
+                      dataType="r8"
+                      name="Weight" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[DaysToManufacture]"
+                      dataType="i4"
+                      name="DaysToManufacture" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ProductLine]"
+                      dataType="wstr"
+                      length="2"
+                      name="ProductLine" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[DealerPrice]"
+                      dataType="cy"
+                      name="DealerPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Class]"
+                      dataType="wstr"
+                      length="2"
+                      name="Class" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Style]"
+                      dataType="wstr"
+                      length="2"
+                      name="Style" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ModelName]"
+                      dataType="wstr"
+                      length="50"
+                      name="ModelName" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[LargePhoto]"
+                      dataType="image"
+                      name="LargePhoto" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[EnglishDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="EnglishDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[FrenchDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="FrenchDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ChineseDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="ChineseDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ArabicDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="ArabicDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[HebrewDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="HebrewDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[ThaiDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="ThaiDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[GermanDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="GermanDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[JapaneseDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="JapaneseDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[TurkishDescription]"
+                      dataType="wstr"
+                      length="400"
+                      name="TurkishDescription" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[StartDate]"
+                      dataType="dbTimeStamp"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[EndDate]"
+                      dataType="dbTimeStamp"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output].ExternalColumns[Status]"
+                      dataType="wstr"
+                      length="7"
+                      name="Status" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductKey]"
+                      name="ProductKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductAlternateKey]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductAlternateKey]"
+                      name="ProductAlternateKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductSubcategoryKey]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductSubcategoryKey]"
+                      name="ProductSubcategoryKey" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[WeightUnitMeasureCode]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[WeightUnitMeasureCode]"
+                      name="WeightUnitMeasureCode" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SizeUnitMeasureCode]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SizeUnitMeasureCode]"
+                      name="SizeUnitMeasureCode" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[EnglishProductName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[EnglishProductName]"
+                      name="EnglishProductName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SpanishProductName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SpanishProductName]"
+                      name="SpanishProductName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[FrenchProductName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[FrenchProductName]"
+                      name="FrenchProductName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[StandardCost]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[StandardCost]"
+                      name="StandardCost" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[FinishedGoodsFlag]"
+                      dataType="bool"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[FinishedGoodsFlag]"
+                      name="FinishedGoodsFlag" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Color]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Color]"
+                      name="Color" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SafetyStockLevel]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SafetyStockLevel]"
+                      name="SafetyStockLevel" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ReorderPoint]"
+                      dataType="i2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ReorderPoint]"
+                      name="ReorderPoint" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ListPrice]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ListPrice]"
+                      name="ListPrice" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Size]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Size]"
+                      name="Size" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SizeRange]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[SizeRange]"
+                      name="SizeRange" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Weight]"
+                      dataType="r8"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Weight]"
+                      name="Weight" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[DaysToManufacture]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[DaysToManufacture]"
+                      name="DaysToManufacture" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductLine]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ProductLine]"
+                      name="ProductLine" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[DealerPrice]"
+                      dataType="cy"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[DealerPrice]"
+                      name="DealerPrice" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Class]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Class]"
+                      name="Class" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Style]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Style]"
+                      name="Style" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ModelName]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ModelName]"
+                      name="ModelName" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[LargePhoto]"
+                      dataType="image"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[LargePhoto]"
+                      name="LargePhoto" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[EnglishDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[EnglishDescription]"
+                      name="EnglishDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[FrenchDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[FrenchDescription]"
+                      name="FrenchDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ChineseDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ChineseDescription]"
+                      name="ChineseDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ArabicDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ArabicDescription]"
+                      name="ArabicDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[HebrewDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[HebrewDescription]"
+                      name="HebrewDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ThaiDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ThaiDescription]"
+                      name="ThaiDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[GermanDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[GermanDescription]"
+                      name="GermanDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[JapaneseDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[JapaneseDescription]"
+                      name="JapaneseDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[TurkishDescription]"
+                      dataType="wstr"
+                      length="400"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[TurkishDescription]"
+                      name="TurkishDescription" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[StartDate]"
+                      name="StartDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[EndDate]"
+                      name="EndDate" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Status]"
+                      dataType="wstr"
+                      length="7"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[Status]"
+                      name="Status" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load dbo DimProduct.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load dbo DimProduct\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load dbo DimProduct\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load dbo DimProduct.Paths[Source dbo DimProduct_Output_Add Load Date]"
+              endId="Package\Load dbo DimProduct\Add Load Date.Inputs[Source dbo DimProduct_Output_Add Load Date]"
+              name="Source dbo DimProduct_Output_Add Load Date"
+              startId="Package\Load dbo DimProduct\Source dbo DimProduct.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate dbo DimProduct"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{F2E0788A-3927-4DAE-B074-AB48E6A71E8E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate dbo DimProduct"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{AE456F3D-D06A-4382-976D-426023203B51}"
+          SQLTask:SqlStatementSource="&#xA;                        truncate table adworks.DimProduct&#xA;                    " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Truncate dbo DimProduct_To_Load dbo DimProduct]"
+      DTS:CreationName=""
+      DTS:DTSID="{96CAFF5D-A485-4326-A6F2-7D21392AD569}"
+      DTS:From="Package\Truncate dbo DimProduct"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Truncate dbo DimProduct_To_Load dbo DimProduct"
+      DTS:To="Package\Load dbo DimProduct" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>

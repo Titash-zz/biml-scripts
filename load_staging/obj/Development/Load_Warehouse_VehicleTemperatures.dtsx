@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/10/2020 6:02:51 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="FIREBOLT"
+  DTS:CreatorName="titashrc"
+  DTS:DTSID="{C0671408-8A59-41B2-9DAF-DD279B7EEB43}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.93"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Warehouse_VehicleTemperatures"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{4B4BCA39-4CE1-496E-A597-0E608FF60BF2}"
+  DTS:VersionMajor="0">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D7029028-9D1E-4EE9-9189-5F8AB058E2E4}"
+      DTS:ObjectName="Source">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=WideWorldImporters;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EE62ED76-95EE-49F9-8850-EA6F6676B5C5}"
+      DTS:ObjectName="Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="data source=localhost\SQLEXPRESS;initial catalog=Staging;provider=MSOLEDBSQL;integrated security=SSPI;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB784F0B-DCF9-4A8F-9217-8453E6A2445A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NewRows">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create Table VehicleTemperatures"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{5602CE0D-AA22-4EC8-B3E4-D2EE859D56C3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create Table VehicleTemperatures"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EE62ED76-95EE-49F9-8850-EA6F6676B5C5}"
+          SQLTask:SqlStatementSource="SET ANSI_NULLS ON&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;IF EXISTS (SELECT * from sys.objects WHERE object_id = OBJECT_ID(N'[Warehouse].[VehicleTemperatures]') AND type IN (N'U'))&#xA;DROP TABLE [Warehouse].[VehicleTemperatures]&#xA;GO&#xA;&#xA;CREATE TABLE [Warehouse].[VehicleTemperatures]&#xA;(&#xA;-- Columns Definition&#xA; [VehicleTemperatureID] bigint IDENTITY(1,1) NOT NULL &#xA;, [VehicleRegistration] nvarchar(20) NOT NULL &#xA;, [ChillerSensorNumber] int NOT NULL &#xA;, [RecordedWhen] datetime2(7) NOT NULL &#xA;, [Temperature] decimal(10,2) NOT NULL &#xA;, [FullSensorData] nvarchar(1000) &#xA;, [IsCompressed] bit NOT NULL &#xA;, [CompressedSensorData] varbinary(max) &#xA;&#xA;-- Constraints&#xA;,CONSTRAINT [PK_Warehouse_VehicleTemperatures] PRIMARY KEY NONCLUSTERED&#xA;(&#xA;  [VehicleTemperatureID] Asc) WITH(PAD_INDEX = OFF,IGNORE_DUP_KEY = OFF) ON &quot;default&quot;&#xA;&#xA;)&#xA;ON &quot;default&quot;&#xA;WITH (DATA_COMPRESSION = NONE)&#xA;GO&#xA;&#xA;-------------------------------------------------------------------&#xA;&#xA;&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Warehouse VehicleTemperatures"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{342C5917-1A77-431E-B1D2-01B238B0D2E4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Warehouse VehicleTemperatures"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Warehouse VehicleTemperatures\Add Load Date"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Add Load Date"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Inputs[Source Warehouse VehicleTemperatures_Output_Add Load Date]"
+                  name="Source Warehouse VehicleTemperatures_Output_Add Load Date">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Output]"
+                  exclusionGroup="1"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Inputs[Source Warehouse VehicleTemperatures_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Output].Columns[LoadDate]"
+                      name="LoadDate"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[System::StartTime]</property>
+                        <property
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[System::StartTime]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Error]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Error"
+                  synchronousInputId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Inputs[Source Warehouse VehicleTemperatures_Output_Add Load Date]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse VehicleTemperatures\Count New Rows"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              name="Count New Rows">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::NewRows</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Load Warehouse VehicleTemperatures\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+                  hasSideEffects="true"
+                  name="Add Load Date_Output_Count New Rows">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse VehicleTemperatures\Count New Rows.Outputs[Output]"
+                  name="Output"
+                  synchronousInputId="Package\Load Warehouse VehicleTemperatures\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              name="Source Warehouse VehicleTemperatures"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [VehicleTemperatureID]
+,[VehicleRegistration]
+,[ChillerSensorNumber]
+,[RecordedWhen]
+,[Temperature]
+,[FullSensorData]
+,[IsCompressed]
+,[CompressedSensorData]
+FROM [Warehouse].[VehicleTemperatures]
+</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output]"
+                  name="Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[VehicleTemperatureID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[VehicleTemperatureID]"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[VehicleTemperatureID]"
+                      name="VehicleTemperatureID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[VehicleRegistration]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[VehicleRegistration]"
+                      length="20"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[VehicleRegistration]"
+                      name="VehicleRegistration"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[ChillerSensorNumber]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[ChillerSensorNumber]"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[ChillerSensorNumber]"
+                      name="ChillerSensorNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[RecordedWhen]"
+                      dataType="dbTimeStamp2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[RecordedWhen]"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[RecordedWhen]"
+                      name="RecordedWhen"
+                      scale="7"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[Temperature]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[Temperature]"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[Temperature]"
+                      name="Temperature"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[FullSensorData]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[FullSensorData]"
+                      length="1000"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[FullSensorData]"
+                      name="FullSensorData"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[IsCompressed]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[IsCompressed]"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[IsCompressed]"
+                      name="IsCompressed"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[CompressedSensorData]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[CompressedSensorData]"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].Columns[CompressedSensorData]"
+                      name="CompressedSensorData"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[VehicleTemperatureID]"
+                      dataType="i8"
+                      name="VehicleTemperatureID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[VehicleRegistration]"
+                      dataType="wstr"
+                      length="20"
+                      name="VehicleRegistration" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[ChillerSensorNumber]"
+                      dataType="i4"
+                      name="ChillerSensorNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[RecordedWhen]"
+                      dataType="dbTimeStamp2"
+                      name="RecordedWhen"
+                      scale="7" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[Temperature]"
+                      dataType="numeric"
+                      name="Temperature"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[FullSensorData]"
+                      dataType="wstr"
+                      length="1000"
+                      name="FullSensorData" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[IsCompressed]"
+                      dataType="bool"
+                      name="IsCompressed" />
+                    <externalMetadataColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output].ExternalColumns[CompressedSensorData]"
+                      dataType="image"
+                      name="CompressedSensorData" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error]"
+                  isErrorOut="true"
+                  name="Error">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[VehicleTemperatureID]"
+                      dataType="i8"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[VehicleTemperatureID]"
+                      name="VehicleTemperatureID" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[VehicleRegistration]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[VehicleRegistration]"
+                      name="VehicleRegistration" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[ChillerSensorNumber]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[ChillerSensorNumber]"
+                      name="ChillerSensorNumber" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[RecordedWhen]"
+                      dataType="dbTimeStamp2"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[RecordedWhen]"
+                      name="RecordedWhen"
+                      scale="7" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[Temperature]"
+                      dataType="numeric"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[Temperature]"
+                      name="Temperature"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[FullSensorData]"
+                      dataType="wstr"
+                      length="1000"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[FullSensorData]"
+                      name="FullSensorData" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[IsCompressed]"
+                      dataType="bool"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[IsCompressed]"
+                      name="IsCompressed" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[CompressedSensorData]"
+                      dataType="image"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[CompressedSensorData]"
+                      name="CompressedSensorData" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Error].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Warehouse VehicleTemperatures.Paths[Add Load Date_Output_Count New Rows]"
+              endId="Package\Load Warehouse VehicleTemperatures\Count New Rows.Inputs[Add Load Date_Output_Count New Rows]"
+              name="Add Load Date_Output_Count New Rows"
+              startId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Outputs[Output]" />
+            <path
+              refId="Package\Load Warehouse VehicleTemperatures.Paths[Source Warehouse VehicleTemperatures_Output_Add Load Date]"
+              endId="Package\Load Warehouse VehicleTemperatures\Add Load Date.Inputs[Source Warehouse VehicleTemperatures_Output_Add Load Date]"
+              name="Source Warehouse VehicleTemperatures_Output_Add Load Date"
+              startId="Package\Load Warehouse VehicleTemperatures\Source Warehouse VehicleTemperatures.Outputs[Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint_Create Table VehicleTemperatures_To_Load Warehouse VehicleTemperatures]"
+      DTS:CreationName=""
+      DTS:DTSID="{C3D8464A-A676-4881-AF19-90BAC98A2131}"
+      DTS:From="Package\Create Table VehicleTemperatures"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint_Create Table VehicleTemperatures_To_Load Warehouse VehicleTemperatures"
+      DTS:To="Package\Load Warehouse VehicleTemperatures" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>
